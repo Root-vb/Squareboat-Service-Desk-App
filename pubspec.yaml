@@ -1,0 +1,61 @@
+name: starter
+version: 1.0.0+1
+publish_to: none
+description: A new Flutter project.
+environment: 
+  sdk: '>=2.12.0 <3.0.0'
+
+dependencies: 
+  cupertino_icons: ^1.0.4
+  get: ^4.6.1
+  get_storage: ^2.0.3
+  dio: ^4.0.4
+  shimmer: ^2.0.0
+  google_sign_in: 5.2.1
+  firebase_core: 1.11.0
+  firebase_auth: 3.3.5
+  flutter: 
+    sdk: flutter
+
+dev_dependencies: 
+  flutter_test: 
+    sdk: flutter
+
+flutter: 
+  assets: 
+    - assets/images/google_logo.png
+  fonts: 
+    - family: poppins
+      fonts: 
+        - asset: assets/fonts/poppins_light.ttf
+          weight: 300
+        - asset: assets/fonts/poppins_light_italic.ttf
+          style: italic
+          weight: 300
+        - asset: assets/fonts/poppins_regular.ttf
+          weight: 400
+        - asset: assets/fonts/poppins_italic.ttf
+          style: italic
+          weight: 400
+        - asset: assets/fonts/poppins_medium.ttf
+          weight: 500
+        - asset: assets/fonts/poppins_medium_italic.ttf
+          style: italic
+          weight: 500
+        - asset: assets/fonts/poppins_semi_bold.ttf
+          weight: 600
+        - asset: assets/fonts/poppins_semi_bold_italic.ttf
+          style: italic
+          weight: 600
+        - asset: assets/fonts/poppins_bold.ttf
+          weight: 700
+        - asset: assets/fonts/poppins_bold_italic.ttf
+          style: italic
+          weight: 700
+        - asset: assets/fonts/poppins_extra_bold.ttf
+          weight: 800
+        - asset: assets/fonts/poppins_bold_italic.ttf
+          style: italic
+          weight: 800
+  uses-material-design: true
+
