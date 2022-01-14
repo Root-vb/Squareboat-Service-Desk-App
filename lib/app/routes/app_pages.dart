@@ -12,6 +12,8 @@ import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
 import '../modules/splash/bindings/splash_binding.dart';
 import '../modules/splash/views/splash_view.dart';
+import '../modules/ticket/bindings/ticket_binding.dart';
+import '../modules/ticket/views/ticket_view.dart';
 
 part 'app_routes.dart';
 
@@ -46,6 +48,11 @@ class AppPages {
       name: Routes.CREATE_TICKET,
       page: () => CreateTicketView(),
       binding: CreateTicketBinding(),
+    ),
+    GetPage(
+      name: Routes.TICKET,
+      page: () => TicketView(),
+      binding: TicketBinding(),
     ),
   ];
 }

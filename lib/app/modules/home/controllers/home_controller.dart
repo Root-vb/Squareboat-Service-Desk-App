@@ -1,41 +1,32 @@
-import 'dart:developer';
-
-import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 import 'package:starter/app/data/models/dto/response.dart';
-import 'package:starter/app/data/models/dto/ticket_dto.dart';
-import 'package:starter/app/data/network/network_requester.dart';
+import 'package:starter/app/data/models/dto/ticket.dart';
 import 'package:starter/app/data/repository/ticket_repository.dart';
+import 'package:starter/utils/storage/storage_utils.dart';
 
 class HomeController extends GetxController {
-  var ticketList = <TicketDto>[].obs;
-  NetworkRequester _networkRequester = NetworkRequester();
   TicketRepository _ticketRepository = TicketRepository();
 
-  getAllTickets(String token) async {
-    var response = _networkRequester.get(
-        path: "https://api.service-desk.squareboat.info/tickets?=",
-        options: Options(headers: {
-          "Authorization": 'Bearer $token',
-        }));
+  RxList<Ticket> ticketList = <Ticket>[].obs;
 
-    print(token);
-
-    print(response);
-  }
-
-  allTicket(String data) async {
-    RepoResponse repoResponse = await _ticketRepository.fetchAllTicket({
-      "Authorization": data,
+  allTicket() async {
+    RepoResponse<TicketList> repoResponse =
+        await _ticketRepository.fetchAllTicket({
+      "Authorization": 'Bearer ${Storage.getUser().access_token}',
     });
 
     if (repoResponse.error == null) {
-      log(repoResponse.data);
+      repoResponse.data?.data?.forEach((element) {
+        ticketList.add(element);
+      });
     }
   }
 
   @override
   void onInit() {
+    allTicket();
+    print(Storage.getUser().access_token);
+
     super.onInit();
   }
 

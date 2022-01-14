@@ -7,4 +7,5 @@ abstract class Routes {
   static const AUTH_SIGNUP = '/auth/signup';
   static const HOME = '/home';
   static const CREATE_TICKET = '/create-ticket';
+  static const TICKET = '/ticket';
 }

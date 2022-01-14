@@ -1,13 +1,13 @@
-import 'package:starter/app/data/models/dto/ticket_dto.dart';
+import 'package:starter/app/data/models/dto/ticket.dart';
 
 class TicketResponse {
-  late TicketDto? data;
+  late TicketList? data;
   late int code;
 
   TicketResponse({required this.data, required this.code});
 
   TicketResponse.fromJson(Map<String, dynamic> json) {
-    this.data = json['data'] == null ? null : TicketDto.fromJson(json['data']);
+    this.data = json['data'] == null ? null : TicketList.fromJson(json['data']);
     this.code = json['code'];
   }
 

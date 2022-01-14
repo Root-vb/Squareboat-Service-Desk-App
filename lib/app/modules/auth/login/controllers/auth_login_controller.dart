@@ -26,8 +26,6 @@ class AuthLoginController extends BaseController {
 
       if (googleAuth.accessToken != null) {
         login(googleAuth.idToken!);
-
-        Storage.setToken(googleAuth.idToken!);
       }
     } catch (error) {
       print(error);

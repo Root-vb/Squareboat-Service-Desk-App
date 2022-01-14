@@ -2,60 +2,61 @@ name: starter
 version: 1.0.0+1
 publish_to: none
 description: A new Flutter project.
-environment: 
+environment:
   sdk: '>=2.12.0 <3.0.0'
 
-dependencies: 
+dependencies:
+  cached_network_image: ^3.2.0
   cupertino_icons: ^1.0.4
+  dio: ^4.0.4
+  firebase_auth: 3.3.5
+  firebase_core: 1.11.0
+  flutter:
+    sdk: flutter
   get: ^4.6.1
   get_storage: ^2.0.3
-  dio: ^4.0.4
-  shimmer: ^2.0.0
   google_sign_in: 5.2.1
-  firebase_core: 1.11.0
-  firebase_auth: 3.3.5
-  flutter: 
+  shimmer: ^2.0.0
+  timeago: ^3.1.0
+
+dev_dependencies:
+  flutter_test:
     sdk: flutter
 
-dev_dependencies: 
-  flutter_test: 
-    sdk: flutter
-
-flutter: 
-  assets: 
+flutter:
+  assets:
     - assets/images/google_logo.png
-  fonts: 
-    - family: poppins
-      fonts: 
-        - asset: assets/fonts/poppins_light.ttf
+  fonts:
+    - family: opensans
+      fonts:
+        - asset: assets/fonts/OpenSans-Light.ttf
           weight: 300
-        - asset: assets/fonts/poppins_light_italic.ttf
+        - asset: assets/fonts/OpenSans-LightItalic.ttf
           style: italic
           weight: 300
-        - asset: assets/fonts/poppins_regular.ttf
+        - asset: assets/fonts/OpenSans-Regular.ttf
           weight: 400
-        - asset: assets/fonts/poppins_italic.ttf
+        - asset: assets/fonts/OpenSans-Italic.ttf
           style: italic
           weight: 400
-        - asset: assets/fonts/poppins_medium.ttf
+        - asset: assets/fonts/OpenSans-Medium.ttf
           weight: 500
-        - asset: assets/fonts/poppins_medium_italic.ttf
+        - asset: assets/fonts/OpenSans-MediumItalic.ttf
           style: italic
           weight: 500
-        - asset: assets/fonts/poppins_semi_bold.ttf
+        - asset: assets/fonts/OpenSans-SemiBold.ttf
           weight: 600
-        - asset: assets/fonts/poppins_semi_bold_italic.ttf
+        - asset: assets/fonts/OpenSans-SemiBoldItalic.ttf
           style: italic
           weight: 600
-        - asset: assets/fonts/poppins_bold.ttf
+        - asset: assets/fonts/OpenSans-Bold.ttf
           weight: 700
-        - asset: assets/fonts/poppins_bold_italic.ttf
+        - asset: assets/fonts/OpenSans-BoldItalic.ttf
           style: italic
           weight: 700
-        - asset: assets/fonts/poppins_extra_bold.ttf
+        - asset: assets/fonts/OpenSans-ExtraBold.ttf
           weight: 800
-        - asset: assets/fonts/poppins_bold_italic.ttf
+        - asset: assets/fonts/OpenSans-BoldItalic.ttf
           style: italic
           weight: 800
   uses-material-design: true
-

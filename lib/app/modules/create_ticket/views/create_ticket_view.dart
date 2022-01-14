@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:starter/app/data/models/dto/ticket_dto.dart';
-import 'package:starter/app/routes/app_pages.dart';
 import 'package:starter/widgets/buttons/custom_button.dart';
 import 'package:starter/widgets/text_field/custom_text_field.dart';
 
@@ -618,44 +616,3 @@ class CreateTicketView extends GetView<CreateTicketController> {
     );
   }
 }
- // Padding(
-                  //   padding:
-                  //       const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-                  //   child: ClipRRect(
-                  //     borderRadius: BorderRadius.all(Radius.circular(12)),
-                  //     child: MaterialButton(
-                  //       elevation: 5,
-                  //       onPressed: () {
-                  //         Get.offAllNamed(
-                  //           Routes.HOME,
-                  //           arguments: TicketDto(
-                  //             heading: controller
-                  //                 .generalHeadingWrapper.controller.text,
-                  //             id: "#45363",
-                  //             type: controller.updatedValue.value,
-                  //             status: "status",
-                  //             date: "5/01/2022",
-                  //           ),
-                  //         );
-                  //       },
-                  //       child: Row(
-                  //         mainAxisSize: MainAxisSize.min,
-                  //         children: [
-                  //           Container(
-                  //             color: Color(0xff6DC79C),
-                  //             child: Icon(
-                  //               CupertinoIcons.add_circled,
-                  //               color: Colors.white,
-                  //             ),
-                  //           ),
-                  //           SizedBox(width: 8),
-                  //           Text(
-                  //             "Create Ticket",
-                  //             style: TextStyle(color: Colors.white),
-                  //           ),
-                  //         ],
-                  //       ),
-                  //       color: Color(0xff3FB883),
-                  //     ),
-                  //   ),
-                  // )
