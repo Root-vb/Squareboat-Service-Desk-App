@@ -20,6 +20,8 @@ class Storage {
 
   static bool isUserExists() => _box.read(StorageKeys.USER) != null;
 
+  static Future<void> clearStorage() => _box.erase();
+
   static String getToken() => _box.read(StorageKeys.TOKEN);
   static void setToken(String token) => _box.write(StorageKeys.TOKEN, token);
 }

@@ -25,11 +25,18 @@ class AuthLoginController extends BaseController {
           await googleUser!.authentication;
 
       if (googleAuth.accessToken != null) {
+        print(googleAuth.accessToken);
         login(googleAuth.idToken!);
       }
     } catch (error) {
       print(error);
     }
+  }
+
+  signOut() async {
+    await _googleSignIn.signOut();
+
+    Get.toNamed(Routes.AUTH_LOGIN);
   }
 
   login(String token) async {

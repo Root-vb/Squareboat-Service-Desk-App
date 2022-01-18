@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
+import 'package:starter/app/app_controller.dart';
 import 'package:starter/app/data/models/response/error_response.dart';
 import 'package:starter/app/data/values/strings.dart';
 
@@ -20,8 +21,16 @@ class ExceptionHandler {
         case DioErrorType.connectTimeout:
           return APIException(message: ErrorMessages.connectionTimeout);
         case DioErrorType.response:
-          return APIException(
-              message: ErrorResponse.fromJson(error.response?.data).message);
+          if (error.response?.statusCode == 401) {
+            AppController().showLogoutDialog();
+
+            return APIException(
+                message: ErrorResponse.fromJson(error.response?.data).message);
+          } else {
+            return APIException(
+                message: ErrorResponse.fromJson(error.response?.data).message);
+          }
+
         default:
           return APIException(message: ErrorMessages.networkGeneral);
       }

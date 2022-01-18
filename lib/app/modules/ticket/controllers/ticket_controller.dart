@@ -9,6 +9,17 @@ class TicketController extends GetxController {
 
   String? profilePic;
   String? name;
+  String? uuid;
+  String? heading;
+  String? type;
+  String? description;
+  String? projectName;
+  String? projectManager;
+  String? repoName;
+  String? releasePriority;
+  String? environment;
+  String? releaseNotes;
+  String? deploymentSteps;
 
   final items = [
     "In Progress",
@@ -32,6 +43,17 @@ class TicketController extends GetxController {
 
     profilePic = data['profilePic'];
     name = data['name'];
+    uuid = data['uuid'];
+    heading = data['heading'];
+    type = data['type'];
+    description = data['description'];
+    projectName = data['projectName'];
+    projectManager = data['projectManager'];
+    repoName = data['repoName'];
+    releasePriority = data['releasePriority'];
+    environment = data['environment'];
+    releaseNotes = data['releaseNotes'];
+    deploymentSteps = data['deploymentSteps'];
 
     print(profilePic);
     super.onInit();
@@ -44,5 +66,4 @@ class TicketController extends GetxController {
 
   @override
   void onClose() {}
-  void increment() => count.value++;
 }

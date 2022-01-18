@@ -102,4 +102,60 @@ class Styles {
     fontSize: 12.0,
     fontFamily: "opensans",
   );
+
+  static const tsWhiteSemiBold14 = TextStyle(
+    color: AppColors.white,
+    fontWeight: FontWeight.w600,
+    fontSize: 14.0,
+    fontFamily: "opensans",
+  );
+
+  static const tsPrimaryColorSemiBold28 = TextStyle(
+    color: AppColors.primaryColor,
+    fontWeight: FontWeight.w600,
+    fontSize: 28.0,
+    fontFamily: "opensans",
+  );
+
+  static const tsPrimaryColorBold20 = TextStyle(
+    color: AppColors.primaryColor,
+    fontWeight: FontWeight.w700,
+    fontSize: 20.0,
+    fontFamily: "opensans",
+  );
+
+  static const tsWhiteBold12 = TextStyle(
+    color: AppColors.white,
+    fontWeight: FontWeight.w700,
+    fontSize: 12.0,
+    fontFamily: "opensans",
+  );
+
+  static const tsDarkGreySemiBold14 = TextStyle(
+    color: AppColors.darkGrey,
+    fontWeight: FontWeight.w600,
+    fontSize: 14.0,
+    fontFamily: "opensans",
+  );
+
+  static const tslightBlueWithOpcaity100Bold18 = TextStyle(
+    color: AppColors.lightBlueOpacity100,
+    fontWeight: FontWeight.w700,
+    fontSize: 18.0,
+    fontFamily: "opensans",
+  );
+
+  static const tslightBlueWithOpcaity100SemiBold18 = TextStyle(
+    color: AppColors.lightBlueOpacity100,
+    fontWeight: FontWeight.w600,
+    fontSize: 18.0,
+    fontFamily: "opensans",
+  );
+
+  static const tsDarkGreyRegular12 = TextStyle(
+    color: AppColors.darkGrey,
+    fontWeight: FontWeight.w400,
+    fontSize: 12.0,
+    fontFamily: "opensans",
+  );
 }

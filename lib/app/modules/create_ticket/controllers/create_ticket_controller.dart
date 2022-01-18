@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:starter/app/modules/home/views/home_view.dart';
+
+import 'package:starter/app/data/repository/create_ticket_repository.dart';
+import 'package:starter/app/routes/app_pages.dart';
+import 'package:starter/app/theme/app_colors.dart';
 import 'package:starter/utils/helper/text_field_wrapper.dart';
+import 'package:starter/utils/loading/loading_utils.dart';
+import 'package:starter/utils/storage/storage_utils.dart';
 
 class CreateTicketController extends GetxController {
-  //TODO: Implement CreateTicketController
-
   final formKey = GlobalKey<FormState>();
 
+  CreateTicketRepository _createTicketRepository = CreateTicketRepository();
   // General Wrapper
 
   TextFieldWrapper generalHeadingWrapper = TextFieldWrapper();
@@ -23,6 +27,73 @@ class CreateTicketController extends GetxController {
   TextFieldWrapper releaseNotesWrapper = TextFieldWrapper();
   TextFieldWrapper deploymentStepsWrapper = TextFieldWrapper();
   TextFieldWrapper deploymentWatcherEmails = TextFieldWrapper();
+
+  createTicket() async {
+    if (isGeneralTicket.isTrue) {
+      LoadingUtils.showLoader();
+
+      final _response = await _createTicketRepository.createGeneralTicket(
+        {
+          "type": updatedValue.value,
+          "heading": generalHeadingWrapper.controller.text,
+          "description": descriptionWrapper.controller.text,
+          "watcherEmail": generalWatcherEmails.controller.text,
+        },
+        {"Authorization": 'Bearer ${Storage.getUser().access_token}'},
+      );
+
+      LoadingUtils.hideLoader();
+
+      if (_response.error == null) {
+        Get.snackbar(
+          "Sucess",
+          "General Ticket Created!",
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: AppColors.green,
+        );
+
+        Get.toNamed(Routes.HOME);
+      }
+    } else {
+      LoadingUtils.showLoader();
+      final _response = await _createTicketRepository.createDeploymentTicket(
+        {
+          // "referenceId": 34,
+          "type": updatedValue.value,
+          "status": "created",
+          "heading": deploymentHeadingWrapper.controller.text,
+          "projectName": projectNameWrapper.controller.text,
+          "managerName": projectManagerWrapper.controller.text,
+          "repoName": repoNameWrapper.controller.text,
+          "branchName": branchNameWrapper.controller.text,
+          "releasePriority": releasePriorityValue.value,
+          "releaseNotes": releaseNotesWrapper.controller.text,
+          "environment": enviromentsValue.value,
+          // "participants": selectedParticipants.value,
+          "deploymentSteps": deploymentStepsWrapper.controller.text,
+          "watcherEmail": deploymentWatcherEmails.controller.text,
+        },
+        {"Authorization": 'Bearer ${Storage.getUser().access_token}'},
+      );
+
+      LoadingUtils.hideLoader();
+
+      if (_response.error == null) {
+        Get.snackbar(
+          "Sucess",
+          "Deployment Ticket Created!",
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: AppColors.green,
+        );
+
+        Get.toNamed(Routes.HOME);
+      }
+    }
+  }
+
+  /*
+   * {"success":false,"code":422,"message":"Some entities failed, please check","errors":{"referenceId":["Reference Id must be a number conforming to the specified constraints"],"heading":["Heading should not be empty"]}}
+   */
 
   final items = [
     "General Ticket",
@@ -60,40 +131,10 @@ class CreateTicketController extends GetxController {
   var isGeneralTicket = true.obs;
   var selectedParticipants = "Select Participants".obs;
 
-  createGeneralTicket() {
-    Get.offAll(() => HomeView(), arguments: {
-      "type": updatedValue,
-      "heading": generalHeadingWrapper.controller.text,
-      "description": descriptionWrapper.controller.text,
-      "email": generalWatcherEmails.controller.text,
-    });
-    Get.snackbar(
-      "Ticket Created!",
-      "Go to home page to view your ticket",
-      snackPosition: SnackPosition.BOTTOM,
-      colorText: Colors.white,
-      backgroundColor: Colors.green,
-    );
-  }
-
-  createDeploymentTicket() {
-    Get.offAll(() => HomeView(), arguments: {
-      "type": "Deployment Ticket",
-      "heading": deploymentHeadingWrapper.controller.text,
-      "project": projectNameWrapper.controller.text,
-      "email": generalWatcherEmails.controller.text,
-    });
-    Get.snackbar(
-      "Ticket Created!",
-      "Go to home page to view your ticket",
-      snackPosition: SnackPosition.BOTTOM,
-      colorText: Colors.white,
-      backgroundColor: Colors.green,
-    );
-  }
-
   @override
   void onInit() {
+    print(Storage.getUser().access_token);
+    print(deploymentHeadingWrapper.controller.text);
     super.onInit();
   }
 

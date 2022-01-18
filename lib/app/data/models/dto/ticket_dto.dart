@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 class TicketDto {
   TicketDto({
     this.id,

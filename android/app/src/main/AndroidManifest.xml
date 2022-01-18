@@ -2,7 +2,7 @@
     package="com.example.starter">
     <uses-permission android:name="android.permission.INTERNET" />
    <application
-        android:label="starter"
+        android:label="Service Desk"
         android:icon="@mipmap/ic_launcher">
          
         <activity

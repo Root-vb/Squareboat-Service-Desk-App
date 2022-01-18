@@ -26,14 +26,10 @@ class UserRepository extends BaseRepositry {
   }
 
   Future<RepoResponse<User>> login(Map<String, dynamic> data) async {
-    final response = await controller.post(
-      path: URLs.login,
-      data: data,
-    );
+    final response = await controller.post(path: URLs.login, data: data);
+
     return response is APIException
         ? RepoResponse(error: response)
-        : RepoResponse(
-            data: UserResponse.fromJson(response).data,
-          );
+        : RepoResponse(data: UserResponse.fromJson(response).data);
   }
 }

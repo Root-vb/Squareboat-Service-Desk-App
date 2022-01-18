@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:starter/app/theme/app_colors.dart';
+import 'package:starter/app/theme/styles.dart';
 
 class CustomButton extends StatelessWidget {
   final Function() onPressed;
@@ -12,32 +14,23 @@ class CustomButton extends StatelessWidget {
       child: GestureDetector(
         onTap: onPressed,
         child: Container(
+          height: 44,
+          width: 142,
+          decoration: BoxDecoration(
+            color: AppColors.green,
+            borderRadius: BorderRadius.circular(6),
+          ),
           child: Row(
-            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              Container(
-                color: Color(0xff6DC79C),
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Icon(
-                    Icons.add_circle_outline,
-                    size: 24.7,
-                    color: Colors.white,
-                  ),
-                ),
+              Icon(
+                Icons.add,
+                size: 15.25,
+                color: AppColors.white,
               ),
-              Container(
-                color: Color(0xff3FB883),
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    "Create Ticket",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 16,
-                    ),
-                  ),
-                ),
+              Text(
+                "Create New",
+                style: Styles.tsWhiteSemiBold14,
               ),
             ],
           ),

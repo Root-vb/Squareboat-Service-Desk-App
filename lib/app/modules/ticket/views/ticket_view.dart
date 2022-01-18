@@ -27,7 +27,9 @@ class TicketView extends GetView<TicketController> {
               SizedBox(height: 40),
               dropDown(),
               SizedBox(height: 30),
-              testingProjectCard(),
+              controller.description == null
+                  ? deploymentProjectCard()
+                  : generalProjectCard(),
               SizedBox(height: 40),
               Text("People Involved", style: Styles.tsPrimaryBlueSemiBold18),
               SizedBox(height: 25),
@@ -268,7 +270,7 @@ class TicketView extends GetView<TicketController> {
     );
   }
 
-  Container testingProjectCard() {
+  Container deploymentProjectCard() {
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
@@ -286,7 +288,7 @@ class TicketView extends GetView<TicketController> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "SQB-14",
+                  controller.uuid ?? "SQB-14",
                   style: Styles.tsPrimaryBlueBold18,
                 ),
                 Row(
@@ -313,11 +315,10 @@ class TicketView extends GetView<TicketController> {
                 ),
               ],
             ),
-            Text("Testing Project", style: Styles.tsPrimaryColorSemiBold16),
-            // TextButton(
-            //   onPressed: () {},
-            //   child: Text("Delete", style: Styles.tsRedSemiBold14),
-            // ),
+            Text(
+              controller.heading ?? "Testing Project",
+              style: Styles.tsPrimaryColorSemiBold16,
+            ),
             Divider(color: Color(0xffEEF2F8), thickness: 2),
             SizedBox(height: 10),
             Row(
@@ -328,7 +329,7 @@ class TicketView extends GetView<TicketController> {
                   style: Styles.tsprimaryIndigoSemiBold12,
                 ),
                 Text(
-                  "Deployment Ticket",
+                  controller.type ?? "Deployment Ticket",
                   style: Styles.tsPrimaryColorRegular12,
                 ),
               ],
@@ -342,7 +343,7 @@ class TicketView extends GetView<TicketController> {
                   style: Styles.tsprimaryIndigoSemiBold12,
                 ),
                 Text(
-                  "Test 1",
+                  controller.projectName ?? "Test 1",
                   style: Styles.tsPrimaryColorRegular12,
                 ),
               ],
@@ -356,7 +357,7 @@ class TicketView extends GetView<TicketController> {
                   style: Styles.tsprimaryIndigoSemiBold12,
                 ),
                 Text(
-                  "Nimish Dawar",
+                  controller.projectManager ?? "Nimish Dawar",
                   style: Styles.tsPrimaryColorRegular12,
                 ),
               ],
@@ -370,7 +371,7 @@ class TicketView extends GetView<TicketController> {
                   style: Styles.tsprimaryIndigoSemiBold12,
                 ),
                 Text(
-                  "Test Repo",
+                  controller.repoName ?? "Test Repo",
                   style: Styles.tsPrimaryColorRegular12,
                 ),
               ],
@@ -384,7 +385,7 @@ class TicketView extends GetView<TicketController> {
                   style: Styles.tsprimaryIndigoSemiBold12,
                 ),
                 Text(
-                  "PO - Service Downtime",
+                  controller.releasePriority ?? "PO - Service Downtime",
                   style: Styles.tsPrimaryColorRegular12,
                 ),
               ],
@@ -398,7 +399,7 @@ class TicketView extends GetView<TicketController> {
                   style: Styles.tsprimaryIndigoSemiBold12,
                 ),
                 Text(
-                  "Testing for developers and QA",
+                  controller.environment ?? "Testing for developers and QA",
                   style: Styles.tsPrimaryColorRegular12,
                 ),
               ],
@@ -412,7 +413,7 @@ class TicketView extends GetView<TicketController> {
                   style: Styles.tsprimaryIndigoSemiBold12,
                 ),
                 Text(
-                  "Patch 1.0",
+                  controller.releaseNotes ?? "Patch 1.0",
                   style: Styles.tsPrimaryColorRegular12,
                 ),
               ],
@@ -426,7 +427,92 @@ class TicketView extends GetView<TicketController> {
                   style: Styles.tsprimaryIndigoSemiBold12,
                 ),
                 Text(
-                  "1,2,3",
+                  controller.deploymentSteps ?? "1,2,3",
+                  style: Styles.tsPrimaryColorRegular12,
+                ),
+              ],
+            ),
+            SizedBox(height: 10),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Container generalProjectCard() {
+    return Container(
+      width: double.infinity,
+      decoration: BoxDecoration(
+          border: Border.all(
+            width: 2,
+            color: Color(0xffECECEC),
+          ),
+          borderRadius: BorderRadius.all(Radius.circular(12))),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  controller.uuid ?? "SQB-14",
+                  style: Styles.tsPrimaryBlueBold18,
+                ),
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    ClipOval(
+                      child: Container(
+                        color: AppColors.red,
+                        child: Padding(
+                          padding: const EdgeInsets.all(3.0),
+                          child: Icon(
+                            CupertinoIcons.delete,
+                            color: AppColors.white,
+                            size: 14,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text("Delete", style: Styles.tsRedSemiBold14),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+            Text(
+              controller.heading ?? "Testing Project",
+              style: Styles.tsPrimaryColorSemiBold16,
+            ),
+            Divider(color: Color(0xffEEF2F8), thickness: 2),
+            SizedBox(height: 10),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  "Type",
+                  style: Styles.tsprimaryIndigoSemiBold12,
+                ),
+                Text(
+                  controller.type ?? "Deployment Ticket",
+                  style: Styles.tsPrimaryColorRegular12,
+                ),
+              ],
+            ),
+            SizedBox(height: 10),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  "Description",
+                  style: Styles.tsprimaryIndigoSemiBold12,
+                ),
+                Text(
+                  controller.description ?? "Testing ticket Feature",
                   style: Styles.tsPrimaryColorRegular12,
                 ),
               ],
