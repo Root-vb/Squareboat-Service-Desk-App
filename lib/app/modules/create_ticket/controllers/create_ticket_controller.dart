@@ -53,6 +53,10 @@ class CreateTicketController extends GetxController {
         );
 
         Get.toNamed(Routes.HOME);
+
+        generalHeadingWrapper.controller.clear();
+        descriptionWrapper.controller.clear();
+        generalWatcherEmails.controller.clear();
       }
     } else {
       LoadingUtils.showLoader();
@@ -87,6 +91,15 @@ class CreateTicketController extends GetxController {
         );
 
         Get.toNamed(Routes.HOME);
+
+        deploymentHeadingWrapper.controller.clear();
+        projectManagerWrapper.controller.clear();
+        projectNameWrapper.controller.clear();
+        repoNameWrapper.controller.clear();
+        branchNameWrapper.controller.clear();
+        releaseNotesWrapper.controller.clear();
+        deploymentStepsWrapper.controller.clear();
+        deploymentWatcherEmails.controller.clear();
       }
     }
   }

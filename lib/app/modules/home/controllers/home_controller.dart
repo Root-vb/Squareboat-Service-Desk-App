@@ -7,9 +7,10 @@ import 'package:starter/utils/storage/storage_utils.dart';
 class HomeController extends GetxController {
   TicketRepository _ticketRepository = TicketRepository();
 
-  RxList<Ticket> ticketList = <Ticket>[].obs;
+  var ticketList = <Ticket>[].obs;
 
-  allTicket() async {
+  Future<void> allTicket() async {
+    ticketList.clear();
     RepoResponse<TicketList> repoResponse =
         await _ticketRepository.fetchAllTicket({
       "Authorization": 'Bearer ${Storage.getUser().access_token}',
