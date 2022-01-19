@@ -45,14 +45,13 @@ class CreateTicketController extends GetxController {
       LoadingUtils.hideLoader();
 
       if (_response.error == null) {
+        Get.back();
         Get.snackbar(
           "Sucess",
           "General Ticket Created!",
           snackPosition: SnackPosition.BOTTOM,
           backgroundColor: AppColors.green,
         );
-
-        Get.toNamed(Routes.HOME);
 
         generalHeadingWrapper.controller.clear();
         descriptionWrapper.controller.clear();
@@ -83,14 +82,14 @@ class CreateTicketController extends GetxController {
       LoadingUtils.hideLoader();
 
       if (_response.error == null) {
+        Get.back();
+
         Get.snackbar(
           "Sucess",
           "Deployment Ticket Created!",
           snackPosition: SnackPosition.BOTTOM,
           backgroundColor: AppColors.green,
         );
-
-        Get.toNamed(Routes.HOME);
 
         deploymentHeadingWrapper.controller.clear();
         projectManagerWrapper.controller.clear();
@@ -103,10 +102,6 @@ class CreateTicketController extends GetxController {
       }
     }
   }
-
-  /*
-   * {"success":false,"code":422,"message":"Some entities failed, please check","errors":{"referenceId":["Reference Id must be a number conforming to the specified constraints"],"heading":["Heading should not be empty"]}}
-   */
 
   final items = [
     "General Ticket",

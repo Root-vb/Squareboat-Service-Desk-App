@@ -17,4 +17,18 @@ class TicketRepository extends BaseRepositry {
         ? RepoResponse(error: response)
         : RepoResponse(data: TicketResponse.fromJson(response).data);
   }
+
+  Future<RepoResponse<TicketList>> fetchAllPageTicket(
+    String url,
+    Map<String, dynamic> data,
+  ) async {
+    final response = await controller.get(
+      path: url,
+      options: Options(headers: data),
+    );
+
+    return response is APIException
+        ? RepoResponse(error: response)
+        : RepoResponse(data: TicketResponse.fromJson(response).data);
+  }
 }

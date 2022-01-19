@@ -17,35 +17,38 @@ class HomeView extends GetView<HomeController> {
       ),
       body: RefreshIndicator(
         onRefresh: () => controller.allTicket(),
-        child: ListView(
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 25),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "All Tickets",
-                    style: Styles.tsPrimaryColorSemiBold28,
-                  ),
-                  CustomButton(onPressed: () {
-                    Get.toNamed(Routes.CREATE_TICKET);
-                  })
-                ],
+        child: SingleChildScrollView(
+          controller: controller.scrollController,
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 25),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "All Tickets",
+                      style: Styles.tsPrimaryColorSemiBold28,
+                    ),
+                    CustomButton(onPressed: () {
+                      Get.toNamed(Routes.CREATE_TICKET);
+                    })
+                  ],
+                ),
               ),
-            ),
-            SizedBox(height: 40),
-            Obx(
-              () => ListView.builder(
-                shrinkWrap: true,
-                itemCount: controller.ticketList.length,
-                physics: NeverScrollableScrollPhysics(),
-                itemBuilder: (context, index) {
-                  return ticketItem(index);
-                },
-              ),
-            )
-          ],
+              SizedBox(height: 40),
+              Obx(
+                () => ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: controller.ticketList.length,
+                  physics: NeverScrollableScrollPhysics(),
+                  itemBuilder: (context, index) {
+                    return ticketItem(index);
+                  },
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );
