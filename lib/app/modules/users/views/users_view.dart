@@ -24,26 +24,17 @@ class UsersView extends GetView<UsersController> {
               shrinkWrap: true,
               itemCount: controller.usersList.length,
               itemBuilder: (context, index) {
-                return ListTile(
-                  title: Text(
-                    controller.usersList[index].name ?? "",
-                    style: Styles.tsprimaryBlueSemiBold14,
-                  ),
-                  trailing: Obx(
-                    () => IconButton(
-                      onPressed: () {
-                        controller.isChecked.add(index);
-                      },
-                      icon: controller.isChecked.contains(index)
-                          ? Icon(
-                              Icons.check_box,
-                              color: Theme.of(context).iconTheme.color,
-                            )
-                          : Icon(
-                              Icons.check_box_outline_blank,
-                              color: Theme.of(context).iconTheme.color,
-                            ),
+                return Obx(
+                  () => CheckboxListTile(
+                    title: Text(
+                      controller.usersList[index].name ?? "",
+                      style: Styles.tsprimaryBlueSemiBold14,
                     ),
+                    value: controller.users
+                        .contains(controller.usersList[index].id),
+                    onChanged: (bool? value) {
+                      controller.addUser(index, value);
+                    },
                   ),
                 );
               },
@@ -51,8 +42,7 @@ class UsersView extends GetView<UsersController> {
             Center(
                 child: MaterialButton(
               onPressed: () {
-                controller.addPartcipantsPerformAction();
-                Get.back(result: true);
+                controller.onBackPressed();
               },
               child: Text("Done"),
             ))
@@ -62,17 +52,3 @@ class UsersView extends GetView<UsersController> {
     );
   }
 }
-/**
- * Wrap(
-        direction: Axis.horizontal,
-        children: List.generate(
-          controller.usersList.length,
-          (index) => Chip(
-            label: Text(controller.usersList[index].name ?? ""),
-            backgroundColor: Color(0xffEFF2F4),
-            elevation: 1,
-          ),
-        ),
-        spacing: 5,
-      ),
- */

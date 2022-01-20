@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:starter/app/data/models/dto/comment.dart';
 import 'package:starter/app/data/models/dto/participants_list.dart';
-import 'package:starter/app/data/models/dto/participants_list.dart';
 import 'package:starter/app/data/models/dto/response.dart';
 import 'package:starter/app/data/models/dto/ticket_update.dart';
 import 'package:starter/app/data/repository/comment_repository.dart';
@@ -10,6 +9,7 @@ import 'package:starter/app/data/repository/participants_repository.dart'
     as parti;
 import 'package:starter/app/data/repository/perform_action_repository.dart';
 import 'package:starter/app/data/repository/ticket_update_repository.dart';
+import 'package:starter/app/routes/app_pages.dart';
 import 'package:starter/utils/storage/storage_utils.dart';
 
 class TicketController extends GetxController {
@@ -20,7 +20,6 @@ class TicketController extends GetxController {
   TicketUpdateRepository ticketUpdateRepository = TicketUpdateRepository();
   CommentRepository commentRepository = CommentRepository();
   PerformActionRepository performActionRepository = PerformActionRepository();
-
   parti.ParticipantsRepository participantsRepository =
       parti.ParticipantsRepository();
 
@@ -138,8 +137,33 @@ class TicketController extends GetxController {
 
     if (repoResponse.error == null) {
       getAllTicketUpdate();
+    }
+  }
 
-      print(assignedToUuid);
+  launchParticipants() async {
+    var result = await Get.toNamed(Routes.USERS, arguments: {
+      'list': participantsList,
+      'uid': uuid,
+    });
+
+    if (result != null) {
+      addPartcipantsPerformAction(result);
+    }
+  }
+
+  Future<void> addPartcipantsPerformAction(List<String>? user) async {
+    List<String> listOfParticipants = [];
+
+    listOfParticipants.add(Storage.getUser().id);
+    listOfParticipants.addAll(user ?? []);
+    final repoResponse = await performActionRepository.fetchAllActions(
+      uuid!,
+      {"actionType": "update-user", "users": listOfParticipants},
+      {"Authorization": 'Bearer ${Storage.getUser().access_token}'},
+    );
+
+    if (repoResponse.error == null) {
+      getAllTicketUpdate();
     }
   }
 

@@ -126,14 +126,15 @@ class UpdateTicketParticipants {
   String? email;
   List<String>? roles;
 
-  UpdateTicketParticipants(
-      {this.id,
-      this.name,
-      this.profilePicture,
-      this.organizationId,
-      this.status,
-      this.email,
-      this.roles});
+  UpdateTicketParticipants({
+    this.id,
+    this.name,
+    this.profilePicture,
+    this.organizationId,
+    this.status,
+    this.email,
+    this.roles,
+  });
 
   UpdateTicketParticipants.fromJson(Map<String, dynamic> json) {
     id = json['id'];

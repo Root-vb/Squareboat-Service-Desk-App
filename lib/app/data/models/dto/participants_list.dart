@@ -36,13 +36,14 @@ class Participants {
   String? status;
   String? email;
 
-  Participants(
-      {this.id,
-      this.name,
-      this.profilePicture,
-      this.organizationId,
-      this.status,
-      this.email});
+  Participants({
+    this.id,
+    this.name,
+    this.profilePicture,
+    this.organizationId,
+    this.status,
+    this.email,
+  });
 
   Participants.fromJson(Map<String, dynamic> json) {
     id = json['id'];

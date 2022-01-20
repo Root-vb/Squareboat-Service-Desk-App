@@ -1,37 +1,25 @@
 import 'package:get/get.dart';
 import 'package:starter/app/data/models/dto/participants_list.dart';
-import 'package:starter/app/data/repository/perform_action_repository.dart';
-import 'package:starter/utils/storage/storage_utils.dart';
+import 'package:starter/app/data/models/dto/ticket_update.dart';
 
 class UsersController extends GetxController {
-  var usersList = <Participants>[].obs;
+  final usersList = <UpdateTicketParticipants>[].obs;
 
-  var isSelected = false.obs;
+  final isSelected = false.obs;
+  final RxList<String> users = RxList<String>();
 
-  RxList<int> isChecked = RxList<int>();
   String? uid;
 
-  PerformActionRepository performActionRepository = PerformActionRepository();
+  addUser(int index, bool? value) {
+    if (value == true) {
+      users.add(usersList[index].id ?? "");
+    } else {
+      users.remove(usersList[index].id ?? "");
+    }
+  }
 
-  Future<void> addPartcipantsPerformAction() async {
-    List<String> users = [];
-
-    users.add(Storage.getUser().id);
-
-    isChecked.forEach((element) {
-      users.add(usersList[element].id!);
-    });
-
-    final repoResponse = await performActionRepository.fetchAllActions(
-      uid!,
-      {
-        "actionType": "update-user",
-        "users": users,
-      },
-      {
-        "Authorization": 'Bearer ${Storage.getUser().access_token}',
-      },
-    );
+  onBackPressed() {
+    Get.back(result: users.value);
   }
 
   final count = 0.obs;

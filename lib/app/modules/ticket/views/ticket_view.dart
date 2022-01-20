@@ -92,10 +92,7 @@ class TicketView extends GetView<TicketController> {
                             style: Styles.tsPrimaryColorSemiBold16,
                           ),
                           InkWell(
-                            onTap: () => Get.toNamed(Routes.USERS, arguments: {
-                              'list': controller.participantsList,
-                              'uid': controller.uuid,
-                            }),
+                            onTap: () => controller.launchParticipants(),
                             child: Row(
                               children: [
                                 Icon(
