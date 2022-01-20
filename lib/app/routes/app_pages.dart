@@ -14,6 +14,8 @@ import '../modules/splash/bindings/splash_binding.dart';
 import '../modules/splash/views/splash_view.dart';
 import '../modules/ticket/bindings/ticket_binding.dart';
 import '../modules/ticket/views/ticket_view.dart';
+import '../modules/users/bindings/users_binding.dart';
+import '../modules/users/views/users_view.dart';
 
 part 'app_routes.dart';
 
@@ -53,6 +55,11 @@ class AppPages {
       name: Routes.TICKET,
       page: () => TicketView(),
       binding: TicketBinding(),
+    ),
+    GetPage(
+      name: Routes.USERS,
+      page: () => UsersView(),
+      binding: UsersBinding(),
     ),
   ];
 }

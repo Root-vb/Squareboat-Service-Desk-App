@@ -53,6 +53,7 @@ class Styles {
     fontWeight: FontWeight.w600,
     fontSize: 14.0,
     fontFamily: "opensans",
+    decoration: TextDecoration.underline,
   );
 
   static const tsprimaryIndigoSemiBold12 = TextStyle(
@@ -156,6 +157,13 @@ class Styles {
     color: AppColors.darkGrey,
     fontWeight: FontWeight.w400,
     fontSize: 12.0,
+    fontFamily: "opensans",
+  );
+
+  static const tsprimaryBlueSemiBold14 = TextStyle(
+    color: AppColors.primaryBlue,
+    fontWeight: FontWeight.w600,
+    fontSize: 14.0,
     fontFamily: "opensans",
   );
 }

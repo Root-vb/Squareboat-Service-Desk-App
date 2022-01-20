@@ -1,10 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:starter/app/routes/app_pages.dart';
 import 'package:starter/app/theme/app_colors.dart';
 import 'package:starter/app/theme/styles.dart';
 import 'package:starter/widgets/cached_netwrok_image_utils.dart';
 import '../controllers/ticket_controller.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 class TicketView extends GetView<TicketController> {
   @override
@@ -50,26 +52,18 @@ class TicketView extends GetView<TicketController> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Row(
-                        children: [
-                          Text(
-                            "Participants ",
-                            style: Styles.tsPrimaryColorSemiBold16,
-                          ),
-                          Icon(
-                            CupertinoIcons.add_circled_solid,
-                            color: AppColors.primaryBlue,
-                            size: 16,
-                          ),
-                        ],
+                      // SizedBox(height: 20),
+                      Text(
+                        "Created By",
+                        style: Styles.tsPrimaryColorSemiBold16,
                       ),
-                      SizedBox(height: 20),
+                      SizedBox(height: 15),
                       Row(
                         children: [
                           CachedNetworkImageProviderUtils(
-                            imageUrl: controller.profilePic ?? " ",
-                            height: 40,
-                            width: 40,
+                            imageUrl: controller.profilePic ?? "",
+                            height: 32,
+                            width: 32,
                           ),
                           SizedBox(width: 10),
                           Text(
@@ -78,28 +72,73 @@ class TicketView extends GetView<TicketController> {
                           )
                         ],
                       ),
+
                       SizedBox(height: 20),
                       Text(
                         "Assigned to",
                         style: Styles.tsPrimaryColorSemiBold16,
                       ),
                       SizedBox(height: 10),
-                      Obx(
-                        () => Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 4),
-                          child: assignedToDropDown(),
-                        ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 4),
+                        child: assignedToDropDown(),
                       ),
                       SizedBox(height: 20),
-                      Text(
-                        "Created By",
-                        style: Styles.tsPrimaryColorSemiBold16,
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "Participants ",
+                            style: Styles.tsPrimaryColorSemiBold16,
+                          ),
+                          InkWell(
+                            onTap: () => Get.toNamed(Routes.USERS, arguments: {
+                              'list': controller.participantsList,
+                              'uid': controller.uuid,
+                            }),
+                            child: Row(
+                              children: [
+                                Icon(
+                                  CupertinoIcons.add_circled_solid,
+                                  color: AppColors.primaryBlue,
+                                  size: 16,
+                                ),
+                                SizedBox(width: 8),
+                                Text(
+                                  "Add New",
+                                  style: Styles.tsprimaryBlueSemiBold14,
+                                )
+                              ],
+                            ),
+                          ),
+                        ],
                       ),
-                      SizedBox(height: 15),
-                      CachedNetworkImageProviderUtils(
-                        imageUrl: controller.profilePic ?? "",
+                      SizedBox(height: 20),
+                      SizedBox(
                         height: 32,
-                        width: 32,
+                        child: Obx(
+                          () => ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            shrinkWrap: true,
+                            itemCount:
+                                controller.updatedParticipantsList.length,
+                            itemBuilder: (context, index) {
+                              return Row(
+                                children: [
+                                  CachedNetworkImageProviderUtils(
+                                    imageUrl: controller
+                                            .updatedParticipantsList[index]
+                                            .profilePicture ??
+                                        "",
+                                    height: 32,
+                                    width: 32,
+                                  ),
+                                  SizedBox(width: 8)
+                                ],
+                              );
+                            },
+                          ),
+                        ),
                       ),
                       SizedBox(height: 20),
                       Text(
@@ -107,12 +146,30 @@ class TicketView extends GetView<TicketController> {
                         style: Styles.tsPrimaryColorSemiBold16,
                       ),
                       SizedBox(height: 15),
-                      updatesSection(),
+
+                      Obx(
+                        () => ListView.builder(
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
+                          itemCount: controller.updatedList.length,
+                          itemBuilder: (context, index) {
+                            return Column(
+                              children: [
+                                updatesSection(index),
+                                SizedBox(height: 10),
+                              ],
+                            );
+                          },
+                        ),
+                      ),
+
                       SizedBox(height: 30),
                     ],
                   ),
                 ),
               ),
+              SizedBox(height: 30),
+              Text("Comments", style: Styles.tsPrimaryBlueSemiBold18),
               SizedBox(height: 30),
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -125,6 +182,7 @@ class TicketView extends GetView<TicketController> {
                   SizedBox(width: 8),
                   Expanded(
                     child: Container(
+                      padding: EdgeInsets.all(10),
                       decoration: BoxDecoration(
                         border: Border.all(
                           width: 2,
@@ -152,21 +210,24 @@ class TicketView extends GetView<TicketController> {
               SizedBox(height: 10),
               Align(
                 alignment: Alignment.bottomRight,
-                child: Container(
-                  width: 65,
-                  height: 29,
-                  decoration: BoxDecoration(
-                    color: AppColors.green,
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(6.0),
+                child: InkWell(
+                  onTap: () => controller.postAllComments(),
+                  child: Container(
+                    width: 65,
+                    height: 29,
+                    decoration: BoxDecoration(
+                      color: AppColors.green,
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(6.0),
+                      ),
                     ),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8),
-                    child: Center(
-                      child: Text(
-                        "Post",
-                        style: Styles.tsWhiteSemiBold12,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8),
+                      child: Center(
+                        child: Text(
+                          "Post",
+                          style: Styles.tsWhiteSemiBold12,
+                        ),
                       ),
                     ),
                   ),
@@ -174,7 +235,26 @@ class TicketView extends GetView<TicketController> {
               ),
               SizedBox(
                 height: 50,
-              )
+              ),
+              Obx(
+                () => ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: controller.commentList.length,
+                  physics: NeverScrollableScrollPhysics(),
+                  itemBuilder: (context, index) {
+                    var data = controller.commentList[index];
+                    return ListTile(
+                      leading: CachedNetworkImageProviderUtils(
+                        imageUrl: data.user?.profilePicture ?? "",
+                        height: 30,
+                        width: 30,
+                      ),
+                      title: Text(data.user?.name ?? ""),
+                      subtitle: Text(data.description ?? ""),
+                    );
+                  },
+                ),
+              ),
             ],
           ),
         ),
@@ -187,45 +267,58 @@ class TicketView extends GetView<TicketController> {
       child: DropdownButtonHideUnderline(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 4),
-          child: DropdownButton(
-            isExpanded: true,
-            value: controller.selectedParticipants.value,
-            items: controller.participantsList.map((String items) {
-              return DropdownMenuItem(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    items,
-                    style: Styles.tsPrimaryIndigoSemiBold14,
-                  ),
+          child: Obx(
+            () => DropdownButton(
+              isExpanded: true,
+              value: controller.selectedParticipants.value,
+              items: controller.participantsList.map((element) {
+                controller.assignedToUuid.value = element.id!;
+                return DropdownMenuItem(
+                  child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        element.name ?? "",
+                        style: Styles.tsPrimaryIndigoSemiBold14,
+                      )),
+                  value: element.name ?? "",
+                );
+              }).toList(),
+              icon: Padding(
+                padding: const EdgeInsets.only(right: 4),
+                child: Icon(
+                  Icons.arrow_drop_down,
+                  color: AppColors.primaryIndigo,
                 ),
-                value: items,
-              );
-            }).toList(),
-            icon: Padding(
-              padding: const EdgeInsets.only(right: 4),
-              child: Icon(
-                Icons.arrow_drop_down,
-                color: AppColors.primaryIndigo,
               ),
-            ),
-            onChanged: (dynamic value) {
-              controller.selectedParticipants.value = value;
+              onChanged: (String? value) {
+                controller.selectedParticipants.value = value ?? "";
 
-              // if (controller.updatedValue.value ==
-              //     "General Ticket") {
-              //   controller.isGeneralTicket.value = true;
-              // } else {
-              //   controller.isGeneralTicket.value = false;
-              // }
-            },
+                print(controller.assignedToUuid);
+
+                controller.assignedToPerformAction();
+              },
+            ),
           ),
         ),
       ),
     );
   }
 
-  IntrinsicHeight updatesSection() {
+  IntrinsicHeight updatesSection(int index) {
+    var data = controller.updatedList[index];
+
+    DateTime time = DateTime.parse(data.updatedBy?.updatedAt ?? "");
+
+    String value = "";
+
+    if (data.fieldName == "Participants") {
+      value = "Participants updated";
+    } else if (data.fieldName == "assignedTo") {
+      value = "Ticket Assigned to ${data.newValue}";
+    } else {
+      value = "Status Updated to ${data.newValue}";
+    }
+
     return IntrinsicHeight(
       child: Row(
         children: [
@@ -239,11 +332,11 @@ class TicketView extends GetView<TicketController> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text("Ticket Updated", style: Styles.tsPrimaryColorSemiBold14),
+                Text(value, style: Styles.tsPrimaryColorSemiBold14),
                 Row(
                   children: [
                     Text(
-                      "By Nimish Dawar ",
+                      "By ${data.updatedBy?.name} ",
                       style: Styles.tsprimaryIndigoSemiBold12,
                     ),
                     IntrinsicHeight(
@@ -254,7 +347,7 @@ class TicketView extends GetView<TicketController> {
                             color: AppColors.green,
                           ),
                           Text(
-                            " few sec ago",
+                            ' ${timeago.format(time)}',
                             style: Styles.tsprimaryIndigoSemiBold12,
                           )
                         ],
@@ -433,6 +526,20 @@ class TicketView extends GetView<TicketController> {
               ],
             ),
             SizedBox(height: 10),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  "Watcher email",
+                  style: Styles.tsprimaryIndigoSemiBold12,
+                ),
+                Text(
+                  controller.email ?? "Testing ticket Feature",
+                  style: Styles.tsPrimaryColorRegular12,
+                ),
+              ],
+            ),
+            SizedBox(height: 10),
           ],
         ),
       ),
@@ -478,7 +585,10 @@ class TicketView extends GetView<TicketController> {
                     ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: Text("Delete", style: Styles.tsRedSemiBold14),
+                      child: Text(
+                        "Delete",
+                        style: Styles.tsRedSemiBold14,
+                      ),
                     ),
                   ],
                 ),
@@ -509,6 +619,20 @@ class TicketView extends GetView<TicketController> {
               children: [
                 Text(
                   "Description",
+                  style: Styles.tsprimaryIndigoSemiBold12,
+                ),
+                Text(
+                  controller.description ?? "Testing ticket Feature",
+                  style: Styles.tsPrimaryColorRegular12,
+                ),
+              ],
+            ),
+            SizedBox(height: 10),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  "Watcher email",
                   style: Styles.tsprimaryIndigoSemiBold12,
                 ),
                 Text(

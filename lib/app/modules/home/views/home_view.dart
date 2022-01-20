@@ -79,6 +79,7 @@ class HomeView extends GetView<HomeController> {
                 controller.ticketList[index].formFields?.releaseNotes,
             'deploymentSteps':
                 controller.ticketList[index].formFields?.deploymentSteps,
+            'email': controller.ticketList[index].participants?[0].email
           });
         },
         child: Column(

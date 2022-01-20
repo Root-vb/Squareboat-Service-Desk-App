@@ -16,4 +16,18 @@ class URLs {
 
   static const createDeploymentTicketUrl =
       "https://api.service-desk.squareboat.info/tickets?=";
+
+  static const getCommentUrl =
+      "https://api.service-desk.squareboat.info/tickets/";
+  static const postCommentUrl =
+      "https://api.service-desk.squareboat.info/tickets/";
+
+  static const partcipantsUrl =
+      "https://api.service-desk.squareboat.info/users/developers?id=1";
+
+  static const updateTicketUrl =
+      "https://api.service-desk.squareboat.info/tickets/";
+
+  static const performAction =
+      "https://api.service-desk.squareboat.info/tickets/";
 }

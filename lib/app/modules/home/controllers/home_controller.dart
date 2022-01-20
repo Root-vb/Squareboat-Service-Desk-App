@@ -71,6 +71,8 @@ class HomeController extends GetxController {
 
     allTicket();
 
+    print(Storage.getUser().access_token);
+
     super.onInit();
   }
 
@@ -84,6 +86,3 @@ class HomeController extends GetxController {
     scrollController.dispose();
   }
 }
-/**
- *  "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OSwidXVpZCI6IjcyY2EzNDFhLTJlNTEtNGVhMi05YTE5LWQ5YzZkZGM4ZDdiMSIsImVtYWlsIjoiYXNod2FuaS5zaW5naEBzcXVhcmVib2F0LmNvbSIsImlhdCI6MTY0MjA1NjQ5NSwiZXhwIjoxNjQyMzE1Njk1fQ.s5fwLHF-P_EEYhng-GHpkO3ZBmNLrNYkbcKi500GVbE",
- */

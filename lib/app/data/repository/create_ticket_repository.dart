@@ -17,8 +17,6 @@ class CreateTicketRepository extends BaseRepositry {
       ),
     );
 
-    print(response);
-
     return response is APIException
         ? RepoResponse(error: response)
         : RepoResponse(

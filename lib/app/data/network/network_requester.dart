@@ -92,10 +92,15 @@ class NetworkRequester {
     required String path,
     Map<String, dynamic>? query,
     Map<String, dynamic>? data,
+    Options? options,
   }) async {
     try {
-      final response =
-          await _dio.patch(path, queryParameters: query, data: data);
+      final response = await _dio.patch(
+        path,
+        queryParameters: query,
+        data: data,
+        options: options,
+      );
       return response.data;
     } on Exception catch (error) {
       return ExceptionHandler.handleError(error);
