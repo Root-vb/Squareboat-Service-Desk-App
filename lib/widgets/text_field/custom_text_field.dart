@@ -26,7 +26,7 @@ class CustomTextField extends StatelessWidget {
     return Obx(
       () => TextField(
         controller: wrapper.controller,
-        style: Styles.tsPrimaryColorRegular18,
+        style: Styles.tsPrimaryColorSemiBold14,
         maxLength: maxLength,
         keyboardType: inputType,
         enabled: isEnabled,
@@ -39,6 +39,7 @@ class CustomTextField extends StatelessWidget {
           hintText: hintText,
           hintStyle: hintStyle,
           enabled: isEnabled,
+          isDense: true,
           errorBorder: OutlineInputBorder(
             borderSide: BorderSide(
               color: Color(0xff595C97),

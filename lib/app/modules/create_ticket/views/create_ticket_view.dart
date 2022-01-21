@@ -41,7 +41,7 @@ class CreateTicketView extends GetView<CreateTicketController> {
                     style: TextStyle(color: Color(0xff595C97)),
                   ),
                 ),
-                SizedBox(height: 5),
+                SizedBox(height: 14),
                 Obx(
                   () => Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 4),
@@ -94,7 +94,7 @@ class CreateTicketView extends GetView<CreateTicketController> {
                     ),
                   ),
                 ),
-                SizedBox(height: 8),
+                SizedBox(height: 14),
                 controller.isGeneralTicket.isTrue
                     ? Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -111,7 +111,7 @@ class CreateTicketView extends GetView<CreateTicketController> {
                               style: TextStyle(color: Color(0xff595C97)),
                             ),
                           ),
-                          SizedBox(height: 5),
+                          SizedBox(height: 8),
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 4),
                             child: CustomTextField(
@@ -121,7 +121,7 @@ class CreateTicketView extends GetView<CreateTicketController> {
                               inputType: TextInputType.text,
                             ),
                           ),
-                          SizedBox(height: 5),
+                          SizedBox(height: 14),
                           Padding(
                             padding: const EdgeInsets.only(
                               top: 8,
@@ -134,7 +134,7 @@ class CreateTicketView extends GetView<CreateTicketController> {
                               style: TextStyle(color: Color(0xff595C97)),
                             ),
                           ),
-                          SizedBox(height: 5),
+                          SizedBox(height: 8),
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 4),
                             child: CustomTextField(
@@ -144,7 +144,7 @@ class CreateTicketView extends GetView<CreateTicketController> {
                               inputType: TextInputType.text,
                             ),
                           ),
-                          SizedBox(height: 5),
+                          SizedBox(height: 14),
                           Row(
                             children: [
                               Padding(
@@ -173,7 +173,7 @@ class CreateTicketView extends GetView<CreateTicketController> {
                               ),
                             ],
                           ),
-                          SizedBox(height: 5),
+                          SizedBox(height: 8),
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 4),
                             child: CustomTextField(
@@ -200,7 +200,7 @@ class CreateTicketView extends GetView<CreateTicketController> {
                               style: TextStyle(color: Color(0xff595C97)),
                             ),
                           ),
-                          SizedBox(height: 5),
+                          SizedBox(height: 8),
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 4),
                             child: CustomTextField(
@@ -210,7 +210,7 @@ class CreateTicketView extends GetView<CreateTicketController> {
                               inputType: TextInputType.text,
                             ),
                           ),
-                          SizedBox(height: 5),
+                          SizedBox(height: 14),
                           Padding(
                             padding: const EdgeInsets.only(
                               top: 8,
@@ -223,7 +223,7 @@ class CreateTicketView extends GetView<CreateTicketController> {
                               style: TextStyle(color: Color(0xff595C97)),
                             ),
                           ),
-                          SizedBox(height: 5),
+                          SizedBox(height: 8),
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 4),
                             child: CustomTextField(
@@ -233,7 +233,7 @@ class CreateTicketView extends GetView<CreateTicketController> {
                               inputType: TextInputType.text,
                             ),
                           ),
-                          SizedBox(height: 5),
+                          SizedBox(height: 14),
                           Padding(
                             padding: const EdgeInsets.only(
                               top: 8,
@@ -246,7 +246,7 @@ class CreateTicketView extends GetView<CreateTicketController> {
                               style: TextStyle(color: Color(0xff595C97)),
                             ),
                           ),
-                          SizedBox(height: 5),
+                          SizedBox(height: 8),
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 4),
                             child: CustomTextField(
@@ -256,7 +256,7 @@ class CreateTicketView extends GetView<CreateTicketController> {
                               inputType: TextInputType.text,
                             ),
                           ),
-                          SizedBox(height: 5),
+                          SizedBox(height: 14),
                           Padding(
                             padding: const EdgeInsets.only(
                               top: 8,
@@ -269,7 +269,7 @@ class CreateTicketView extends GetView<CreateTicketController> {
                               style: TextStyle(color: Color(0xff595C97)),
                             ),
                           ),
-                          SizedBox(height: 5),
+                          SizedBox(height: 8),
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 4),
                             child: CustomTextField(
@@ -279,7 +279,7 @@ class CreateTicketView extends GetView<CreateTicketController> {
                               inputType: TextInputType.text,
                             ),
                           ),
-                          SizedBox(height: 5),
+                          SizedBox(height: 14),
                           Padding(
                             padding: const EdgeInsets.only(
                               top: 8,
@@ -292,7 +292,7 @@ class CreateTicketView extends GetView<CreateTicketController> {
                               style: TextStyle(color: Color(0xff595C97)),
                             ),
                           ),
-                          SizedBox(height: 5),
+                          SizedBox(height: 8),
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 4),
                             child: CustomTextField(
@@ -302,7 +302,7 @@ class CreateTicketView extends GetView<CreateTicketController> {
                               inputType: TextInputType.text,
                             ),
                           ),
-                          SizedBox(height: 5),
+                          SizedBox(height: 14),
                           Padding(
                             padding: const EdgeInsets.only(
                               top: 8,
@@ -315,7 +315,7 @@ class CreateTicketView extends GetView<CreateTicketController> {
                               style: TextStyle(color: Color(0xff595C97)),
                             ),
                           ),
-                          SizedBox(height: 5),
+                          SizedBox(height: 8),
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 4),
                             child: Container(
@@ -363,7 +363,7 @@ class CreateTicketView extends GetView<CreateTicketController> {
                               ),
                             ),
                           ),
-                          SizedBox(height: 5),
+                          SizedBox(height: 14),
                           Padding(
                             padding: const EdgeInsets.only(
                               top: 8,
@@ -376,7 +376,7 @@ class CreateTicketView extends GetView<CreateTicketController> {
                               style: TextStyle(color: Color(0xff595C97)),
                             ),
                           ),
-                          SizedBox(height: 5),
+                          SizedBox(height: 8),
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 4),
                             child: CustomTextField(
@@ -386,7 +386,7 @@ class CreateTicketView extends GetView<CreateTicketController> {
                               inputType: TextInputType.text,
                             ),
                           ),
-                          SizedBox(height: 5),
+                          SizedBox(height: 14),
                           Padding(
                             padding: const EdgeInsets.only(
                               top: 8,
@@ -399,7 +399,7 @@ class CreateTicketView extends GetView<CreateTicketController> {
                               style: TextStyle(color: Color(0xff595C97)),
                             ),
                           ),
-                          SizedBox(height: 5),
+                          SizedBox(height: 8),
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 4),
                             child: CustomTextField(
@@ -409,7 +409,7 @@ class CreateTicketView extends GetView<CreateTicketController> {
                               inputType: TextInputType.text,
                             ),
                           ),
-                          SizedBox(height: 5),
+                          SizedBox(height: 14),
                           Padding(
                             padding: const EdgeInsets.only(
                               top: 8,
@@ -422,7 +422,7 @@ class CreateTicketView extends GetView<CreateTicketController> {
                               style: TextStyle(color: Color(0xff595C97)),
                             ),
                           ),
-                          SizedBox(height: 5),
+                          SizedBox(height: 8),
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 4),
                             child: Container(
@@ -467,7 +467,7 @@ class CreateTicketView extends GetView<CreateTicketController> {
                               ),
                             ),
                           ),
-                          SizedBox(height: 5),
+                          SizedBox(height: 14),
                           Padding(
                             padding: const EdgeInsets.only(
                               top: 8,
@@ -482,7 +482,7 @@ class CreateTicketView extends GetView<CreateTicketController> {
                               ),
                             ),
                           ),
-                          SizedBox(height: 5),
+                          SizedBox(height: 8),
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 4),
                             child: Container(
@@ -542,7 +542,7 @@ class CreateTicketView extends GetView<CreateTicketController> {
                             ),
                             spacing: 5,
                           ),
-                          SizedBox(height: 5),
+                          SizedBox(height: 14),
                           Row(
                             children: [
                               Padding(
@@ -567,7 +567,7 @@ class CreateTicketView extends GetView<CreateTicketController> {
                               )
                             ],
                           ),
-                          SizedBox(height: 5),
+                          SizedBox(height: 8),
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 4),
                             child: CustomTextField(
@@ -580,13 +580,15 @@ class CreateTicketView extends GetView<CreateTicketController> {
                           SizedBox(height: 5),
                         ],
                       ),
+                SizedBox(height: 15),
                 Padding(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
                   child: CustomButton(
                     onPressed: () => controller.createTicket(),
                   ),
-                )
+                ),
+                SizedBox(height: 30),
               ],
             ),
           ),

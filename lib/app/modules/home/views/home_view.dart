@@ -63,7 +63,7 @@ class HomeView extends GetView<HomeController> {
         onTap: () {
           Get.toNamed(Routes.TICKET, arguments: {
             'profilePic': controller.ticketList[index].profilePicture,
-            'name': controller.ticketList[index].participants?[0].name,
+            'name': controller.ticketList[index].createdBy,
             'uuid': controller.ticketList[index].uuid,
             'heading': controller.ticketList[index].formFields!.heading,
             'type': controller.ticketList[index].type,
@@ -116,15 +116,18 @@ class HomeView extends GetView<HomeController> {
                             ),
                             Container(
                               height: 29,
-                              width: 65,
                               decoration: BoxDecoration(
                                   color: AppColors.lightBlue,
                                   borderRadius: BorderRadius.circular(6.0)),
-                              child: MaterialButton(
-                                onPressed: () {},
-                                child: Text(
-                                  "NEW",
-                                  style: Styles.tsWhiteBold12,
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 8),
+                                child: Center(
+                                  child: Text(
+                                    controller.ticketList[index].status ??
+                                        "NEW",
+                                    style: Styles.tsWhiteBold12,
+                                  ),
                                 ),
                               ),
                             ),
@@ -156,7 +159,8 @@ class HomeView extends GetView<HomeController> {
                           ),
                           SizedBox(height: 8),
                           Text(
-                            "assigned to",
+                            controller.ticketList[index].assignedTo?.name ??
+                                "-",
                             style: Styles.tsPrimaryColorSemiBold18,
                           ),
                           SizedBox(height: 20),

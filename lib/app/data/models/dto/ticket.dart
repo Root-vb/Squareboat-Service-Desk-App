@@ -40,6 +40,7 @@ class Ticket {
   String? createdBy;
   String? profilePicture;
   String? createdAt;
+  AssignedTo? assignedTo;
 
   Ticket({
     this.id,
@@ -53,6 +54,7 @@ class Ticket {
     this.createdBy,
     this.profilePicture,
     this.createdAt,
+    this.assignedTo,
   });
 
   Ticket.fromJson(Map<String, dynamic> json) {
@@ -74,6 +76,9 @@ class Ticket {
     createdBy = json['createdBy'];
     profilePicture = json['profilePicture'];
     createdAt = json["createdAt"];
+    assignedTo = json['assignedTo'] != null
+        ? new AssignedTo.fromJson(json['assignedTo'])
+        : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -93,7 +98,9 @@ class Ticket {
     data['createdBy'] = this.createdBy;
     data['profilePicture'] = this.profilePicture;
     data['createdAt'] = this.createdAt;
-
+    if (this.assignedTo != null) {
+      data['assignedTo'] = this.assignedTo!.toJson();
+    }
     return data;
   }
 }
@@ -217,6 +224,44 @@ class Pagination {
     data['totalPages'] = this.totalPages;
     data['perPage'] = this.perPage;
     data['total'] = this.total;
+    return data;
+  }
+}
+
+class AssignedTo {
+  String? id;
+  String? name;
+  String? profilePicture;
+  int? organizationId;
+  String? status;
+  String? email;
+
+  AssignedTo({
+    this.id,
+    this.name,
+    this.profilePicture,
+    this.organizationId,
+    this.status,
+    this.email,
+  });
+
+  AssignedTo.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    name = json['name'];
+    profilePicture = json['profilePicture'];
+    organizationId = json['organizationId'];
+    status = json['status'];
+    email = json['email'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['name'] = this.name;
+    data['profilePicture'] = this.profilePicture;
+    data['organizationId'] = this.organizationId;
+    data['status'] = this.status;
+    data['email'] = this.email;
     return data;
   }
 }
