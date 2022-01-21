@@ -163,14 +163,6 @@ class TicketController extends GetxController {
     listOfParticipants.add(Storage.getUser().id);
     listOfParticipants.addAll(user ?? []);
 
-    updatedParticipantsList.forEach((element) {
-      listOfParticipants.add(element.id ?? "");
-    });
-
-    user?.forEach((element) {
-      print("list $user");
-    });
-
     final repoResponse = await performActionRepository.fetchAllActions(
       uuid!,
       {
