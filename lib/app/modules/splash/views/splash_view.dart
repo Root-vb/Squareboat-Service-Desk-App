@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:starter/app/theme/app_colors.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import '../controllers/splash_controller.dart';
 
@@ -17,13 +18,14 @@ class SplashView extends GetView<SplashController> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Center(
-            child: FlutterLogo(
-              size: 120,
+            child: SvgPicture.asset(
+              'assets/images/Logo.svg',
+              height: 40,
             ),
           ),
           SizedBox(height: 20),
           CircularProgressIndicator(
-            color: AppColors.green,
+            color: AppColors.lightBlueOpacity100,
           )
         ],
       ),
