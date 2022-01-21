@@ -220,7 +220,7 @@ class UpdatedBy {
   int? organizationId;
   String? status;
   String? email;
-  Null? password;
+  String? password;
   String? createdAt;
   String? updatedAt;
 
@@ -273,7 +273,7 @@ class User {
   int? organizationId;
   String? status;
   String? email;
-  Null? password;
+  String? password;
   String? createdAt;
   String? updatedAt;
   List<Roles>? roles;
@@ -382,7 +382,7 @@ class HavePermission {
   int? id;
   String? uuid;
   String? scope;
-  Null? description;
+  String? description;
   String? createdAt;
   String? updatedAt;
 

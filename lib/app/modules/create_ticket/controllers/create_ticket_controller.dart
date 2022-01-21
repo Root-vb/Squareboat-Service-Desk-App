@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:starter/app/data/repository/create_ticket_repository.dart';
+import 'package:starter/app/modules/home/controllers/home_controller.dart';
 import 'package:starter/app/theme/app_colors.dart';
 import 'package:starter/utils/helper/text_field_wrapper.dart';
 import 'package:starter/utils/loading/loading_utils.dart';
@@ -26,6 +27,8 @@ class CreateTicketController extends GetxController {
   TextFieldWrapper deploymentStepsWrapper = TextFieldWrapper();
   TextFieldWrapper deploymentWatcherEmails = TextFieldWrapper();
 
+  HomeController controller = Get.find<HomeController>();
+
   createTicket() async {
     if (isGeneralTicket.isTrue) {
       LoadingUtils.showLoader();
@@ -44,6 +47,7 @@ class CreateTicketController extends GetxController {
 
       if (_response.error == null) {
         Get.back();
+        controller.allTicket();
         Get.snackbar(
           "Sucess",
           "General Ticket Created!",
@@ -81,6 +85,8 @@ class CreateTicketController extends GetxController {
 
       if (_response.error == null) {
         Get.back();
+
+        controller.allTicket();
 
         Get.snackbar(
           "Sucess",

@@ -144,7 +144,8 @@ class HomeView extends GetView<HomeController> {
                           ),
                           SizedBox(height: 8),
                           Text(
-                            controller.ticketList[index].formFields!.heading ??
+                            controller.ticketList[index].formFields!.heading
+                                    ?.toUpperCase() ??
                                 "",
                             style: Styles.tslightBlueWithOpcaity100Bold18,
                           ),

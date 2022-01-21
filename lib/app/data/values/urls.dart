@@ -30,4 +30,7 @@ class URLs {
 
   static const performAction =
       "https://api.service-desk.squareboat.info/tickets/";
+
+  static const devopsUrl =
+      "https://api.service-desk.squareboat.info/users/devops?id=1";
 }

@@ -108,7 +108,7 @@ class User {
   int? organizationId;
   String? status;
   String? email;
-  Null? password;
+  String? password;
   String? createdAt;
   String? updatedAt;
 

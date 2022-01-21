@@ -1,4 +1,3 @@
-import 'package:starter/app/data/models/dto/comment.dart';
 import 'package:starter/app/data/models/dto/participants_list.dart';
 
 class ParticipantsResponse {

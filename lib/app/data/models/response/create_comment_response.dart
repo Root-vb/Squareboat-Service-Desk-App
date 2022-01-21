@@ -1,4 +1,3 @@
-import 'package:starter/app/data/models/dto/comment.dart';
 import 'package:starter/app/data/models/dto/create_comment.dart';
 
 class CreateCommentResponse {

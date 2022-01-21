@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:starter/app/routes/app_pages.dart';
 import 'package:starter/app/theme/app_colors.dart';
 import 'package:starter/app/theme/styles.dart';
 import 'package:starter/widgets/cached_netwrok_image_utils.dart';
@@ -267,9 +266,8 @@ class TicketView extends GetView<TicketController> {
           child: Obx(
             () => DropdownButton(
               isExpanded: true,
-              value: controller.selectedParticipants.value,
-              items: controller.participantsList.map((element) {
-                controller.assignedToUuid.value = element.id!;
+              value: controller.selectedDevops.value,
+              items: controller.devopsLists.map((element) {
                 return DropdownMenuItem(
                   child: Padding(
                       padding: const EdgeInsets.all(8.0),
@@ -288,11 +286,8 @@ class TicketView extends GetView<TicketController> {
                 ),
               ),
               onChanged: (String? value) {
-                controller.selectedParticipants.value = value ?? "";
-
-                print(controller.assignedToUuid);
-
-                controller.assignedToPerformAction();
+                controller.selectedDevops.value = value ?? "";
+                controller.assignedToPerformAction(value!);
               },
             ),
           ),
@@ -592,7 +587,7 @@ class TicketView extends GetView<TicketController> {
               ],
             ),
             Text(
-              controller.heading ?? "Testing Project",
+              controller.heading?.toUpperCase() ?? "Testing Project",
               style: Styles.tsPrimaryColorSemiBold16,
             ),
             Divider(color: Color(0xffEEF2F8), thickness: 2),
@@ -633,7 +628,7 @@ class TicketView extends GetView<TicketController> {
                   style: Styles.tsprimaryIndigoSemiBold12,
                 ),
                 Text(
-                  controller.description ?? "Testing ticket Feature",
+                  controller.email ?? "Testing ticket Feature",
                   style: Styles.tsPrimaryColorRegular12,
                 ),
               ],

@@ -22,16 +22,16 @@ class UsersView extends GetView<UsersController> {
           children: [
             ListView.builder(
               shrinkWrap: true,
-              itemCount: controller.usersList.length,
+              itemCount: controller.participantsList.length,
               itemBuilder: (context, index) {
                 return Obx(
                   () => CheckboxListTile(
                     title: Text(
-                      controller.usersList[index].name ?? "",
+                      controller.participantsList[index].name ?? "",
                       style: Styles.tsprimaryBlueSemiBold14,
                     ),
                     value: controller.users
-                        .contains(controller.usersList[index].id),
+                        .contains(controller.participantsList[index].id),
                     onChanged: (bool? value) {
                       controller.addUser(index, value);
                     },
