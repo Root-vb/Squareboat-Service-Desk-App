@@ -1,34 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:starter/app/data/models/dto/comment.dart';
-import 'package:starter/app/data/models/dto/participants_list.dart';
+import 'package:starter/app/data/models/dto/devops.dart';
 import 'package:starter/app/data/models/dto/response.dart';
 import 'package:starter/app/data/models/dto/ticket_update.dart';
 import 'package:starter/app/data/repository/comment_repository.dart';
-import 'package:starter/app/data/repository/participants_repository.dart'
-    as parti;
+import 'package:starter/app/data/repository/devops_repository.dart';
 import 'package:starter/app/data/repository/perform_action_repository.dart';
 import 'package:starter/app/data/repository/ticket_update_repository.dart';
 import 'package:starter/app/routes/app_pages.dart';
 import 'package:starter/utils/storage/storage_utils.dart';
 
 class TicketController extends GetxController {
-  var updatedValue = "In Progress".obs;
-  var selectedParticipants = "Aakash Pandey".obs;
+  var updatedValue = "New".obs;
+  var selectedDevops = "Vinayak Sarawagi".obs;
 
   TextEditingController commentController = TextEditingController();
   TicketUpdateRepository ticketUpdateRepository = TicketUpdateRepository();
   CommentRepository commentRepository = CommentRepository();
   PerformActionRepository performActionRepository = PerformActionRepository();
-  parti.ParticipantsRepository participantsRepository =
-      parti.ParticipantsRepository();
+  DevopsRepository devopsRepository = DevopsRepository();
 
+  var devopsLists = <Devops>[].obs;
   var commentList = <Data>[].obs;
-  var participantsList = <Participants>[].obs;
   var updatedList = <Updates>[].obs;
   var updatedParticipantsList = <UpdateTicketParticipants>[].obs;
-
-  var assignedToUuid = "".obs;
+  var result;
 
   String? profilePic;
   String? name;
@@ -46,20 +43,11 @@ class TicketController extends GetxController {
   String? email;
 
   final items = [
-    "In Progress",
+    "New",
+    "Assigned",
+    "Ongoing",
     "Completed",
-  ];
-
-  // participantsList
-
-  final pList = [
-    "Aakash Pandey",
-    "Abhinav Anshul",
-    "Abhipsa Matura",
-    "Abul Karim",
-    "Ankit Jain",
-    "Ankit Kaushik",
-    "Nobody Assigned yet"
+    "Invalid",
   ];
 
   fetchAllComments() async {
@@ -92,21 +80,11 @@ class TicketController extends GetxController {
     commentController.clear();
   }
 
-  Future<void> getAllParticipants() async {
-    RepoResponse<ParticipantsList> repoResponse =
-        await participantsRepository.fetchAllPartcipants({
-      "Authorization": 'Bearer ${Storage.getUser().access_token}',
-    });
-
-    if (repoResponse.error == null) {
-      repoResponse.data?.data?.forEach((element) {
-        participantsList.add(element);
-        print(element.name);
-      });
-    }
-  }
-
   Future<void> getAllTicketUpdate() async {
+    updatedList.clear();
+
+    updatedParticipantsList.clear();
+
     RepoResponse<TicketUpdate> repoResponse =
         await ticketUpdateRepository.fetchAllTicketUpdate(uuid!, {
       "Authorization": 'Bearer ${Storage.getUser().access_token}',
@@ -123,12 +101,21 @@ class TicketController extends GetxController {
     }
   }
 
-  Future<void> assignedToPerformAction() async {
+  Future<void> assignedToPerformAction(String name) async {
+    String? id;
+
+    for (var i = 0; i < devopsLists.length; i++) {
+      if (name == devopsLists[i].name) {
+        id = devopsLists[i].id;
+        print(i);
+      }
+    }
+
     final repoResponse = await performActionRepository.fetchAllActions(
       uuid!,
       {
         "actionType": "update-assignedTo",
-        "assignedTo": assignedToUuid,
+        "assignedTo": id,
       },
       {
         "Authorization": 'Bearer ${Storage.getUser().access_token}',
@@ -137,14 +124,33 @@ class TicketController extends GetxController {
 
     if (repoResponse.error == null) {
       getAllTicketUpdate();
+
+      // print(selectedDevops);
+    }
+  }
+
+  Future<void> fetchAllDevops() async {
+    RepoResponse<DevopsList> repoResponse =
+        await devopsRepository.getAllDevopsDetails(
+      {
+        "Authorization": 'Bearer ${Storage.getUser().access_token}',
+      },
+    );
+
+    if (repoResponse.error == null) {
+      repoResponse.data?.devops?.forEach((element) {
+        devopsLists.add(element);
+      });
     }
   }
 
   launchParticipants() async {
-    var result = await Get.toNamed(Routes.USERS, arguments: {
-      'list': participantsList,
-      'uid': uuid,
+    List<String> allParticipantsUuid = [];
+
+    updatedParticipantsList.forEach((element) {
+      allParticipantsUuid.add(element.id ?? "");
     });
+    result = await Get.toNamed(Routes.USERS, arguments: allParticipantsUuid);
 
     if (result != null) {
       addPartcipantsPerformAction(result);
@@ -156,9 +162,23 @@ class TicketController extends GetxController {
 
     listOfParticipants.add(Storage.getUser().id);
     listOfParticipants.addAll(user ?? []);
+
+    updatedParticipantsList.forEach((element) {
+      listOfParticipants.add(element.id ?? "");
+    });
+
+    user?.forEach((element) {
+      print("list $user");
+    });
+
     final repoResponse = await performActionRepository.fetchAllActions(
       uuid!,
-      {"actionType": "update-user", "users": listOfParticipants},
+      {
+        "actionType": "update-user",
+        "users": [
+          ...{...listOfParticipants}
+        ]
+      },
       {"Authorization": 'Bearer ${Storage.getUser().access_token}'},
     );
 
@@ -190,13 +210,12 @@ class TicketController extends GetxController {
 
     postAllComments();
 
-    getAllParticipants();
+    // getAllParticipants();
 
     getAllTicketUpdate();
 
-    assignedToPerformAction();
+    fetchAllDevops();
 
-    print(assignedToUuid);
     super.onInit();
   }
 
