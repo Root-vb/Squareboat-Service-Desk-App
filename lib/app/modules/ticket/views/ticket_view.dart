@@ -1,9 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:starter/app/routes/app_pages.dart';
 import 'package:starter/app/theme/app_colors.dart';
 import 'package:starter/app/theme/styles.dart';
 import 'package:starter/widgets/cached_netwrok_image_utils.dart';
+import 'package:starter/widgets/update_section.dart';
 import '../controllers/ticket_controller.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
@@ -144,20 +146,83 @@ class TicketView extends GetView<TicketController> {
                       SizedBox(height: 15),
 
                       Obx(
-                        () => ListView.builder(
-                          shrinkWrap: true,
-                          physics: NeverScrollableScrollPhysics(),
-                          itemCount: controller.updatedList.length,
-                          itemBuilder: (context, index) {
-                            return Column(
-                              children: [
-                                updatesSection(index),
-                                SizedBox(height: 10),
-                              ],
-                            );
-                          },
+                        () => Column(
+                          children: [
+                            ListView.builder(
+                              shrinkWrap: true,
+                              physics: NeverScrollableScrollPhysics(),
+                              itemCount: controller.updatedList.length > 2
+                                  ? 2
+                                  : controller.updatedList.length,
+                              itemBuilder: (context, index) {
+                                var data = controller.updatedList[index];
+                                DateTime time = DateTime.parse(
+                                    data.updatedBy?.updatedAt ?? "");
+
+                                return Column(
+                                  children: [
+                                    UpdatesSection(
+                                      name: data.updatedBy?.name ?? "",
+                                      fieldName: data.fieldName ?? "",
+                                      newValue: data.newValue ?? "",
+                                      time: time,
+                                    ),
+                                    SizedBox(height: 10),
+                                  ],
+                                );
+                              },
+                            ),
+                            controller.updatedList.length > 2
+                                ? Align(
+                                    alignment: Alignment.bottomRight,
+                                    child: TextButton(
+                                      onPressed: () {
+                                        Get.toNamed(
+                                          Routes.SHOWUPDATE,
+                                          arguments: controller.updatedList,
+                                        );
+                                      },
+                                      child: Text(
+                                        "Show more",
+                                        style: Styles.tsprimaryBlueSemiBold12,
+                                      ),
+                                    ),
+                                  )
+                                : SizedBox(),
+                          ],
                         ),
                       ),
+                      // : Obx(
+                      //     () => Column(
+                      //       children: [
+                      //         ListView.builder(
+                      //           shrinkWrap: true,
+                      //           physics: NeverScrollableScrollPhysics(),
+                      //           itemCount: controller.updatedList.length > 2
+                      //               ? 2
+                      //               : controller.updatedList.length,
+                      //           itemBuilder: (context, index) {
+                      //             return Column(
+                      //               children: [
+                      //                 updatesSection(index),
+                      //                 SizedBox(height: 10),
+                      //               ],
+                      //             );
+                      //           },
+                      //         ),
+                      //         Align(
+                      //           alignment: Alignment.bottomRight,
+                      //           child: TextButton(
+                      //             onPressed: () {},
+                      //             child: Text(
+                      //               "Show more",
+                      //               style: Styles.tsprimaryBlueSemiBold12,
+                      //             ),
+                      //           ),
+                      //         ),
+                      //       ],
+                      //     ),
+                      //   ),
 
                       SizedBox(height: 30),
                     ],
@@ -292,65 +357,6 @@ class TicketView extends GetView<TicketController> {
             ),
           ),
         ),
-      ),
-    );
-  }
-
-  IntrinsicHeight updatesSection(int index) {
-    var data = controller.updatedList[index];
-
-    DateTime time = DateTime.parse(data.updatedBy?.updatedAt ?? "");
-
-    String value = "";
-
-    if (data.fieldName == "Participants") {
-      value = "Participants updated";
-    } else if (data.fieldName == "assignedTo") {
-      value = "Ticket Assigned to ${data.newValue}";
-    } else {
-      value = "Status Updated to ${data.newValue}";
-    }
-
-    return IntrinsicHeight(
-      child: Row(
-        children: [
-          Container(
-            width: 4,
-            color: AppColors.green,
-          ), // This is divider
-          SizedBox(width: 4),
-          Padding(
-            padding: const EdgeInsets.only(left: 20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(value, style: Styles.tsPrimaryColorSemiBold14),
-                Row(
-                  children: [
-                    Text(
-                      "By ${data.updatedBy?.name} ",
-                      style: Styles.tsprimaryIndigoSemiBold12,
-                    ),
-                    IntrinsicHeight(
-                      child: Row(
-                        children: [
-                          Container(
-                            width: 1,
-                            color: AppColors.green,
-                          ),
-                          Text(
-                            ' ${timeago.format(time)}',
-                            style: Styles.tsprimaryIndigoSemiBold12,
-                          )
-                        ],
-                      ),
-                    ),
-                  ],
-                )
-              ],
-            ),
-          )
-        ],
       ),
     );
   }
