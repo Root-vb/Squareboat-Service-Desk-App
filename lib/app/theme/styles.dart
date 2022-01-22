@@ -174,4 +174,11 @@ class Styles {
     fontSize: 14.0,
     fontFamily: "opensans",
   );
+
+  static const tsprimaryBlueSemiBold12 = TextStyle(
+    color: AppColors.primaryBlue,
+    fontWeight: FontWeight.w600,
+    fontSize: 12.0,
+    fontFamily: "opensans",
+  );
 }

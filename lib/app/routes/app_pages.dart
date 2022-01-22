@@ -10,6 +10,8 @@ import '../modules/create_ticket/bindings/create_ticket_binding.dart';
 import '../modules/create_ticket/views/create_ticket_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
+import '../modules/showupdate/bindings/showupdate_binding.dart';
+import '../modules/showupdate/views/showupdate_view.dart';
 import '../modules/splash/bindings/splash_binding.dart';
 import '../modules/splash/views/splash_view.dart';
 import '../modules/ticket/bindings/ticket_binding.dart';
@@ -60,6 +62,11 @@ class AppPages {
       name: Routes.USERS,
       page: () => UsersView(),
       binding: UsersBinding(),
+    ),
+    GetPage(
+      name: Routes.SHOWUPDATE,
+      page: () => ShowupdateView(),
+      binding: ShowupdateBinding(),
     ),
   ];
 }
