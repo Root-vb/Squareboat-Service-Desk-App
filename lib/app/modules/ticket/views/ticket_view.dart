@@ -158,8 +158,8 @@ class TicketView extends GetView<TicketController> {
                                   : controller.updatedList.length,
                               itemBuilder: (context, index) {
                                 var data = controller.updatedList[index];
-                                DateTime time = DateTime.parse(
-                                    data.updatedBy?.updatedAt ?? "");
+                                DateTime time =
+                                    DateTime.parse(data.updatedAt ?? "");
 
                                 return Column(
                                   children: [
@@ -449,9 +449,12 @@ class TicketView extends GetView<TicketController> {
                   "Project Name",
                   style: Styles.tsprimaryIndigoSemiBold12,
                 ),
-                Text(
-                  controller.projectName ?? "Test 1",
-                  style: Styles.tsPrimaryColorRegular12,
+                SizedBox(width: 40),
+                Flexible(
+                  child: Text(
+                    controller.projectName ?? "Test 1",
+                    style: Styles.tsPrimaryColorRegular12,
+                  ),
                 ),
               ],
             ),
@@ -463,9 +466,12 @@ class TicketView extends GetView<TicketController> {
                   "Project Manager",
                   style: Styles.tsprimaryIndigoSemiBold12,
                 ),
-                Text(
-                  controller.projectManager ?? "Nimish Dawar",
-                  style: Styles.tsPrimaryColorRegular12,
+                SizedBox(width: 40),
+                Flexible(
+                  child: Text(
+                    controller.projectManager ?? "Nimish Dawar",
+                    style: Styles.tsPrimaryColorRegular12,
+                  ),
                 ),
               ],
             ),
@@ -477,9 +483,12 @@ class TicketView extends GetView<TicketController> {
                   "Repo Name",
                   style: Styles.tsprimaryIndigoSemiBold12,
                 ),
-                Text(
-                  controller.repoName ?? "Test Repo",
-                  style: Styles.tsPrimaryColorRegular12,
+                SizedBox(width: 40),
+                Flexible(
+                  child: Text(
+                    controller.repoName ?? "Test Repo",
+                    style: Styles.tsPrimaryColorRegular12,
+                  ),
                 ),
               ],
             ),
@@ -519,9 +528,12 @@ class TicketView extends GetView<TicketController> {
                   "Release Notes",
                   style: Styles.tsprimaryIndigoSemiBold12,
                 ),
-                Text(
-                  controller.releaseNotes ?? "Patch 1.0",
-                  style: Styles.tsPrimaryColorRegular12,
+                SizedBox(width: 40),
+                Flexible(
+                  child: Text(
+                    controller.releaseNotes ?? "Patch 1.0",
+                    style: Styles.tsPrimaryColorRegular12,
+                  ),
                 ),
               ],
             ),
@@ -533,9 +545,12 @@ class TicketView extends GetView<TicketController> {
                   "Deployment Steps",
                   style: Styles.tsprimaryIndigoSemiBold12,
                 ),
-                Text(
-                  controller.deploymentSteps ?? "1,2,3",
-                  style: Styles.tsPrimaryColorRegular12,
+                SizedBox(width: 40),
+                Flexible(
+                  child: Text(
+                    controller.deploymentSteps ?? "1,2,3",
+                    style: Styles.tsPrimaryColorRegular12,
+                  ),
                 ),
               ],
             ),
@@ -561,6 +576,7 @@ class TicketView extends GetView<TicketController> {
   }
 
   Container generalProjectCard() {
+    print(controller.email);
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
@@ -621,9 +637,11 @@ class TicketView extends GetView<TicketController> {
                   "Type",
                   style: Styles.tsprimaryIndigoSemiBold12,
                 ),
-                Text(
-                  controller.type ?? "Deployment Ticket",
-                  style: Styles.tsPrimaryColorRegular12,
+                Flexible(
+                  child: Text(
+                    controller.type ?? "Deployment Ticket",
+                    style: Styles.tsPrimaryColorRegular12,
+                  ),
                 ),
               ],
             ),
@@ -635,9 +653,12 @@ class TicketView extends GetView<TicketController> {
                   "Description",
                   style: Styles.tsprimaryIndigoSemiBold12,
                 ),
-                Text(
-                  controller.description ?? "Testing ticket Feature",
-                  style: Styles.tsPrimaryColorRegular12,
+                SizedBox(width: 50),
+                Flexible(
+                  child: Text(
+                    controller.description ?? "Testing ticket Feature",
+                    style: Styles.tsPrimaryColorRegular12,
+                  ),
                 ),
               ],
             ),
@@ -649,9 +670,11 @@ class TicketView extends GetView<TicketController> {
                   "Watcher email",
                   style: Styles.tsprimaryIndigoSemiBold12,
                 ),
-                Text(
-                  controller.email ?? "Testing ticket Feature",
-                  style: Styles.tsPrimaryColorRegular12,
+                Flexible(
+                  child: Text(
+                    controller.email ?? "Testing ticket Feature",
+                    style: Styles.tsPrimaryColorRegular12,
+                  ),
                 ),
               ],
             ),

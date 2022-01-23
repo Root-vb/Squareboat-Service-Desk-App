@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:starter/app/data/models/dto/participants_list.dart';
 import 'package:starter/app/data/models/dto/response.dart';
@@ -8,6 +9,7 @@ class UsersController extends GetxController {
   final isSelected = false.obs;
   final RxList<String> users = RxList<String>();
   var participantsList = <Participants>[].obs;
+  TextEditingController searchController = TextEditingController();
 
   String? uid;
 

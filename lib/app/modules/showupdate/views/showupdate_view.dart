@@ -20,25 +20,28 @@ class ShowupdateView extends GetView<ShowupdateController> {
       body: Obx(
         () => Padding(
           padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
-          child: ListView.builder(
-            shrinkWrap: true,
-            physics: NeverScrollableScrollPhysics(),
-            itemCount: controller.allUpdatesList.length,
-            itemBuilder: (context, index) {
-              var data = controller.allUpdatesList[index];
-              DateTime time = DateTime.parse(data.updatedBy?.updatedAt ?? "");
-              return Column(
-                children: [
-                  UpdatesSection(
-                    name: data.updatedBy?.name ?? "",
-                    fieldName: data.fieldName ?? "",
-                    newValue: data.newValue ?? "",
-                    time: time,
-                  ),
-                  SizedBox(height: 10),
-                ],
-              );
-            },
+          child: SingleChildScrollView(
+            child: ListView.builder(
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
+              itemCount: controller.allUpdatesList.length,
+              itemBuilder: (context, index) {
+                print(controller.allUpdatesList.length);
+                var data = controller.allUpdatesList[index];
+                DateTime time = DateTime.parse(data.updatedAt ?? "");
+                return Column(
+                  children: [
+                    UpdatesSection(
+                      name: data.updatedBy?.name ?? "",
+                      fieldName: data.fieldName ?? "",
+                      newValue: data.newValue ?? "",
+                      time: time,
+                    ),
+                    SizedBox(height: 10),
+                  ],
+                );
+              },
+            ),
           ),
         ),
       ),
