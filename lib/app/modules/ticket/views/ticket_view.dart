@@ -1,10 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:starter/app/data/models/dto/comment.dart';
 import 'package:starter/app/routes/app_pages.dart';
 import 'package:starter/app/theme/app_colors.dart';
 import 'package:starter/app/theme/styles.dart';
 import 'package:starter/widgets/cached_netwrok_image_utils.dart';
+import 'package:starter/widgets/comment_box_util.dart';
 import 'package:starter/widgets/update_section.dart';
 import '../controllers/ticket_controller.dart';
 import 'package:timeago/timeago.dart' as timeago;
@@ -192,45 +194,78 @@ class TicketView extends GetView<TicketController> {
                           ],
                         ),
                       ),
-                      // : Obx(
-                      //     () => Column(
-                      //       children: [
-                      //         ListView.builder(
-                      //           shrinkWrap: true,
-                      //           physics: NeverScrollableScrollPhysics(),
-                      //           itemCount: controller.updatedList.length > 2
-                      //               ? 2
-                      //               : controller.updatedList.length,
-                      //           itemBuilder: (context, index) {
-                      //             return Column(
-                      //               children: [
-                      //                 updatesSection(index),
-                      //                 SizedBox(height: 10),
-                      //               ],
-                      //             );
-                      //           },
-                      //         ),
-                      //         Align(
-                      //           alignment: Alignment.bottomRight,
-                      //           child: TextButton(
-                      //             onPressed: () {},
-                      //             child: Text(
-                      //               "Show more",
-                      //               style: Styles.tsprimaryBlueSemiBold12,
-                      //             ),
-                      //           ),
-                      //         ),
-                      //       ],
-                      //     ),
-                      //   ),
-
-                      SizedBox(height: 30),
                     ],
                   ),
                 ),
               ),
               SizedBox(height: 30),
-              Text("Comments", style: Styles.tsPrimaryBlueSemiBold18),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text("Comments", style: Styles.tsPrimaryBlueSemiBold18),
+                  InkWell(
+                    onTap: () {
+                      Get.toNamed(Routes.SHOWCOMMENTS);
+                    },
+                    child: Row(
+                      children: [
+                        Icon(
+                          CupertinoIcons.add_circled_solid,
+                          color: AppColors.primaryBlue,
+                          size: 16,
+                        ),
+                        SizedBox(width: 8),
+                        Text(
+                          "Add New",
+                          style: Styles.tsprimaryBlueSemiBold14,
+                        )
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: 30),
+              Obx(
+                () => Column(
+                  children: [
+                    ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: controller.commentList.length > 2
+                          ? 2
+                          : controller.commentList.length,
+                      physics: NeverScrollableScrollPhysics(),
+                      itemBuilder: (context, index) {
+                        var data = controller.commentList[index];
+                        DateTime time = DateTime.parse(data.createdAt ?? "");
+
+                        return CommentUtils(
+                          imageUrl: data.user?.profilePicture ?? "",
+                          name: data.user?.name ?? "",
+                          time: timeago.format(time),
+                          comments: data.description ?? "",
+                        );
+                      },
+                    ),
+                    controller.commentList.length > 2
+                        ? Align(
+                            alignment: Alignment.bottomRight,
+                            child: TextButton(
+                              onPressed: () {
+                                Get.toNamed(
+                                  Routes.SHOWCOMMENTS,
+                                  arguments: controller.commentList,
+                                );
+                              },
+                              child: Text(
+                                "Show more",
+                                style: Styles.tsprimaryBlueSemiBold12,
+                              ),
+                            ),
+                          )
+                        : SizedBox(),
+                  ],
+                ),
+              ),
               SizedBox(height: 30),
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -296,25 +331,6 @@ class TicketView extends GetView<TicketController> {
               ),
               SizedBox(
                 height: 50,
-              ),
-              Obx(
-                () => ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: controller.commentList.length,
-                  physics: NeverScrollableScrollPhysics(),
-                  itemBuilder: (context, index) {
-                    var data = controller.commentList[index];
-                    return ListTile(
-                      leading: CachedNetworkImageProviderUtils(
-                        imageUrl: data.user?.profilePicture ?? "",
-                        height: 30,
-                        width: 30,
-                      ),
-                      title: Text(data.user?.name ?? ""),
-                      subtitle: Text(data.description ?? ""),
-                    );
-                  },
-                ),
               ),
             ],
           ),

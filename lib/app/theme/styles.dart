@@ -181,4 +181,18 @@ class Styles {
     fontSize: 12.0,
     fontFamily: "opensans",
   );
+
+  static const tsPrimaryColorBold14 = TextStyle(
+    color: AppColors.primaryColor,
+    fontWeight: FontWeight.w700,
+    fontSize: 14.0,
+    fontFamily: "opensans",
+  );
+
+  static const tsPrimaryColorRegular14 = TextStyle(
+    color: AppColors.primaryColor,
+    fontWeight: FontWeight.w400,
+    fontSize: 14.0,
+    fontFamily: "opensans",
+  );
 }

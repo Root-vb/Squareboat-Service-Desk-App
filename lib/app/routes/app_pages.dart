@@ -10,6 +10,8 @@ import '../modules/create_ticket/bindings/create_ticket_binding.dart';
 import '../modules/create_ticket/views/create_ticket_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
+import '../modules/showcomments/bindings/showcomments_binding.dart';
+import '../modules/showcomments/views/showcomments_view.dart';
 import '../modules/showupdate/bindings/showupdate_binding.dart';
 import '../modules/showupdate/views/showupdate_view.dart';
 import '../modules/splash/bindings/splash_binding.dart';
@@ -67,6 +69,11 @@ class AppPages {
       name: Routes.SHOWUPDATE,
       page: () => ShowupdateView(),
       binding: ShowupdateBinding(),
+    ),
+    GetPage(
+      name: Routes.SHOWCOMMENTS,
+      page: () => ShowcommentsView(),
+      binding: ShowcommentsBinding(),
     ),
   ];
 }

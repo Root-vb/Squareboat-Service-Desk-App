@@ -1,11 +1,16 @@
 import 'package:get/get.dart';
+import 'package:starter/app/data/models/dto/comment.dart';
 
 class ShowcommentsController extends GetxController {
-  //TODO: Implement ShowcommentsController
+  RxList allComments = RxList();
 
-  final count = 0.obs;
   @override
   void onInit() {
+    RxList<Data>? data = Get.arguments;
+
+    if (data != null) {
+      allComments.addAll(data);
+    }
     super.onInit();
   }
 
@@ -16,5 +21,4 @@ class ShowcommentsController extends GetxController {
 
   @override
   void onClose() {}
-  void increment() => count.value++;
 }
