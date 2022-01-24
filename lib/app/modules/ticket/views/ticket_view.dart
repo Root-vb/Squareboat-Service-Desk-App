@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:starter/app/data/models/dto/devops.dart';
 import 'package:starter/app/routes/app_pages.dart';
 import 'package:starter/app/theme/app_colors.dart';
 import 'package:starter/app/theme/styles.dart';
@@ -59,6 +60,7 @@ class TicketView extends GetView<TicketController> {
                         "Created By",
                         style: Styles.tsPrimaryColorSemiBold16,
                       ),
+
                       SizedBox(height: 15),
                       Row(
                         children: [
@@ -175,7 +177,7 @@ class TicketView extends GetView<TicketController> {
                             ),
                             controller.updatedList.length > 2
                                 ? Align(
-                                    alignment: Alignment.bottomRight,
+                                    alignment: Alignment.bottomLeft,
                                     child: TextButton(
                                       onPressed: () {
                                         Get.toNamed(
@@ -198,31 +200,7 @@ class TicketView extends GetView<TicketController> {
                 ),
               ),
               SizedBox(height: 30),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text("Comments", style: Styles.tsPrimaryBlueSemiBold18),
-                  InkWell(
-                    onTap: () {
-                      Get.toNamed(Routes.SHOWCOMMENTS);
-                    },
-                    child: Row(
-                      children: [
-                        Icon(
-                          CupertinoIcons.add_circled_solid,
-                          color: AppColors.primaryBlue,
-                          size: 16,
-                        ),
-                        SizedBox(width: 8),
-                        Text(
-                          "Add New",
-                          style: Styles.tsprimaryBlueSemiBold14,
-                        )
-                      ],
-                    ),
-                  ),
-                ],
-              ),
+              Text("Comments", style: Styles.tsPrimaryBlueSemiBold18),
               SizedBox(height: 30),
               Obx(
                 () => Column(
@@ -269,12 +247,6 @@ class TicketView extends GetView<TicketController> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  CachedNetworkImageProviderUtils(
-                    imageUrl: controller.profilePic ?? "",
-                    height: 30,
-                    width: 30,
-                  ),
-                  SizedBox(width: 8),
                   Expanded(
                     child: Container(
                       padding: EdgeInsets.all(10),
@@ -302,7 +274,7 @@ class TicketView extends GetView<TicketController> {
                   )
                 ],
               ),
-              SizedBox(height: 10),
+              SizedBox(height: 15),
               Align(
                 alignment: Alignment.bottomRight,
                 child: InkWell(
@@ -328,9 +300,7 @@ class TicketView extends GetView<TicketController> {
                   ),
                 ),
               ),
-              SizedBox(
-                height: 50,
-              ),
+              SizedBox(height: 50),
             ],
           ),
         ),
@@ -347,15 +317,13 @@ class TicketView extends GetView<TicketController> {
             () => DropdownButton(
               isExpanded: true,
               value: controller.selectedDevops.value,
-              items: controller.devopsLists.map((element) {
-                return DropdownMenuItem(
+              items: controller.devopsLists.map((Devops element) {
+                return DropdownMenuItem<String>(
                   child: Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        element.name ?? "",
-                        style: Styles.tsPrimaryIndigoSemiBold14,
-                      )),
-                  value: element.name ?? "",
+                      child: Text(element.name ?? "",
+                          style: Styles.tsPrimaryIndigoSemiBold14)),
+                  value: element.id ?? "",
                 );
               }).toList(),
               icon: Padding(
@@ -367,7 +335,6 @@ class TicketView extends GetView<TicketController> {
               ),
               onChanged: (String? value) {
                 if (controller.currentUserIsDevops.value) {
-                  print("done");
                   controller.selectedDevops.value = value ?? "";
                   controller.assignedToPerformAction(value!);
                 } else {
@@ -375,8 +342,16 @@ class TicketView extends GetView<TicketController> {
                     "Error",
                     "Only Devops has the permissions!",
                     snackPosition: SnackPosition.BOTTOM,
-                    backgroundColor: AppColors.green,
+                    backgroundColor: AppColors.darkWhite,
+                    colorText: AppColors.primaryColor,
                   );
+                }
+
+                if (controller.uuidOfCurrentUser ==
+                    controller.uuidOfAssignedUser) {
+                  controller.changeStatus.value = true;
+                } else {
+                  controller.changeStatus.value = false;
                 }
               },
             ),
@@ -400,37 +375,11 @@ class TicketView extends GetView<TicketController> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  controller.uuid ?? "SQB-14",
-                  style: Styles.tsPrimaryBlueBold18,
-                ),
-                Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    ClipOval(
-                      child: Container(
-                        color: AppColors.red,
-                        child: Padding(
-                          padding: const EdgeInsets.all(3.0),
-                          child: Icon(
-                            CupertinoIcons.delete,
-                            color: AppColors.white,
-                            size: 14,
-                          ),
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text("Delete", style: Styles.tsRedSemiBold14),
-                    ),
-                  ],
-                ),
-              ],
+            Text(
+              controller.uuid ?? "SQB-14",
+              style: Styles.tsPrimaryBlueBold18,
             ),
+            SizedBox(height: 8),
             Text(
               controller.heading ?? "Testing Project",
               style: Styles.tsPrimaryColorSemiBold16,
@@ -599,40 +548,11 @@ class TicketView extends GetView<TicketController> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  controller.uuid ?? "SQB-14",
-                  style: Styles.tsPrimaryBlueBold18,
-                ),
-                Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    ClipOval(
-                      child: Container(
-                        color: AppColors.red,
-                        child: Padding(
-                          padding: const EdgeInsets.all(3.0),
-                          child: Icon(
-                            CupertinoIcons.delete,
-                            color: AppColors.white,
-                            size: 14,
-                          ),
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        "Delete",
-                        style: Styles.tsRedSemiBold14,
-                      ),
-                    ),
-                  ],
-                ),
-              ],
+            Text(
+              controller.uuid ?? "SQB-14",
+              style: Styles.tsPrimaryBlueBold18,
             ),
+            SizedBox(height: 8),
             Text(
               controller.heading?.toUpperCase() ?? "Testing Project",
               style: Styles.tsPrimaryColorSemiBold16,
@@ -736,16 +656,15 @@ class TicketView extends GetView<TicketController> {
                 ),
               ),
               onChanged: (String? value) {
-                if (controller.currentUserIsDevops.value == true) {
-                  print(value);
+                if (controller.changeStatus.value == true) {
                   controller.changeTicketStatus(value ?? "");
                   controller.ticketStatus.value = value ?? "";
                 } else {
                   Get.snackbar(
-                    "Error",
+                    "Error!",
                     "Only Devops has the permissions!",
                     snackPosition: SnackPosition.BOTTOM,
-                    backgroundColor: AppColors.green,
+                    backgroundColor: AppColors.darkWhite,
                   );
                 }
               },

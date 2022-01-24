@@ -494,53 +494,63 @@ class CreateTicketView extends GetView<CreateTicketController> {
                                 borderRadius: BorderRadius.circular(12.0),
                               ),
                               child: DropdownButtonHideUnderline(
-                                child: DropdownButton(
-                                  isExpanded: true,
-                                  hint: Text("Participants"),
-                                  value: controller.selectedParticipants.value,
-                                  items: controller.participantsList
-                                      .map((String val) {
-                                    return DropdownMenuItem(
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Text(
-                                          val,
-                                          style: TextStyle(
-                                            color: Color(0xff595C97),
+                                child: Obx(
+                                  () => DropdownButton(
+                                    isExpanded: true,
+                                    hint: Text("Participants"),
+                                    value:
+                                        controller.selectedParticipants.value,
+                                    items:
+                                        controller.participantsList.map((val) {
+                                      return DropdownMenuItem(
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Text(
+                                            val.name ?? "",
+                                            style: TextStyle(
+                                              color: Color(0xff595C97),
+                                            ),
                                           ),
                                         ),
+                                        value: val.name,
+                                      );
+                                    }).toList(),
+                                    icon: Padding(
+                                      padding: const EdgeInsets.only(right: 4),
+                                      child: Icon(
+                                        Icons.arrow_drop_down,
+                                        color: Color(0xffC7C4DB),
                                       ),
-                                      value: val,
-                                    );
-                                  }).toList(),
-                                  icon: Padding(
-                                    padding: const EdgeInsets.only(right: 4),
-                                    child: Icon(
-                                      Icons.arrow_drop_down,
-                                      color: Color(0xffC7C4DB),
                                     ),
-                                  ),
-                                  onChanged: (dynamic value) {
-                                    controller.selectedParticipants.value =
-                                        value;
+                                    onChanged: (String? value) {
+                                      controller.selectedParticipants.value =
+                                          value ?? "";
 
-                                    controller.selectedVal.add(value);
-                                  },
+                                      controller.selectedVal.add(value!);
+                                    },
+                                  ),
                                 ),
                               ),
                             ),
                           ),
-                          Wrap(
-                            direction: Axis.horizontal,
-                            children: List.generate(
-                              controller.selectedVal.length,
-                              (index) => Chip(
-                                label: Text(controller.selectedVal[index]),
-                                backgroundColor: Color(0xffEFF2F4),
-                                elevation: 1,
+                          SizedBox(height: 14),
+                          Obx(
+                            () => Wrap(
+                              direction: Axis.horizontal,
+                              children: List.generate(
+                                controller.selectedVal.length,
+                                (index) => Chip(
+                                  label: Text(controller.selectedVal[index]),
+                                  backgroundColor: Color(0xffEFF2F4),
+                                  elevation: 1,
+                                  onDeleted: () {
+                                    print(controller.selectedVal.remove(index));
+                                    controller.selectedVal.removeAt(index);
+                                  },
+                                ),
                               ),
+                              spacing: 10,
                             ),
-                            spacing: 5,
                           ),
                           SizedBox(height: 14),
                           Row(

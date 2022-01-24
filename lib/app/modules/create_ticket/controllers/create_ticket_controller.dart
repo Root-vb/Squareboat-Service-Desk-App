@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:starter/app/data/models/dto/participants_list.dart';
+import 'package:starter/app/data/models/dto/response.dart';
 import 'package:starter/app/data/repository/create_ticket_repository.dart';
+import 'package:starter/app/data/repository/participants_repository.dart';
 import 'package:starter/app/modules/home/controllers/home_controller.dart';
 import 'package:starter/app/theme/app_colors.dart';
 import 'package:starter/utils/helper/text_field_wrapper.dart';
@@ -11,6 +14,8 @@ class CreateTicketController extends GetxController {
   final formKey = GlobalKey<FormState>();
 
   CreateTicketRepository _createTicketRepository = CreateTicketRepository();
+  ParticipantsRepository participantsRepository = ParticipantsRepository();
+
   // General Wrapper
 
   TextFieldWrapper generalHeadingWrapper = TextFieldWrapper();
@@ -28,6 +33,15 @@ class CreateTicketController extends GetxController {
   TextFieldWrapper deploymentWatcherEmails = TextFieldWrapper();
 
   HomeController controller = Get.find<HomeController>();
+  var participantsList = <Participants>[].obs;
+
+  var selectedVal = <String>[].obs;
+
+  var updatedValue = "General Ticket".obs;
+  var releasePriorityValue = "P0 - Service DownTime".obs;
+  var enviromentsValue = "Testing - For Developers and QA".obs;
+  var isGeneralTicket = true.obs;
+  var selectedParticipants = "Select Participants".obs;
 
   createTicket() async {
     if (isGeneralTicket.isTrue) {
@@ -107,6 +121,25 @@ class CreateTicketController extends GetxController {
     }
   }
 
+  removeValue(String value) {
+    selectedVal.remove(value);
+  }
+
+  Future<void> getAllParticipants() async {
+    RepoResponse<ParticipantsList> repoResponse =
+        await participantsRepository.fetchAllPartcipants({
+      "Authorization": 'Bearer ${Storage.getUser().access_token}',
+    });
+
+    if (repoResponse.error == null) {
+      repoResponse.data?.data?.forEach((element) {
+        participantsList.add(element);
+      });
+    }
+
+    selectedParticipants.value = participantsList.first.name ?? "Ashwani Singh";
+  }
+
   final items = [
     "General Ticket",
     "Deployment Ticket",
@@ -125,28 +158,11 @@ class CreateTicketController extends GetxController {
     "Production",
   ];
 
-  final participantsList = [
-    "Aakash Pandey",
-    "Abhinav Anshul",
-    "Abhipsa Matura",
-    "Abul Karim",
-    "Ankit Jain",
-    "Ankit Kaushik",
-    "Select Participants"
-  ];
-
-  var selectedVal = [];
-
-  var updatedValue = "General Ticket".obs;
-  var releasePriorityValue = "P0 - Service DownTime".obs;
-  var enviromentsValue = "Testing - For Developers and QA".obs;
-  var isGeneralTicket = true.obs;
-  var selectedParticipants = "Select Participants".obs;
-
   @override
   void onInit() {
     print(Storage.getUser().access_token);
-    print(deploymentHeadingWrapper.controller.text);
+
+    getAllParticipants();
     super.onInit();
   }
 

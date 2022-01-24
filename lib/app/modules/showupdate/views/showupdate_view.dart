@@ -37,7 +37,7 @@ class ShowupdateView extends GetView<ShowupdateController> {
                       newValue: data.newValue ?? "",
                       time: time,
                     ),
-                    SizedBox(height: 10),
+                    SizedBox(height: 20),
                   ],
                 );
               },

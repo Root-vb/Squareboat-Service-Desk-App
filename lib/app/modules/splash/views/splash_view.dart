@@ -18,12 +18,12 @@ class SplashView extends GetView<SplashController> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Center(
-            child: SvgPicture.asset(
-              'assets/images/Logo.svg',
+            child: Image.asset(
+              'assets/images/service_desk_logo.png',
               height: 40,
             ),
           ),
-          SizedBox(height: 20),
+          SizedBox(height: 30),
           CircularProgressIndicator(
             color: AppColors.lightBlueOpacity100,
           )

@@ -15,7 +15,7 @@ import 'package:starter/utils/storage/storage_utils.dart';
 
 class TicketController extends GetxController {
   var ticketStatus = "New".obs;
-  var selectedDevops = "Vinayak Sarawagi".obs;
+  var selectedDevops = ''.obs;
 
   TextEditingController commentController = TextEditingController();
   TicketUpdateRepository ticketUpdateRepository = TicketUpdateRepository();
@@ -31,6 +31,10 @@ class TicketController extends GetxController {
   var roles = <Roles>[].obs;
   var result;
   var currentUserIsDevops = false.obs;
+  var changeTicketStatusPermission = false;
+  var changeStatus = false.obs;
+  String uuidOfCurrentUser = "";
+  String uuidOfAssignedUser = "";
 
   String? profilePic;
   String? name;
@@ -46,6 +50,7 @@ class TicketController extends GetxController {
   String? releaseNotes;
   String? deploymentSteps;
   String? email;
+  String? status;
 
   final items = [
     "New",
@@ -119,20 +124,13 @@ class TicketController extends GetxController {
     );
 
     if (repoResponse.error == null) {
+      getAllTicketUpdate();
       print("completed!");
     }
   }
 
-  Future<void> assignedToPerformAction(String name) async {
-    String? id;
-
-    for (var i = 0; i < devopsLists.length; i++) {
-      if (name == devopsLists[i].name) {
-        id = devopsLists[i].id;
-        print(i);
-      }
-    }
-
+  Future<void> assignedToPerformAction(String id) async {
+    uuidOfAssignedUser = id;
     final repoResponse = await performActionRepository.fetchAllActions(
       uuid!,
       {
@@ -146,8 +144,6 @@ class TicketController extends GetxController {
 
     if (repoResponse.error == null) {
       getAllTicketUpdate();
-
-      // print(selectedDevops);
     }
   }
 
@@ -162,8 +158,11 @@ class TicketController extends GetxController {
         if (element.name == 'devops') {
           currentUserIsDevops.value = true;
         }
+
         roles.add(element);
       });
+
+      uuidOfCurrentUser = repoResponse.data?.id ?? "";
     }
   }
 
@@ -179,6 +178,8 @@ class TicketController extends GetxController {
       repoResponse.data?.devops?.forEach((element) {
         devopsLists.add(element);
       });
+
+      selectedDevops.value = devopsLists.first.id ?? "";
     }
   }
 
@@ -235,6 +236,9 @@ class TicketController extends GetxController {
     releaseNotes = data['releaseNotes'];
     deploymentSteps = data['deploymentSteps'];
     email = data['email'];
+    status = data['ticketStatus'];
+
+    ticketStatus.value = status ?? "New";
 
     fetchAllComments();
 

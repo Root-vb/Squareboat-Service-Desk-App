@@ -36,7 +36,6 @@ class UsersController extends GetxController {
     if (repoResponse.error == null) {
       repoResponse.data?.data?.forEach((element) {
         participantsList.add(element);
-        print(element.name);
       });
     }
   }

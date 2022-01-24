@@ -195,4 +195,11 @@ class Styles {
     fontSize: 14.0,
     fontFamily: "opensans",
   );
+
+  static const tsWhiteColorBold18 = TextStyle(
+    color: AppColors.white,
+    fontWeight: FontWeight.w700,
+    fontSize: 18.0,
+    fontFamily: "opensans",
+  );
 }

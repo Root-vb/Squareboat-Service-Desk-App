@@ -28,6 +28,11 @@ class ExceptionHandler {
 
             return APIException(
                 message: ErrorResponse.fromJson(error.response?.data).message);
+          } else if (error.response?.statusCode == 503) {
+            AppController().serverNotAvilableDialog();
+
+            return APIException(
+                message: ErrorResponse.fromJson(error.response?.data).message);
           } else if (error.response?.statusCode == 401 &&
               (ErrorResponse.fromJson(error.response?.data).message ==
                   "Unauthorized")) {
