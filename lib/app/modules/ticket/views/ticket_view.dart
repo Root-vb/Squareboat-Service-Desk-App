@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:starter/app/data/models/dto/comment.dart';
 import 'package:starter/app/routes/app_pages.dart';
 import 'package:starter/app/theme/app_colors.dart';
 import 'package:starter/app/theme/styles.dart';
@@ -367,8 +366,18 @@ class TicketView extends GetView<TicketController> {
                 ),
               ),
               onChanged: (String? value) {
-                controller.selectedDevops.value = value ?? "";
-                controller.assignedToPerformAction(value!);
+                if (controller.currentUserIsDevops.value) {
+                  print("done");
+                  controller.selectedDevops.value = value ?? "";
+                  controller.assignedToPerformAction(value!);
+                } else {
+                  Get.snackbar(
+                    "Error",
+                    "Only Devops has the permissions!",
+                    snackPosition: SnackPosition.BOTTOM,
+                    backgroundColor: AppColors.green,
+                  );
+                }
               },
             ),
           ),
@@ -701,33 +710,46 @@ class TicketView extends GetView<TicketController> {
           padding: const EdgeInsets.symmetric(
             horizontal: 4,
           ),
-          child: DropdownButton(
-            dropdownColor: AppColors.primaryBlue,
-            focusColor: Colors.red,
-            isExpanded: false,
-            value: controller.updatedValue.value,
-            items: controller.items.map((String items) {
-              return DropdownMenuItem(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    items,
-                    style: Styles.tsWhiteRegular12,
+          child: Obx(
+            () => DropdownButton(
+              dropdownColor: AppColors.primaryBlue,
+              focusColor: Colors.red,
+              isExpanded: false,
+              value: controller.ticketStatus.value,
+              items: controller.items.map((String items) {
+                return DropdownMenuItem(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      items,
+                      style: Styles.tsWhiteRegular12,
+                    ),
                   ),
+                  value: items,
+                );
+              }).toList(),
+              icon: Padding(
+                padding: const EdgeInsets.only(right: 4),
+                child: Icon(
+                  Icons.arrow_drop_down,
+                  color: Colors.white,
                 ),
-                value: items,
-              );
-            }).toList(),
-            icon: Padding(
-              padding: const EdgeInsets.only(right: 4),
-              child: Icon(
-                Icons.arrow_drop_down,
-                color: Colors.white,
               ),
+              onChanged: (String? value) {
+                if (controller.currentUserIsDevops.value == true) {
+                  print(value);
+                  controller.changeTicketStatus(value ?? "");
+                  controller.ticketStatus.value = value ?? "";
+                } else {
+                  Get.snackbar(
+                    "Error",
+                    "Only Devops has the permissions!",
+                    snackPosition: SnackPosition.BOTTOM,
+                    backgroundColor: AppColors.green,
+                  );
+                }
+              },
             ),
-            onChanged: (dynamic value) {
-              controller.updatedValue.value = value;
-            },
           ),
         ),
       ),
@@ -745,7 +767,7 @@ class TicketView extends GetView<TicketController> {
         SizedBox(width: 15),
         Text(
           controller.name ?? "",
-          style: Styles.tsPrimaryColorSemiBold18,
+          style: Styles.tsPrimaryColorSemiBold17,
         ),
       ],
     );

@@ -111,7 +111,7 @@ class HomeView extends GetView<HomeController> {
                               child: Text(
                                 controller.ticketList[index].type ??
                                     'General Ticket',
-                                style: Styles.tsPrimaryColorBold20,
+                                style: Styles.tsPrimaryColorBold19,
                               ),
                             ),
                             Container(
@@ -143,36 +143,36 @@ class HomeView extends GetView<HomeController> {
                           SizedBox(height: 20),
                           Text(
                             "Heading",
-                            style: Styles.tsDarkGreySemiBold14,
+                            style: Styles.tsDarkGreySemiBold13,
                           ),
                           SizedBox(height: 8),
                           Text(
                             controller.ticketList[index].formFields!.heading
                                     ?.toUpperCase() ??
                                 "",
-                            style: Styles.tslightBlueWithOpcaity100Bold18,
+                            style: Styles.tslightBlueWithOpcaity100Bold17,
                           ),
                           SizedBox(height: 20),
                           Text(
                             "Assigned To",
-                            style: Styles.tsDarkGreySemiBold14,
+                            style: Styles.tsDarkGreySemiBold13,
                           ),
                           SizedBox(height: 8),
                           Text(
                             controller.ticketList[index].assignedTo?.name ??
                                 "-",
-                            style: Styles.tsPrimaryColorSemiBold18,
+                            style: Styles.tsPrimaryColorSemiBold17,
                           ),
                           SizedBox(height: 20),
                           Text(
                             "Created By",
-                            style: Styles.tsDarkGreySemiBold14,
+                            style: Styles.tsDarkGreySemiBold13,
                           ),
                           SizedBox(height: 8),
                           Text(
                             controller.ticketList[index].createdBy ??
                                 "Created By",
-                            style: Styles.tsPrimaryColorSemiBold18,
+                            style: Styles.tsPrimaryColorSemiBold17,
                           ),
                         ],
                       ),

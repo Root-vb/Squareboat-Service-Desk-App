@@ -276,7 +276,7 @@ class User {
   String? password;
   String? createdAt;
   String? updatedAt;
-  List<Roles>? roles;
+  List<RolesAssigned>? roles;
 
   User(
       {this.id,
@@ -303,9 +303,9 @@ class User {
     createdAt = json['createdAt'];
     updatedAt = json['updatedAt'];
     if (json['roles'] != null) {
-      roles = <Roles>[];
+      roles = <RolesAssigned>[];
       json['roles'].forEach((v) {
-        roles!.add(new Roles.fromJson(v));
+        roles!.add(new RolesAssigned.fromJson(v));
       });
     }
   }
@@ -329,7 +329,7 @@ class User {
   }
 }
 
-class Roles {
+class RolesAssigned {
   int? id;
   String? uuid;
   String? name;
@@ -338,7 +338,7 @@ class Roles {
   String? updatedAt;
   List<HavePermission>? havePermission;
 
-  Roles(
+  RolesAssigned(
       {this.id,
       this.uuid,
       this.name,
@@ -347,7 +347,7 @@ class Roles {
       this.updatedAt,
       this.havePermission});
 
-  Roles.fromJson(Map<String, dynamic> json) {
+  RolesAssigned.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     uuid = json['uuid'];
     name = json['name'];

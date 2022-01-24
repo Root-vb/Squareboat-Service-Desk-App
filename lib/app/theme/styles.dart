@@ -20,10 +20,10 @@ class Styles {
     fontFamily: "opensans",
   );
 
-  static const tsPrimaryColorSemiBold18 = TextStyle(
+  static const tsPrimaryColorSemiBold17 = TextStyle(
     color: AppColors.primaryColor,
     fontWeight: FontWeight.w600,
-    fontSize: 18.0,
+    fontSize: 17.0,
     fontFamily: "opensans",
   );
 
@@ -118,10 +118,10 @@ class Styles {
     fontFamily: "opensans",
   );
 
-  static const tsPrimaryColorBold20 = TextStyle(
+  static const tsPrimaryColorBold19 = TextStyle(
     color: AppColors.primaryColor,
     fontWeight: FontWeight.w700,
-    fontSize: 20.0,
+    fontSize: 19.0,
     fontFamily: "opensans",
   );
 
@@ -132,17 +132,17 @@ class Styles {
     fontFamily: "opensans",
   );
 
-  static const tsDarkGreySemiBold14 = TextStyle(
+  static const tsDarkGreySemiBold13 = TextStyle(
     color: AppColors.darkGrey,
     fontWeight: FontWeight.w600,
-    fontSize: 14.0,
+    fontSize: 13.0,
     fontFamily: "opensans",
   );
 
-  static const tslightBlueWithOpcaity100Bold18 = TextStyle(
+  static const tslightBlueWithOpcaity100Bold17 = TextStyle(
     color: AppColors.lightBlueOpacity100,
     fontWeight: FontWeight.w700,
-    fontSize: 18.0,
+    fontSize: 17.0,
     fontFamily: "opensans",
   );
 

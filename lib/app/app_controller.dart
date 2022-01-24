@@ -28,6 +28,18 @@ class AppController extends BaseController<ConfigRepository> {
     ));
   }
 
+  showLogoutDialogOfDomainNotRegistered() {
+    Get.dialog(DialogWidget(
+      title: "Your Domain is not registered!",
+      text: 'Login Again with your registered domain',
+      icon: (Icons.logout),
+      action1: () => Get.back(),
+      action2: logout,
+      actionText1: "Cancel",
+      actionText2: "Sign Out",
+    ));
+  }
+
   @override
   void onInit() {
     super.onInit();

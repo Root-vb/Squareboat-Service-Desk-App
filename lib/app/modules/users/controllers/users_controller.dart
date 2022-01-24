@@ -15,12 +15,15 @@ class UsersController extends GetxController {
 
   ParticipantsRepository participantsRepository = ParticipantsRepository();
 
+  var selectedUser = [];
+
   addUser(int index, bool? value) {
     if (value == true) {
       users.add(participantsList[index].id ?? "");
+      selectedUser.add(participantsList[index].name);
     } else {
       users.remove(participantsList[index].id ?? "");
-      print("i am working");
+      selectedUser.remove(participantsList[index].name);
     }
   }
 

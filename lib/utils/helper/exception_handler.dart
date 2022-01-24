@@ -21,7 +21,16 @@ class ExceptionHandler {
         case DioErrorType.connectTimeout:
           return APIException(message: ErrorMessages.connectionTimeout);
         case DioErrorType.response:
-          if (error.response?.statusCode == 401) {
+          if (error.response?.statusCode == 401 &&
+              (ErrorResponse.fromJson(error.response?.data).message ==
+                  "Your Domain is not registered.")) {
+            AppController().showLogoutDialogOfDomainNotRegistered();
+
+            return APIException(
+                message: ErrorResponse.fromJson(error.response?.data).message);
+          } else if (error.response?.statusCode == 401 &&
+              (ErrorResponse.fromJson(error.response?.data).message ==
+                  "Unauthorized")) {
             AppController().showLogoutDialog();
 
             return APIException(

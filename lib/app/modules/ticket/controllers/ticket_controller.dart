@@ -2,17 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:starter/app/data/models/dto/comment.dart';
 import 'package:starter/app/data/models/dto/devops.dart';
+import 'package:starter/app/data/models/dto/myprofile.dart';
 import 'package:starter/app/data/models/dto/response.dart';
 import 'package:starter/app/data/models/dto/ticket_update.dart';
 import 'package:starter/app/data/repository/comment_repository.dart';
 import 'package:starter/app/data/repository/devops_repository.dart';
 import 'package:starter/app/data/repository/perform_action_repository.dart';
+import 'package:starter/app/data/repository/profile_repository.dart';
 import 'package:starter/app/data/repository/ticket_update_repository.dart';
 import 'package:starter/app/routes/app_pages.dart';
 import 'package:starter/utils/storage/storage_utils.dart';
 
 class TicketController extends GetxController {
-  var updatedValue = "New".obs;
+  var ticketStatus = "New".obs;
   var selectedDevops = "Vinayak Sarawagi".obs;
 
   TextEditingController commentController = TextEditingController();
@@ -20,12 +22,15 @@ class TicketController extends GetxController {
   CommentRepository commentRepository = CommentRepository();
   PerformActionRepository performActionRepository = PerformActionRepository();
   DevopsRepository devopsRepository = DevopsRepository();
+  ProfileRepository profileRepository = ProfileRepository();
 
   var devopsLists = <Devops>[].obs;
   var commentList = <Data>[].obs;
   var updatedList = <Updates>[].obs;
   var updatedParticipantsList = <UpdateTicketParticipants>[].obs;
+  var roles = <Roles>[].obs;
   var result;
+  var currentUserIsDevops = false.obs;
 
   String? profilePic;
   String? name;
@@ -101,6 +106,23 @@ class TicketController extends GetxController {
     }
   }
 
+  Future<void> changeTicketStatus(String status) async {
+    final repoResponse = await performActionRepository.fetchAllActions(
+      uuid!,
+      {
+        "actionType": "update-info",
+        "status": status,
+      },
+      {
+        "Authorization": 'Bearer ${Storage.getUser().access_token}',
+      },
+    );
+
+    if (repoResponse.error == null) {
+      print("completed!");
+    }
+  }
+
   Future<void> assignedToPerformAction(String name) async {
     String? id;
 
@@ -126,6 +148,22 @@ class TicketController extends GetxController {
       getAllTicketUpdate();
 
       // print(selectedDevops);
+    }
+  }
+
+  Future<void> profileDetails() async {
+    RepoResponse<MyProfile> repoResponse =
+        await profileRepository.getAllProfileDetails({
+      "Authorization": 'Bearer ${Storage.getUser().access_token}',
+    });
+
+    if (repoResponse.error == null) {
+      repoResponse.data?.roles?.forEach((element) {
+        if (element.name == 'devops') {
+          currentUserIsDevops.value = true;
+        }
+        roles.add(element);
+      });
     }
   }
 
@@ -207,6 +245,8 @@ class TicketController extends GetxController {
     getAllTicketUpdate();
 
     fetchAllDevops();
+
+    profileDetails();
 
     super.onInit();
   }
