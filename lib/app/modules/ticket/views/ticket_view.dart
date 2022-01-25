@@ -376,12 +376,12 @@ class TicketView extends GetView<TicketController> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              controller.uuid ?? "SQB-14",
+              controller.uuid ?? "-",
               style: Styles.tsPrimaryBlueBold18,
             ),
             SizedBox(height: 8),
             Text(
-              controller.heading ?? "Testing Project",
+              controller.heading ?? "-",
               style: Styles.tsPrimaryColorSemiBold16,
             ),
             Divider(color: Color(0xffEEF2F8), thickness: 2),
@@ -410,7 +410,7 @@ class TicketView extends GetView<TicketController> {
                 SizedBox(width: 40),
                 Flexible(
                   child: Text(
-                    controller.projectName ?? "Test 1",
+                    controller.projectName ?? "-",
                     style: Styles.tsPrimaryColorRegular12,
                   ),
                 ),
@@ -427,7 +427,7 @@ class TicketView extends GetView<TicketController> {
                 SizedBox(width: 40),
                 Flexible(
                   child: Text(
-                    controller.projectManager ?? "Nimish Dawar",
+                    controller.projectManager ?? "-",
                     style: Styles.tsPrimaryColorRegular12,
                   ),
                 ),
@@ -444,7 +444,7 @@ class TicketView extends GetView<TicketController> {
                 SizedBox(width: 40),
                 Flexible(
                   child: Text(
-                    controller.repoName ?? "Test Repo",
+                    controller.repoName ?? "-",
                     style: Styles.tsPrimaryColorRegular12,
                   ),
                 ),
@@ -459,7 +459,7 @@ class TicketView extends GetView<TicketController> {
                   style: Styles.tsprimaryIndigoSemiBold12,
                 ),
                 Text(
-                  controller.releasePriority ?? "PO - Service Downtime",
+                  controller.releasePriority ?? "-",
                   style: Styles.tsPrimaryColorRegular12,
                 ),
               ],
@@ -473,7 +473,7 @@ class TicketView extends GetView<TicketController> {
                   style: Styles.tsprimaryIndigoSemiBold12,
                 ),
                 Text(
-                  controller.environment ?? "Testing for developers and QA",
+                  controller.environment ?? "-",
                   style: Styles.tsPrimaryColorRegular12,
                 ),
               ],
@@ -489,7 +489,7 @@ class TicketView extends GetView<TicketController> {
                 SizedBox(width: 40),
                 Flexible(
                   child: Text(
-                    controller.releaseNotes ?? "Patch 1.0",
+                    controller.releaseNotes ?? "-",
                     style: Styles.tsPrimaryColorRegular12,
                   ),
                 ),
@@ -506,7 +506,7 @@ class TicketView extends GetView<TicketController> {
                 SizedBox(width: 40),
                 Flexible(
                   child: Text(
-                    controller.deploymentSteps ?? "1,2,3",
+                    controller.deploymentSteps ?? "-",
                     style: Styles.tsPrimaryColorRegular12,
                   ),
                 ),
@@ -521,7 +521,7 @@ class TicketView extends GetView<TicketController> {
                   style: Styles.tsprimaryIndigoSemiBold12,
                 ),
                 Text(
-                  controller.email ?? "Testing ticket Feature",
+                  controller.email ?? "-",
                   style: Styles.tsPrimaryColorRegular12,
                 ),
               ],
@@ -534,7 +534,6 @@ class TicketView extends GetView<TicketController> {
   }
 
   Container generalProjectCard() {
-    print(controller.email);
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
@@ -549,12 +548,12 @@ class TicketView extends GetView<TicketController> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              controller.uuid ?? "SQB-14",
+              controller.uuid ?? "-",
               style: Styles.tsPrimaryBlueBold18,
             ),
             SizedBox(height: 8),
             Text(
-              controller.heading?.toUpperCase() ?? "Testing Project",
+              controller.heading?.toUpperCase() ?? "-",
               style: Styles.tsPrimaryColorSemiBold16,
             ),
             Divider(color: Color(0xffEEF2F8), thickness: 2),
@@ -568,7 +567,7 @@ class TicketView extends GetView<TicketController> {
                 ),
                 Flexible(
                   child: Text(
-                    controller.type ?? "Deployment Ticket",
+                    controller.type ?? "-",
                     style: Styles.tsPrimaryColorRegular12,
                   ),
                 ),
@@ -585,7 +584,7 @@ class TicketView extends GetView<TicketController> {
                 SizedBox(width: 50),
                 Flexible(
                   child: Text(
-                    controller.description ?? "Testing ticket Feature",
+                    controller.description ?? "-",
                     style: Styles.tsPrimaryColorRegular12,
                   ),
                 ),
@@ -601,7 +600,7 @@ class TicketView extends GetView<TicketController> {
                 ),
                 Flexible(
                   child: Text(
-                    controller.email ?? "Testing ticket Feature",
+                    controller.email ?? "-",
                     style: Styles.tsPrimaryColorRegular12,
                   ),
                 ),

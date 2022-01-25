@@ -107,6 +107,7 @@ class TicketController extends GetxController {
 
       repoResponse.data?.participants?.forEach((element) {
         updatedParticipantsList.add(element);
+        print(element.name);
       });
     }
   }

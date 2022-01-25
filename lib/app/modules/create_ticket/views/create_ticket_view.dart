@@ -525,8 +525,7 @@ class CreateTicketView extends GetView<CreateTicketController> {
                                     onChanged: (String? value) {
                                       controller.selectedParticipants.value =
                                           value ?? "";
-
-                                      controller.selectedVal.add(value!);
+                                      controller.selectedVal.add(value);
                                     },
                                   ),
                                 ),
@@ -540,7 +539,8 @@ class CreateTicketView extends GetView<CreateTicketController> {
                               children: List.generate(
                                 controller.selectedVal.length,
                                 (index) => Chip(
-                                  label: Text(controller.selectedVal[index]),
+                                  label:
+                                      Text(controller.selectedVal[index] ?? ""),
                                   backgroundColor: Color(0xffEFF2F4),
                                   elevation: 1,
                                   onDeleted: () {

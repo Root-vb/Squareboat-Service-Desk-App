@@ -40,6 +40,7 @@ class Ticket {
   String? createdBy;
   String? profilePicture;
   String? createdAt;
+
   AssignedTo? assignedTo;
 
   Ticket({
@@ -76,6 +77,7 @@ class Ticket {
     createdBy = json['createdBy'];
     profilePicture = json['profilePicture'];
     createdAt = json["createdAt"];
+
     assignedTo = json['assignedTo'] != null
         ? new AssignedTo.fromJson(json['assignedTo'])
         : null;
@@ -98,6 +100,7 @@ class Ticket {
     data['createdBy'] = this.createdBy;
     data['profilePicture'] = this.profilePicture;
     data['createdAt'] = this.createdAt;
+
     if (this.assignedTo != null) {
       data['assignedTo'] = this.assignedTo!.toJson();
     }
@@ -116,20 +119,23 @@ class FormFields {
   String? projectName;
   String? releaseNotes;
   String? deploymentSteps;
+  String? watcher;
   String? releasePriority;
 
-  FormFields(
-      {this.heading,
-      this.description,
-      this.participants,
-      this.repoName,
-      this.branchName,
-      this.environment,
-      this.managerName,
-      this.projectName,
-      this.releaseNotes,
-      this.deploymentSteps,
-      this.releasePriority});
+  FormFields({
+    this.heading,
+    this.description,
+    this.participants,
+    this.repoName,
+    this.branchName,
+    this.environment,
+    this.managerName,
+    this.projectName,
+    this.releaseNotes,
+    this.watcher,
+    this.deploymentSteps,
+    this.releasePriority,
+  });
 
   FormFields.fromJson(Map<String, dynamic> json) {
     heading = json['heading'];
@@ -142,6 +148,7 @@ class FormFields {
     projectName = json['project_name'];
     releaseNotes = json['release_notes'];
     deploymentSteps = json['deployment_steps'];
+    watcher = json['watcher'];
     releasePriority = json['release_priority'];
   }
 
@@ -157,6 +164,7 @@ class FormFields {
     data['project_name'] = this.projectName;
     data['release_notes'] = this.releaseNotes;
     data['deployment_steps'] = this.deploymentSteps;
+    data['watcher'] = this.watcher;
     data['release_priority'] = this.releasePriority;
     return data;
   }
@@ -171,14 +179,15 @@ class Participants {
   String? email;
   List<String>? roles;
 
-  Participants(
-      {this.id,
-      this.name,
-      this.profilePicture,
-      this.organizationId,
-      this.status,
-      this.email,
-      this.roles});
+  Participants({
+    this.id,
+    this.name,
+    this.profilePicture,
+    this.organizationId,
+    this.status,
+    this.email,
+    this.roles,
+  });
 
   Participants.fromJson(Map<String, dynamic> json) {
     id = json['id'];

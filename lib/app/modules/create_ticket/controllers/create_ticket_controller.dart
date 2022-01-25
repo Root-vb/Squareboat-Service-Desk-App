@@ -35,7 +35,7 @@ class CreateTicketController extends GetxController {
   HomeController controller = Get.find<HomeController>();
   var participantsList = <Participants>[].obs;
 
-  var selectedVal = <String>[].obs;
+  var selectedVal = <dynamic>[].obs;
 
   var updatedValue = "General Ticket".obs;
   var releasePriorityValue = "P0 - Service DownTime".obs;
@@ -52,7 +52,7 @@ class CreateTicketController extends GetxController {
           "type": updatedValue.value,
           "heading": generalHeadingWrapper.controller.text,
           "description": descriptionWrapper.controller.text,
-          "watcherEmail": generalWatcherEmails.controller.text,
+          "watcher": generalWatcherEmails.controller.text,
         },
         {"Authorization": 'Bearer ${Storage.getUser().access_token}'},
       );
@@ -63,10 +63,10 @@ class CreateTicketController extends GetxController {
         Get.back();
         controller.allTicket();
         Get.snackbar(
-          "Sucess",
+          "Sucess!",
           "General Ticket Created!",
           snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: AppColors.green,
+          backgroundColor: AppColors.darkWhite,
         );
 
         generalHeadingWrapper.controller.clear();
@@ -75,6 +75,18 @@ class CreateTicketController extends GetxController {
       }
     } else {
       LoadingUtils.showLoader();
+
+      List<String> uuidOfUser = [];
+
+      for (var i = 0; i < participantsList.value.length; i++) {
+        for (var j = 0; j < selectedVal.length; j++) {
+          if (selectedVal[j] == participantsList[i].name) {
+            print(participantsList[i].id);
+            uuidOfUser.add(participantsList[i].id ?? "");
+          }
+        }
+      }
+
       final _response = await _createTicketRepository.createDeploymentTicket(
         {
           // "referenceId": 34,
@@ -88,9 +100,9 @@ class CreateTicketController extends GetxController {
           "releasePriority": releasePriorityValue.value,
           "releaseNotes": releaseNotesWrapper.controller.text,
           "environment": enviromentsValue.value,
-          // "participants": selectedParticipants.value,
+          "participants": uuidOfUser,
           "deploymentSteps": deploymentStepsWrapper.controller.text,
-          "watcherEmail": deploymentWatcherEmails.controller.text,
+          "watcher": deploymentWatcherEmails.controller.text,
         },
         {"Authorization": 'Bearer ${Storage.getUser().access_token}'},
       );
@@ -103,10 +115,10 @@ class CreateTicketController extends GetxController {
         controller.allTicket();
 
         Get.snackbar(
-          "Sucess",
+          "Sucess!",
           "Deployment Ticket Created!",
           snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: AppColors.green,
+          backgroundColor: AppColors.darkWhite,
         );
 
         deploymentHeadingWrapper.controller.clear();

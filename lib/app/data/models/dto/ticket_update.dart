@@ -91,28 +91,31 @@ class TicketUpdate {
 class FormFields {
   String? heading;
   String? description;
-  List<UpdateTicketParticipants>? participants;
+  // List<String>? participants;
 
-  FormFields({this.heading, this.description, this.participants});
+  FormFields({
+    this.heading,
+    this.description,
+  });
 
   FormFields.fromJson(Map<String, dynamic> json) {
     heading = json['heading'];
     description = json['description'];
-    if (json['participants'] != null) {
-      participants = <UpdateTicketParticipants>[];
-      json['participants'].forEach((v) {
-        participants!.add(new UpdateTicketParticipants.fromJson(v));
-      });
-    }
+    // if (json['participants'] != null) {
+    //   participants = [];
+    //   json['participants'].forEach((v) {
+    //     participants!.add(v);
+    //   });
+    // }
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['heading'] = this.heading;
     data['description'] = this.description;
-    if (this.participants != null) {
-      data['participants'] = this.participants!.map((v) => v.toJson()).toList();
-    }
+    // if (this.participants != null) {
+    //   // data['participants'] = this.participants!.map((v) => v.toJson()).toList();
+    // }
     return data;
   }
 }
