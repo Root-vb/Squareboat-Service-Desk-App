@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:starter/app/theme/app_colors.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 import '../controllers/splash_controller.dart';
 

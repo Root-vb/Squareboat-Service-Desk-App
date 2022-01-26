@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:starter/app/data/models/dto/devops.dart';
 import 'package:starter/app/routes/app_pages.dart';
@@ -8,300 +9,328 @@ import 'package:starter/app/theme/styles.dart';
 import 'package:starter/widgets/cached_netwrok_image_utils.dart';
 import 'package:starter/widgets/comment_box_util.dart';
 import 'package:starter/widgets/update_section.dart';
+import 'package:starter/widgets/upper_case_formatter.dart';
 import '../controllers/ticket_controller.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 class TicketView extends GetView<TicketController> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0.0,
-        iconTheme: IconThemeData(
-          color: AppColors.primaryBlue,
+    return GestureDetector(
+      onTap: () {
+        FocusManager.instance.primaryFocus?.unfocus();
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          elevation: 0.0,
+          iconTheme: IconThemeData(
+            color: AppColors.primaryBlue,
+          ),
         ),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 30),
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              header(),
-              SizedBox(height: 40),
-              dropDown(),
-              SizedBox(height: 30),
-              controller.description == null
-                  ? deploymentProjectCard()
-                  : generalProjectCard(),
-              SizedBox(height: 40),
-              Text("People Involved", style: Styles.tsPrimaryBlueSemiBold18),
-              SizedBox(height: 25),
-              Container(
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    width: 2,
-                    color: Color(0xffECECEC),
+        body: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 30),
+          child: SingleChildScrollView(
+            keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                header(),
+                SizedBox(height: 40),
+                dropDown(),
+                SizedBox(height: 30),
+                controller.description == null
+                    ? deploymentProjectCard()
+                    : generalProjectCard(),
+                SizedBox(height: 40),
+                Text("People Involved", style: Styles.tsPrimaryBlueSemiBold18),
+                SizedBox(height: 25),
+                Container(
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      width: 2,
+                      color: Color(0xffECECEC),
+                    ),
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(12),
+                    ),
                   ),
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(12),
-                  ),
-                ),
-                child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      // SizedBox(height: 20),
-                      Text(
-                        "Created By",
-                        style: Styles.tsPrimaryColorSemiBold16,
-                      ),
-
-                      SizedBox(height: 15),
-                      Row(
-                        children: [
-                          CachedNetworkImageProviderUtils(
-                            imageUrl: controller.profilePic ?? "",
-                            height: 32,
-                            width: 32,
-                          ),
-                          SizedBox(width: 10),
-                          Text(
-                            controller.name ?? "",
-                            style: Styles.tsprimaryBlueSemiBold16,
-                          )
-                        ],
-                      ),
-
-                      SizedBox(height: 20),
-                      Text(
-                        "Assigned to",
-                        style: Styles.tsPrimaryColorSemiBold16,
-                      ),
-                      SizedBox(height: 10),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 4),
-                        child: assignedToDropDown(),
-                      ),
-                      SizedBox(height: 20),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            "Participants ",
-                            style: Styles.tsPrimaryColorSemiBold16,
-                          ),
-                          InkWell(
-                            onTap: () => controller.launchParticipants(),
-                            child: Row(
-                              children: [
-                                Icon(
-                                  CupertinoIcons.add_circled_solid,
-                                  color: AppColors.primaryBlue,
-                                  size: 16,
-                                ),
-                                SizedBox(width: 8),
-                                Text(
-                                  "Add New",
-                                  style: Styles.tsprimaryBlueSemiBold14,
-                                )
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: 20),
-                      SizedBox(
-                        height: 32,
-                        child: Obx(
-                          () => ListView.builder(
-                            scrollDirection: Axis.horizontal,
-                            shrinkWrap: true,
-                            itemCount:
-                                controller.updatedParticipantsList.length,
-                            itemBuilder: (context, index) {
-                              return Row(
-                                children: [
-                                  CachedNetworkImageProviderUtils(
-                                    imageUrl: controller
-                                            .updatedParticipantsList[index]
-                                            .profilePicture ??
-                                        "",
-                                    height: 32,
-                                    width: 32,
-                                  ),
-                                  SizedBox(width: 8)
-                                ],
-                              );
-                            },
-                          ),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 20, vertical: 30),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        // SizedBox(height: 20),
+                        Text(
+                          "Created By",
+                          style: Styles.tsPrimaryColorSemiBold16,
                         ),
-                      ),
-                      SizedBox(height: 20),
-                      Text(
-                        "Updates",
-                        style: Styles.tsPrimaryColorSemiBold16,
-                      ),
-                      SizedBox(height: 15),
 
-                      Obx(
-                        () => Column(
+                        SizedBox(height: 15),
+                        Row(
                           children: [
-                            ListView.builder(
-                              shrinkWrap: true,
-                              physics: NeverScrollableScrollPhysics(),
-                              itemCount: controller.updatedList.length > 2
-                                  ? 2
-                                  : controller.updatedList.length,
-                              itemBuilder: (context, index) {
-                                var data = controller.updatedList[index];
-                                DateTime time =
-                                    DateTime.parse(data.updatedAt ?? "");
+                            CachedNetworkImageProviderUtils(
+                              imageUrl: controller.profilePic ?? "",
+                              height: 32,
+                              width: 32,
+                            ),
+                            SizedBox(width: 10),
+                            Text(
+                              controller.name ?? "",
+                              style: Styles.tsprimaryBlueSemiBold16,
+                            )
+                          ],
+                        ),
 
-                                return Column(
+                        SizedBox(height: 20),
+                        Text(
+                          "Assigned to",
+                          style: Styles.tsPrimaryColorSemiBold16,
+                        ),
+                        SizedBox(height: 10),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 4),
+                          child: assignedToDropDown(),
+                        ),
+                        SizedBox(height: 20),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              "Participants ",
+                              style: Styles.tsPrimaryColorSemiBold16,
+                            ),
+                            InkWell(
+                              onTap: () => controller.launchParticipants(),
+                              child: Row(
+                                children: [
+                                  Icon(
+                                    CupertinoIcons.add_circled_solid,
+                                    color: AppColors.primaryBlue,
+                                    size: 16,
+                                  ),
+                                  SizedBox(width: 8),
+                                  Text(
+                                    "Add New",
+                                    style: Styles.tsprimaryBlueSemiBold14,
+                                  )
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 20),
+                        SizedBox(
+                          height: 32,
+                          child: Obx(
+                            () => ListView.builder(
+                              scrollDirection: Axis.horizontal,
+                              shrinkWrap: true,
+                              itemCount:
+                                  controller.updatedParticipantsList.length,
+                              itemBuilder: (context, index) {
+                                return Row(
                                   children: [
-                                    UpdatesSection(
-                                      name: data.updatedBy?.name ?? "",
-                                      fieldName: data.fieldName ?? "",
-                                      newValue: data.newValue ?? "",
-                                      time: time,
+                                    CachedNetworkImageProviderUtils(
+                                      imageUrl: controller
+                                              .updatedParticipantsList[index]
+                                              .profilePicture ??
+                                          "",
+                                      height: 32,
+                                      width: 32,
                                     ),
-                                    SizedBox(height: 10),
+                                    SizedBox(width: 8)
                                   ],
                                 );
                               },
                             ),
-                            controller.updatedList.length > 2
-                                ? Align(
-                                    alignment: Alignment.bottomLeft,
-                                    child: TextButton(
-                                      onPressed: () {
-                                        Get.toNamed(
-                                          Routes.SHOWUPDATE,
-                                          arguments: controller.updatedList,
-                                        );
-                                      },
-                                      child: Text(
-                                        "Show more",
-                                        style: Styles.tsprimaryBlueSemiBold12,
-                                      ),
-                                    ),
-                                  )
-                                : SizedBox(),
-                          ],
+                          ),
                         ),
+                        SizedBox(height: 20),
+                        Text(
+                          "Updates",
+                          style: Styles.tsPrimaryColorSemiBold16,
+                        ),
+                        SizedBox(height: 15),
+
+                        Obx(
+                          () => Column(
+                            children: [
+                              ListView.builder(
+                                shrinkWrap: true,
+                                physics: NeverScrollableScrollPhysics(),
+                                itemCount: controller.updatedList.length > 2
+                                    ? 2
+                                    : controller.updatedList.length,
+                                itemBuilder: (context, index) {
+                                  var data = controller.updatedList[index];
+                                  DateTime time =
+                                      DateTime.parse(data.updatedAt ?? "");
+
+                                  return Column(
+                                    children: [
+                                      UpdatesSection(
+                                        name: data.updatedBy?.name ?? "",
+                                        fieldName: data.fieldName ?? "",
+                                        newValue: data.newValue ?? "",
+                                        time: time,
+                                      ),
+                                      SizedBox(height: 10),
+                                    ],
+                                  );
+                                },
+                              ),
+                              controller.updatedList.length > 2
+                                  ? Align(
+                                      alignment: Alignment.bottomLeft,
+                                      child: TextButton(
+                                        onPressed: () {
+                                          Get.toNamed(
+                                            Routes.SHOWUPDATE,
+                                            arguments: controller.updatedList,
+                                          );
+                                        },
+                                        child: Text(
+                                          "Show more",
+                                          style: Styles.tsprimaryBlueSemiBold12,
+                                        ),
+                                      ),
+                                    )
+                                  : SizedBox(),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                SizedBox(height: 30),
+                Text("Comments", style: Styles.tsPrimaryBlueSemiBold18),
+                SizedBox(height: 30),
+                Obx(
+                  () => Column(
+                    children: [
+                      ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: controller.commentList.length > 2
+                            ? 2
+                            : controller.commentList.length,
+                        physics: NeverScrollableScrollPhysics(),
+                        itemBuilder: (context, index) {
+                          var data = controller.commentList[index];
+                          DateTime time = DateTime.parse(data.createdAt ?? "");
+
+                          return CommentUtils(
+                            imageUrl: data.user?.profilePicture ?? "",
+                            name: data.user?.name ?? "",
+                            time: timeago.format(time),
+                            comments: data.description ?? "",
+                          );
+                        },
                       ),
+                      controller.commentList.length > 2
+                          ? Align(
+                              alignment: Alignment.bottomRight,
+                              child: TextButton(
+                                onPressed: () {
+                                  Get.toNamed(
+                                    Routes.SHOWCOMMENTS,
+                                    arguments: controller.commentList,
+                                  );
+                                },
+                                child: Text(
+                                  "Show more",
+                                  style: Styles.tsprimaryBlueSemiBold12,
+                                ),
+                              ),
+                            )
+                          : SizedBox(),
                     ],
                   ),
                 ),
-              ),
-              SizedBox(height: 30),
-              Text("Comments", style: Styles.tsPrimaryBlueSemiBold18),
-              SizedBox(height: 30),
-              Obx(
-                () => Column(
+                SizedBox(height: 30),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: controller.commentList.length > 2
-                          ? 2
-                          : controller.commentList.length,
-                      physics: NeverScrollableScrollPhysics(),
-                      itemBuilder: (context, index) {
-                        var data = controller.commentList[index];
-                        DateTime time = DateTime.parse(data.createdAt ?? "");
-
-                        return CommentUtils(
-                          imageUrl: data.user?.profilePicture ?? "",
-                          name: data.user?.name ?? "",
-                          time: timeago.format(time),
-                          comments: data.description ?? "",
-                        );
-                      },
-                    ),
-                    controller.commentList.length > 2
-                        ? Align(
-                            alignment: Alignment.bottomRight,
-                            child: TextButton(
-                              onPressed: () {
-                                Get.toNamed(
-                                  Routes.SHOWCOMMENTS,
-                                  arguments: controller.commentList,
-                                );
-                              },
-                              child: Text(
-                                "Show more",
-                                style: Styles.tsprimaryBlueSemiBold12,
-                              ),
-                            ),
-                          )
-                        : SizedBox(),
-                  ],
-                ),
-              ),
-              SizedBox(height: 30),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Expanded(
-                    child: Container(
-                      padding: EdgeInsets.all(10),
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          width: 2,
-                          color: AppColors.grey,
-                        ),
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(7.0),
-                        ),
-                      ),
+                    Expanded(
                       child: TextField(
                         controller: controller.commentController,
                         maxLines: 4,
+                        inputFormatters: [UpperCaseTextFormatter()],
+                        keyboardType: TextInputType.text,
+                        textCapitalization: TextCapitalization.words,
+                        onSubmitted: (value) async {
+                          FocusScope.of(context).unfocus();
+                        },
                         decoration: InputDecoration(
                           hintText: "  Post a comment...",
-                          border: InputBorder.none,
                           hintStyle: Styles.tsPrimaryColorSemiBold14.copyWith(
                             color: AppColors.primaryColor.withOpacity(0.37),
+                          ),
+                          errorBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Color(0xff595C97),
+                              width: 0.1,
+                            ),
+                            borderRadius: BorderRadius.circular(8.0),
+                          ),
+                          border: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Color(0xff595C97),
+                              width: 0.1,
+                            ),
+                            borderRadius: BorderRadius.circular(8.0),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              width: 0.1,
+                              color: Color(0xff595C97),
+                            ),
+                            borderRadius: BorderRadius.circular(8.0),
+                          ),
+                          disabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Color(0xff595C97),
+                              width: 0.1,
+                            ),
+                            borderRadius: BorderRadius.circular(8.0),
+                          ),
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+                SizedBox(height: 15),
+                Align(
+                  alignment: Alignment.bottomRight,
+                  child: InkWell(
+                    onTap: () => controller.postAllComments(context),
+                    child: Container(
+                      width: 65,
+                      height: 29,
+                      decoration: BoxDecoration(
+                        color: AppColors.green,
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(6.0),
+                        ),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8),
+                        child: Center(
+                          child: Text(
+                            "Post",
+                            style: Styles.tsWhiteSemiBold12,
                           ),
                         ),
                       ),
                     ),
-                  )
-                ],
-              ),
-              SizedBox(height: 15),
-              Align(
-                alignment: Alignment.bottomRight,
-                child: InkWell(
-                  onTap: () => controller.postAllComments(),
-                  child: Container(
-                    width: 65,
-                    height: 29,
-                    decoration: BoxDecoration(
-                      color: AppColors.green,
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(6.0),
-                      ),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 8),
-                      child: Center(
-                        child: Text(
-                          "Post",
-                          style: Styles.tsWhiteSemiBold12,
-                        ),
-                      ),
-                    ),
                   ),
                 ),
-              ),
-              SizedBox(height: 50),
-            ],
+                SizedBox(height: 50),
+              ],
+            ),
           ),
         ),
       ),

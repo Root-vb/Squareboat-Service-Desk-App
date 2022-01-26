@@ -17,24 +17,26 @@ class ShowcommentsView extends GetView<ShowcommentsController> {
           color: AppColors.primaryBlue,
         ),
       ),
-      body: Obx(
-        () => Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 25),
-          child: ListView.builder(
-            shrinkWrap: true,
-            itemCount: controller.allComments.length,
-            physics: NeverScrollableScrollPhysics(),
-            itemBuilder: (context, index) {
-              var data = controller.allComments[index];
-              DateTime time = DateTime.parse(data.createdAt ?? "");
+      body: SingleChildScrollView(
+        child: Obx(
+          () => Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 25),
+            child: ListView.builder(
+              shrinkWrap: true,
+              itemCount: controller.allComments.length,
+              physics: NeverScrollableScrollPhysics(),
+              itemBuilder: (context, index) {
+                var data = controller.allComments[index];
+                DateTime time = DateTime.parse(data.createdAt ?? "");
 
-              return CommentUtils(
-                imageUrl: data.user?.profilePicture ?? "",
-                name: data.user?.name ?? "",
-                time: timeago.format(time),
-                comments: data.description ?? "",
-              );
-            },
+                return CommentUtils(
+                  imageUrl: data.user?.profilePicture ?? "",
+                  name: data.user?.name ?? "",
+                  time: timeago.format(time),
+                  comments: data.description ?? "",
+                );
+              },
+            ),
           ),
         ),
       ),

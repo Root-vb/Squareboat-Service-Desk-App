@@ -10,44 +10,47 @@ import '../controllers/home_controller.dart';
 class HomeView extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0.0,
-      ),
-      body: RefreshIndicator(
-        onRefresh: () => controller.allTicket(),
-        child: SingleChildScrollView(
-          controller: controller.scrollController,
-          child: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 25),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "All Tickets",
-                      style: Styles.tsPrimaryColorSemiBold28,
-                    ),
-                    CustomButton(onPressed: () {
-                      Get.toNamed(Routes.CREATE_TICKET);
-                    })
-                  ],
+    return GestureDetector(
+      onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          elevation: 0.0,
+        ),
+        body: RefreshIndicator(
+          onRefresh: () => controller.allTicket(),
+          child: SingleChildScrollView(
+            controller: controller.scrollController,
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 25),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "All Tickets",
+                        style: Styles.tsPrimaryColorSemiBold28,
+                      ),
+                      CustomButton(onPressed: () {
+                        Get.toNamed(Routes.CREATE_TICKET);
+                      })
+                    ],
+                  ),
                 ),
-              ),
-              SizedBox(height: 40),
-              Obx(
-                () => ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: controller.ticketList.length,
-                  physics: NeverScrollableScrollPhysics(),
-                  itemBuilder: (context, index) {
-                    return ticketItem(index);
-                  },
-                ),
-              )
-            ],
+                SizedBox(height: 40),
+                Obx(
+                  () => ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: controller.ticketList.length,
+                    physics: NeverScrollableScrollPhysics(),
+                    itemBuilder: (context, index) {
+                      return ticketItem(index);
+                    },
+                  ),
+                )
+              ],
+            ),
           ),
         ),
       ),

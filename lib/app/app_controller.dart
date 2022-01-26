@@ -22,6 +22,7 @@ class AppController extends BaseController<ConfigRepository> {
       title: "Session Expired!",
       text: 'Login Again to continue',
       icon: (Icons.logout),
+      isSecondryButtonVisible: true,
       action1: () => Get.back(),
       action2: logout,
       actionText1: "Cancel",
@@ -45,7 +46,7 @@ class AppController extends BaseController<ConfigRepository> {
       text: 'Login Again with your registered domain',
       icon: (Icons.logout),
       action1: () => Get.back(),
-      action2: logout,
+      action2: () => logout(),
       actionText1: "Cancel",
       actionText2: "Sign Out",
     ));

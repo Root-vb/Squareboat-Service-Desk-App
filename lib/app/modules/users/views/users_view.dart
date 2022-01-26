@@ -56,6 +56,7 @@ class UsersView extends GetView<UsersController> {
                 ListView.builder(
                   shrinkWrap: true,
                   itemCount: controller.participantsList.length,
+                  physics: NeverScrollableScrollPhysics(),
                   itemBuilder: (context, index) {
                     return Obx(
                       () => CheckboxListTile(

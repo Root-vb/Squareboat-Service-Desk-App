@@ -25,6 +25,7 @@ class CreateTicketView extends GetView<CreateTicketController> {
         padding: const EdgeInsets.symmetric(horizontal: 12),
         child: Obx(
           () => SingleChildScrollView(
+            keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
             scrollDirection: Axis.vertical,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,

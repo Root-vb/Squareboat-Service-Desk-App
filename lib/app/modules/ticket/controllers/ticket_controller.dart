@@ -11,6 +11,7 @@ import 'package:starter/app/data/repository/perform_action_repository.dart';
 import 'package:starter/app/data/repository/profile_repository.dart';
 import 'package:starter/app/data/repository/ticket_update_repository.dart';
 import 'package:starter/app/routes/app_pages.dart';
+import 'package:starter/utils/loading/loading_utils.dart';
 import 'package:starter/utils/storage/storage_utils.dart';
 
 class TicketController extends GetxController {
@@ -74,12 +75,18 @@ class TicketController extends GetxController {
     }
   }
 
-  Future<void> postAllComments() async {
+  Future<void> postAllComments(BuildContext context) async {
+    LoadingUtils.showLoader();
+
     final response = await commentRepository.postComments(uuid!, {
       "description": commentController.text,
     }, {
       "Authorization": 'Bearer ${Storage.getUser().access_token}',
     });
+
+    LoadingUtils.hideLoader();
+
+    FocusScope.of(context).unfocus();
 
     if (response.error == null) {
       print("Ticket create successfully!");
@@ -243,7 +250,7 @@ class TicketController extends GetxController {
 
     fetchAllComments();
 
-    postAllComments();
+    // postAllComments();
 
     // getAllParticipants();
 

@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:starter/app/theme/app_colors.dart';
 import 'package:starter/app/theme/styles.dart';
 import 'package:starter/utils/helper/text_field_wrapper.dart';
+import 'package:starter/widgets/upper_case_formatter.dart';
 
 class CustomTextField extends StatelessWidget {
   final String hintText;
@@ -11,6 +12,7 @@ class CustomTextField extends StatelessWidget {
   final TextInputType inputType;
   final TextFieldWrapper wrapper;
   final bool isEnabled;
+  Function()? onSubmitted;
 
   CustomTextField({
     required this.wrapper,
@@ -19,6 +21,7 @@ class CustomTextField extends StatelessWidget {
     this.maxLength,
     this.inputType = TextInputType.text,
     this.isEnabled = true,
+    this.onSubmitted,
   });
 
   @override
@@ -26,9 +29,11 @@ class CustomTextField extends StatelessWidget {
     return Obx(
       () => TextField(
         controller: wrapper.controller,
-        style: Styles.tsPrimaryColorSemiBold14,
+        style: Styles.tsPrimaryColorRegular14,
         maxLength: maxLength,
         keyboardType: inputType,
+        inputFormatters: [UpperCaseTextFormatter()],
+        onSubmitted: (_) => onSubmitted,
         enabled: isEnabled,
         decoration: InputDecoration(
           errorText: wrapper.errorText.isEmpty ? null : wrapper.errorText,

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:starter/app/modules/auth/login/controllers/auth_login_controller.dart';
 import 'package:starter/app/theme/styles.dart';
@@ -65,9 +64,9 @@ class AuthLoginView extends GetView<AuthLoginController> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Padding(
-            padding: const EdgeInsets.only(left: 4, top: 4, bottom: 4),
+            padding: const EdgeInsets.only(left: 5, top: 4, bottom: 5),
             child: Container(
-              width: 48,
+              width: 38,
               height: 35,
               color: Colors.white,
               child: Padding(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:starter/app/theme/app_colors.dart';
 import 'package:starter/app/theme/styles.dart';
 
@@ -8,6 +9,7 @@ class DialogWidget extends StatelessWidget {
   final IconData icon;
   final VoidCallback action1;
   final VoidCallback action2;
+  final bool isSecondryButtonVisible;
 
   final String actionText1;
   final String actionText2;
@@ -21,6 +23,7 @@ class DialogWidget extends StatelessWidget {
     required this.action2,
     required this.actionText1,
     required this.actionText2,
+    this.isSecondryButtonVisible = false,
     this.isTextCentreAligned = false,
   });
   @override
@@ -53,7 +56,8 @@ class DialogWidget extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                TextButton(onPressed: action1, child: Text(actionText1)),
+                if (isSecondryButtonVisible)
+                  TextButton(onPressed: action1, child: Text(actionText1)),
                 TextButton(onPressed: action2, child: Text(actionText2)),
               ],
             )
