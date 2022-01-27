@@ -30,7 +30,10 @@ class UsersView extends GetView<UsersController> {
                   padding: EdgeInsets.symmetric(horizontal: 8, vertical: 12),
                   style: Styles.tsPrimaryColorRegular14,
                   onSubmitted: (value) {
-                    controller.searchController.text = value;
+                    controller.onSearchTextChanged(value, context);
+                  },
+                  onChanged: (String text) {
+                    controller.onSearchTextChanged(text, context);
                   },
                 ),
                 SizedBox(height: 20),
@@ -53,27 +56,59 @@ class UsersView extends GetView<UsersController> {
                   spacing: 5,
                 ),
                 SizedBox(height: 20),
-                ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: controller.participantsList.length,
-                  physics: NeverScrollableScrollPhysics(),
-                  itemBuilder: (context, index) {
-                    return Obx(
-                      () => CheckboxListTile(
-                        title: Text(
-                          controller.participantsList[index].name ?? "",
-                          style: Styles.tsPrimaryColorRegular14,
-                        ),
-                        value: controller.users
-                            .contains(controller.participantsList[index].id),
-                        onChanged: (bool? value) {
-                          controller.addUser(index, value);
+                !controller.showSearchResult.value
+                    ? ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: controller.participantsList.length,
+                        physics: NeverScrollableScrollPhysics(),
+                        itemBuilder: (context, index) {
+                          return Obx(
+                            () => CheckboxListTile(
+                              title: Text(
+                                controller.participantsList[index].name ?? "",
+                                style: Styles.tsPrimaryColorRegular14,
+                              ),
+                              value: controller.users.contains(
+                                  controller.participantsList[index].id),
+                              onChanged: (bool? value) {
+                                controller.addUser(index, value);
+                              },
+                              activeColor: AppColors.darkGrey,
+                            ),
+                          );
                         },
-                        activeColor: AppColors.darkGrey,
+                      )
+                    : ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: controller.searchList.length,
+                        physics: NeverScrollableScrollPhysics(),
+                        itemBuilder: (context, index) {
+                          return Obx(
+                            () => CheckboxListTile(
+                              title: Text(
+                                controller.searchList[index].name ?? "",
+                                style: Styles.tsPrimaryColorRegular14,
+                              ),
+                              value: controller.users
+                                  .contains(controller.searchList[index].id),
+                              onChanged: (bool? value) {
+                                int newIndex = 0;
+
+                                for (var i = 0;
+                                    i < controller.participantsList.length;
+                                    i++) {
+                                  if (controller.participantsList[i].name ==
+                                      controller.searchList[index].name) {
+                                    newIndex = i;
+                                  }
+                                }
+                                controller.addUser(newIndex, value);
+                              },
+                              activeColor: AppColors.darkGrey,
+                            ),
+                          );
+                        },
                       ),
-                    );
-                  },
-                ),
                 SizedBox(height: 20),
                 Center(
                   child: InkWell(

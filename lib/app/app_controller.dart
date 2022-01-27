@@ -40,6 +40,21 @@ class AppController extends BaseController<ConfigRepository> {
     );
   }
 
+  connectionTimedOut() {
+    Get.dialog(DialogWidget(
+      title: "Connection timed out",
+      text: 'Please check your internet connection',
+      icon: (Icons.logout),
+      isSecondryButtonVisible: true,
+      action1: () => Get.back(),
+      action2: () {
+        Get.back();
+      },
+      actionText1: "Okay",
+      actionText2: "Okay",
+    ));
+  }
+
   showLogoutDialogOfDomainNotRegistered() {
     Get.dialog(DialogWidget(
       title: "Your Domain is not registered!",

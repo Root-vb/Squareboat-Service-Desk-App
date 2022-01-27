@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:starter/app/data/models/dto/devops.dart';
 import 'package:starter/app/routes/app_pages.dart';
@@ -528,9 +527,11 @@ class TicketView extends GetView<TicketController> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  "Deployment Steps",
-                  style: Styles.tsprimaryIndigoSemiBold12,
+                Flexible(
+                  child: Text(
+                    "Deployment Steps",
+                    style: Styles.tsprimaryIndigoSemiBold12,
+                  ),
                 ),
                 SizedBox(width: 40),
                 Flexible(
@@ -545,13 +546,18 @@ class TicketView extends GetView<TicketController> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  "Watcher email",
-                  style: Styles.tsprimaryIndigoSemiBold12,
+                Flexible(
+                  child: Text(
+                    "Watcher email",
+                    style: Styles.tsprimaryIndigoSemiBold12,
+                  ),
                 ),
-                Text(
-                  controller.email ?? "-",
-                  style: Styles.tsPrimaryColorRegular12,
+                // SizedBox(width: 50),
+                Flexible(
+                  child: Text(
+                    controller.email ?? "-",
+                    style: Styles.tsPrimaryColorRegular12,
+                  ),
                 ),
               ],
             ),

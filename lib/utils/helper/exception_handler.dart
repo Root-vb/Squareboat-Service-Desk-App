@@ -19,6 +19,7 @@ class ExceptionHandler {
         case DioErrorType.sendTimeout:
           return APIException(message: ErrorMessages.noInternet);
         case DioErrorType.connectTimeout:
+          AppController().serverNotAvilableDialog();
           return APIException(message: ErrorMessages.connectionTimeout);
         case DioErrorType.response:
           if (error.response?.statusCode == 503) {

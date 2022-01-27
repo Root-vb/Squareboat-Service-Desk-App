@@ -40,6 +40,28 @@ class UsersController extends GetxController {
     }
   }
 
+  var searchList = <Participants>[].obs;
+  final RxBool showSearchResult = false.obs;
+
+  onSearchTextChanged(String text, BuildContext context) async {
+    searchList.clear();
+    if (text.isEmpty) {
+      showSearchResult.value = false;
+      return;
+    } else {
+      searchList.value = participantsList
+          .where((value) =>
+              value.name?.toLowerCase().startsWith(text.toLowerCase()) ?? true)
+          .toList();
+
+      showSearchResult.value = true;
+
+      searchList.forEach((element) {
+        print(element.name);
+      });
+    }
+  }
+
   onBackPressed() {
     Get.back(result: users.value);
   }
