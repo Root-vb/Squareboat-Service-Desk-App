@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:starter/app/theme/app_colors.dart';
 import 'package:starter/app/theme/styles.dart';
@@ -13,6 +14,8 @@ class CustomTextField extends StatelessWidget {
   final TextFieldWrapper wrapper;
   final bool isEnabled;
   Function()? onSubmitted;
+  final TextInputAction textInputAction;
+  List<TextInputFormatter>? inputformator;
 
   CustomTextField({
     required this.wrapper,
@@ -22,6 +25,8 @@ class CustomTextField extends StatelessWidget {
     this.inputType = TextInputType.text,
     this.isEnabled = true,
     this.onSubmitted,
+    required this.textInputAction,
+    this.inputformator,
   });
 
   @override
@@ -32,12 +37,13 @@ class CustomTextField extends StatelessWidget {
         style: Styles.tsPrimaryColorRegular14,
         maxLength: maxLength,
         keyboardType: inputType,
-        inputFormatters: [UpperCaseTextFormatter()],
+        inputFormatters: inputformator,
         onSubmitted: (_) => onSubmitted,
         enabled: isEnabled,
+        textInputAction: textInputAction,
         decoration: InputDecoration(
           errorText: wrapper.errorText.isEmpty ? null : wrapper.errorText,
-          errorStyle: Styles.tsPrimaryColorRegular18,
+          errorStyle: Styles.tsPrimaryColorRegular14,
           counterText: '',
           fillColor: AppColors.white,
           filled: true,

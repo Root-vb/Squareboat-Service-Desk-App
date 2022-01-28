@@ -50,7 +50,7 @@ class TicketController extends GetxController {
   String? environment;
   String? releaseNotes;
   String? deploymentSteps;
-  String? email;
+  late String email;
   String? status;
 
   final items = [
@@ -245,6 +245,8 @@ class TicketController extends GetxController {
     deploymentSteps = data['deploymentSteps'];
     email = data['email'];
     status = data['ticketStatus'];
+
+    print(email);
 
     ticketStatus.value = status ?? "New";
 

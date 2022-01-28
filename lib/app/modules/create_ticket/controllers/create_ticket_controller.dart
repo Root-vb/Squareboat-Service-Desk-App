@@ -42,8 +42,83 @@ class CreateTicketController extends GetxController {
   var enviromentsValue = "Testing - For Developers and QA".obs;
   var isGeneralTicket = true.obs;
   var selectedParticipants = "Select Participants".obs;
+  String errorText = "Please fill in this feild";
+
+  bool validator() {
+    bool hasError = false;
+    if (isGeneralTicket.isTrue) {
+      if (generalHeadingWrapper.controller.text.isEmpty) {
+        generalHeadingWrapper.errorText = errorText;
+        hasError = true;
+      } else {
+        generalHeadingWrapper.errorText = '';
+      }
+      if (descriptionWrapper.controller.text.isEmpty) {
+        descriptionWrapper.errorText = errorText;
+        hasError = true;
+      } else {
+        descriptionWrapper.errorText = '';
+      }
+    } else {
+      if (deploymentHeadingWrapper.controller.text.isEmpty) {
+        deploymentHeadingWrapper.errorText = errorText;
+        hasError = true;
+      } else {
+        deploymentHeadingWrapper.errorText = '';
+      }
+
+      if (projectManagerWrapper.controller.text.isEmpty) {
+        projectManagerWrapper.errorText = errorText;
+        hasError = true;
+      } else {
+        projectManagerWrapper.errorText = '';
+      }
+
+      if (projectNameWrapper.controller.text.isEmpty) {
+        projectNameWrapper.errorText = errorText;
+        hasError = true;
+      } else {
+        projectNameWrapper.errorText = '';
+      }
+
+      if (repoNameWrapper.controller.text.isEmpty) {
+        repoNameWrapper.errorText = errorText;
+        hasError = true;
+      } else {
+        repoNameWrapper.errorText = '';
+      }
+
+      if (branchNameWrapper.controller.text.isEmpty) {
+        branchNameWrapper.errorText = errorText;
+        hasError = true;
+      } else {
+        branchNameWrapper.errorText = '';
+      }
+
+      if (releaseNotesWrapper.controller.text.isEmpty) {
+        releaseNotesWrapper.errorText = errorText;
+        hasError = true;
+      } else {
+        releaseNotesWrapper.errorText = '';
+      }
+
+      if (deploymentStepsWrapper.controller.text.isEmpty) {
+        deploymentStepsWrapper.errorText = errorText;
+        hasError = true;
+      } else {
+        deploymentStepsWrapper.errorText = '';
+      }
+    }
+    return hasError;
+  }
 
   createTicket() async {
+    final hasError = validator();
+
+    if (hasError) {
+      return;
+    }
+
     if (isGeneralTicket.isTrue) {
       LoadingUtils.showLoader();
 
@@ -61,7 +136,7 @@ class CreateTicketController extends GetxController {
 
       if (_response.error == null) {
         Get.back();
-        controller.allTicket();
+        controller.onRefresh();
         Get.snackbar(
           "Sucess!",
           "General Ticket Created!",
@@ -112,7 +187,7 @@ class CreateTicketController extends GetxController {
       if (_response.error == null) {
         Get.back();
 
-        controller.allTicket();
+        controller.onRefresh();
 
         Get.snackbar(
           "Sucess!",

@@ -555,7 +555,7 @@ class TicketView extends GetView<TicketController> {
                 // SizedBox(width: 50),
                 Flexible(
                   child: Text(
-                    controller.email ?? "-",
+                    controller.email.isEmpty ? '-' : controller.email,
                     style: Styles.tsPrimaryColorRegular12,
                   ),
                 ),
@@ -635,7 +635,7 @@ class TicketView extends GetView<TicketController> {
                 ),
                 Flexible(
                   child: Text(
-                    controller.email ?? "-",
+                    controller.email.isEmpty ? "-" : controller.email,
                     style: Styles.tsPrimaryColorRegular12,
                   ),
                 ),
