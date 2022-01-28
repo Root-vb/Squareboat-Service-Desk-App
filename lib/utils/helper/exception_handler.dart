@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:starter/app/app_controller.dart';
 import 'package:starter/app/data/models/response/error_response.dart';
 import 'package:starter/app/data/values/strings.dart';
+import 'package:starter/utils/loading/loading_utils.dart';
 
 class APIException implements Exception {
   final String message;
@@ -19,11 +20,11 @@ class ExceptionHandler {
         case DioErrorType.sendTimeout:
           return APIException(message: ErrorMessages.noInternet);
         case DioErrorType.connectTimeout:
-          AppController().serverNotAvilableDialog();
+          LoadingUtils().serverNotAvilableDialog();
           return APIException(message: ErrorMessages.connectionTimeout);
         case DioErrorType.response:
           if (error.response?.statusCode == 503) {
-            AppController().serverNotAvilableDialog();
+            LoadingUtils().serverNotAvilableDialog();
 
             return APIException(
                 message: ErrorResponse.fromJson(error.response?.data).message);
