@@ -16,14 +16,13 @@ class HomeController extends GetxController {
 
   var ticketList = <Ticket>[].obs;
   var devopsLists = <Devops>[].obs;
-  final RxList<String> storeStatusList = RxList<String>();
-  final RxList<String> assignedDevopsList = RxList<String>();
+  var storeStatusList = <String>[].obs;
+  var assignedDevopsList = <String>[].obs;
 
   var isChecked = ''.obs;
 
   int? totalPage;
   int currentPage = 1;
-  var assignedUserId = ''.obs;
 
   final statusList = [
     "New",
@@ -71,11 +70,10 @@ class HomeController extends GetxController {
     }, status: {
       'pagination': 'true',
       'page': '$page',
-      'assignedTo': assignedDevopsList.join(','),
-      'status': storeStatusList.join(','),
+      'assignedTo':
+          assignedDevopsList.length == 0 ? '' : assignedDevopsList.join(','),
+      'status': storeStatusList.length == 0 ? '' : storeStatusList.join(','),
     });
-
-    print(assignedDevopsList.join(','));
 
     if (repoResponse.error == null) {
       repoResponse.data?.data?.forEach((element) {
@@ -83,8 +81,6 @@ class HomeController extends GetxController {
         totalPage = repoResponse.data?.pagination?.totalPages;
       });
     }
-
-    print('length ${ticketList.length}');
   }
 
   Future<void> onRefresh() async {
@@ -93,10 +89,14 @@ class HomeController extends GetxController {
     currentPage = 1;
   }
 
-  applyFilter() async {
+  Future<void> applyFilter() async {
     ticketList.clear();
     LoadingUtils.showLoader();
+
+    currentPage = 1;
+
     await allTicket();
+
     Get.back();
     LoadingUtils.hideLoader();
   }
@@ -122,6 +122,7 @@ class HomeController extends GetxController {
 
     allTicket();
     fetchAllDevops();
+
     print(Storage.getUser().access_token);
 
     super.onInit();

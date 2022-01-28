@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:starter/app/data/repository/config_repository.dart';
 import 'package:starter/app/routes/app_pages.dart';
-import 'package:starter/app/theme/app_colors.dart';
 import 'package:starter/base/base_controller.dart';
 import 'package:starter/utils/storage/storage_utils.dart';
 import 'package:starter/widgets/dialog/dialog_widget.dart';

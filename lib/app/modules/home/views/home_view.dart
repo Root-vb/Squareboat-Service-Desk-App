@@ -25,7 +25,7 @@ class HomeView extends GetView<HomeController> {
               DraggableScrollableSheet(
                 initialChildSize: .3,
                 minChildSize: .1,
-                maxChildSize: 0.8,
+                maxChildSize: 0.856,
                 builder:
                     (BuildContext context, ScrollController scrollController) {
                   return SingleChildScrollView(
@@ -36,43 +36,68 @@ class HomeView extends GetView<HomeController> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Padding(
-                            padding: const EdgeInsets.all(8.0),
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 10, horizontal: 24),
                             child: Text(
                               "Filter",
                               style: Styles.tsPrimaryColorBold19,
                             ),
                           ),
                           Padding(
-                            padding: const EdgeInsets.all(8.0),
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 8, horizontal: 24),
                             child: Text(
                               "Status",
                               style: Styles.tsPrimaryColorBold19,
                             ),
                           ),
-                          ListView.builder(
-                            shrinkWrap: true,
-                            physics: NeverScrollableScrollPhysics(),
-                            itemCount: controller.statusList.length,
-                            itemBuilder: (context, index) {
-                              return Obx(
-                                () => CheckboxListTile(
-                                  title: Text(controller.statusList[index]),
-                                  value: controller.storeStatusList
-                                      .contains(controller.statusList[index]),
-                                  dense: true,
-                                  onChanged: (value) {
-                                    controller.addStatus(index, value);
-                                  },
-                                ),
-                              );
-                            },
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 24),
+                            child:
+                                Divider(color: Color(0xffEEF2F8), thickness: 2),
                           ),
                           Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text("Assigned To"),
+                            padding: const EdgeInsets.symmetric(horizontal: 14),
+                            child: ListView.builder(
+                              shrinkWrap: true,
+                              physics: NeverScrollableScrollPhysics(),
+                              itemCount: controller.statusList.length,
+                              itemBuilder: (context, index) {
+                                return Obx(
+                                  () => CheckboxListTile(
+                                    title: Text(
+                                      controller.statusList[index],
+                                      style: Styles.tsPrimaryColorRegular12,
+                                    ),
+                                    value: controller.storeStatusList
+                                        .contains(controller.statusList[index]),
+                                    dense: true,
+                                    onChanged: (value) {
+                                      controller.addStatus(index, value);
+                                    },
+                                    checkColor: AppColors.white,
+                                    activeColor: AppColors.primaryBlue,
+                                  ),
+                                );
+                              },
+                            ),
                           ),
-                          Obx(
-                            () => ListView.builder(
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 24),
+                            child:
+                                Divider(color: Color(0xffEEF2F8), thickness: 2),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 8, horizontal: 24),
+                            child: Text(
+                              "Assigned To",
+                              style: Styles.tsPrimaryColorBold19,
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 14),
+                            child: ListView.builder(
                               shrinkWrap: true,
                               physics: NeverScrollableScrollPhysics(),
                               itemCount: controller.devopsLists.length,
@@ -80,8 +105,9 @@ class HomeView extends GetView<HomeController> {
                                 return Obx(
                                   () => CheckboxListTile(
                                     title: Text(
-                                        controller.devopsLists[index].name ??
-                                            ""),
+                                      controller.devopsLists[index].name ?? "",
+                                      style: Styles.tsPrimaryColorRegular12,
+                                    ),
                                     value: controller.assignedDevopsList
                                         .contains(
                                             controller.devopsLists[index].id),
@@ -90,50 +116,55 @@ class HomeView extends GetView<HomeController> {
                                       controller.addAssignedDevops(
                                           index, value);
                                     },
+                                    checkColor: AppColors.white,
+                                    activeColor: AppColors.primaryBlue,
                                   ),
                                 );
                               },
                             ),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Container(
-                              height: 60,
-                              child: Row(
-                                children: [
-                                  Expanded(
-                                    child: InkWell(
-                                      onTap: () {
-                                        Get.back();
-                                      },
-                                      child: Container(
-                                        height: 50,
-                                        width:
-                                            MediaQuery.of(context).size.width /
-                                                2,
-                                        color: Colors.amber,
-                                        child: Center(child: Text("CANCEL")),
-                                      ),
+                          SizedBox(height: 10),
+                          Container(
+                            height: 50,
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  child: InkWell(
+                                    onTap: () {
+                                      Get.back();
+                                    },
+                                    child: Container(
+                                      height: 50,
+                                      width:
+                                          MediaQuery.of(context).size.width / 2,
+                                      color: AppColors.grey,
+                                      child: Center(
+                                          child: Text(
+                                        "CANCEL",
+                                        style: Styles.tsPrimaryColorSemiBold14,
+                                      )),
                                     ),
                                   ),
-                                  Expanded(
-                                    child: InkWell(
-                                      onTap: () {
-                                        controller.applyFilter();
-                                      },
-                                      child: Container(
-                                        height: 50,
-                                        width:
-                                            MediaQuery.of(context).size.width /
-                                                2,
-                                        color: Colors.red,
-                                        child:
-                                            Center(child: Text("Apply Filter")),
-                                      ),
+                                ),
+                                Expanded(
+                                  child: InkWell(
+                                    onTap: () {
+                                      controller.applyFilter();
+                                    },
+                                    child: Container(
+                                      height: 50,
+                                      width:
+                                          MediaQuery.of(context).size.width / 2,
+                                      color: AppColors.primaryBlue,
+                                      child: Center(
+                                          child: Text(
+                                        " APPLY",
+                                        style: Styles.tsWhiteSemiBold14,
+                                      )),
                                     ),
                                   ),
-                                ],
-                              ),
+                                ),
+                              ],
                             ),
                           )
                         ],
