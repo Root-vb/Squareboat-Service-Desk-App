@@ -10,9 +10,9 @@ class AppColors {
   static final shimmerBaseColor = Colors.grey[200]!;
   static final shimmerHighlightColor = Colors.grey[350]!;
   static const grey = Color(0xffF4F4F4);
-  static const lightBlueOpactiy40 = Color(0xa2f75fd);
+  static const lightBlueOpactiy40 = Color(0x1a2f75fd);
   static const lightBlueOpacity100 = Color(0xff2f75fd);
-  static const lightBlue = Color(0xffC1D7FF);
+  static const lightBlue = Color(0xffc1d7ff);
   static const darkGrey = Color(0xff8E8686);
   static const lightGrey = Color(0xFFBAC3D280);
   static const darkWhite = Color.fromRGBO(47, 117, 253, 0.1);

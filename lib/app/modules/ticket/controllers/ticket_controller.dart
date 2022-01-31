@@ -6,11 +6,13 @@ import 'package:starter/app/data/models/dto/myprofile.dart';
 import 'package:starter/app/data/models/dto/response.dart';
 import 'package:starter/app/data/models/dto/ticket_update.dart';
 import 'package:starter/app/data/repository/comment_repository.dart';
+import 'package:starter/app/data/repository/delete_ticket_repository.dart';
 import 'package:starter/app/data/repository/devops_repository.dart';
 import 'package:starter/app/data/repository/perform_action_repository.dart';
 import 'package:starter/app/data/repository/profile_repository.dart';
 import 'package:starter/app/data/repository/ticket_update_repository.dart';
 import 'package:starter/app/routes/app_pages.dart';
+import 'package:starter/utils/helper/text_field_wrapper.dart';
 import 'package:starter/utils/loading/loading_utils.dart';
 import 'package:starter/utils/storage/storage_utils.dart';
 
@@ -22,8 +24,10 @@ class TicketController extends GetxController {
   TicketUpdateRepository ticketUpdateRepository = TicketUpdateRepository();
   CommentRepository commentRepository = CommentRepository();
   PerformActionRepository performActionRepository = PerformActionRepository();
+  DeleteTicketRepository deleteTicketRepository = DeleteTicketRepository();
   DevopsRepository devopsRepository = DevopsRepository();
   ProfileRepository profileRepository = ProfileRepository();
+  TextFieldWrapper commentWrapper = TextFieldWrapper();
 
   var devopsLists = <Devops>[].obs;
   var commentList = <Data>[].obs;
@@ -36,6 +40,8 @@ class TicketController extends GetxController {
   var changeStatus = false.obs;
   String uuidOfCurrentUser = "";
   String uuidOfAssignedUser = "";
+  String errorText = "Please fill in this feild";
+  String createdTicketUuid = "";
 
   String? profilePic;
   String? name;
@@ -50,8 +56,9 @@ class TicketController extends GetxController {
   String? environment;
   String? releaseNotes;
   String? deploymentSteps;
-  late String email;
+  String? email;
   String? status;
+  String? assignedToId;
 
   final items = [
     "New",
@@ -60,6 +67,19 @@ class TicketController extends GetxController {
     "Completed",
     "Invalid",
   ];
+
+  bool validator() {
+    bool hasError = false;
+
+    if (commentWrapper.controller.text.isEmpty) {
+      commentWrapper.errorText = errorText;
+      hasError = true;
+    } else {
+      commentWrapper.controller.text = '';
+    }
+
+    return hasError;
+  }
 
   fetchAllComments() async {
     commentList.clear();
@@ -76,6 +96,12 @@ class TicketController extends GetxController {
   }
 
   Future<void> postAllComments(BuildContext context) async {
+    final hasError = validator();
+
+    if (hasError) {
+      return;
+    }
+
     LoadingUtils.showLoader();
 
     final response = await commentRepository.postComments(uuid!, {
@@ -89,12 +115,14 @@ class TicketController extends GetxController {
     FocusScope.of(context).unfocus();
 
     if (response.error == null) {
-      print("Ticket create successfully!");
-
       fetchAllComments();
     }
 
     commentController.clear();
+  }
+
+  Future<void> onRefresh(BuildContext context) async {
+    postAllComments(context);
   }
 
   Future<void> getAllTicketUpdate() async {
@@ -111,6 +139,8 @@ class TicketController extends GetxController {
       repoResponse.data?.updates?.forEach((element) {
         updatedList.add(element);
       });
+
+      createdTicketUuid = repoResponse.data?.user?.uuid ?? "";
 
       repoResponse.data?.participants?.forEach((element) {
         updatedParticipantsList.add(element);
@@ -133,7 +163,6 @@ class TicketController extends GetxController {
 
     if (repoResponse.error == null) {
       getAllTicketUpdate();
-      print("completed!");
     }
   }
 
@@ -164,6 +193,9 @@ class TicketController extends GetxController {
     if (repoResponse.error == null) {
       repoResponse.data?.roles?.forEach((element) {
         if (element.name == 'devops') {
+          currentUserIsDevops.value = true;
+        }
+        if (element.name == 'organization_admin') {
           currentUserIsDevops.value = true;
         }
 
@@ -197,7 +229,8 @@ class TicketController extends GetxController {
     updatedParticipantsList.forEach((element) {
       allParticipantsUuid.add(element.id ?? "");
     });
-    result = await Get.toNamed(Routes.USERS, arguments: allParticipantsUuid);
+    result =
+        await Get.toNamed(Routes.PARTICIPANTS, arguments: allParticipantsUuid);
 
     if (result != null) {
       addPartcipantsPerformAction(result);
@@ -226,6 +259,21 @@ class TicketController extends GetxController {
     }
   }
 
+  ticketDelete() {
+    final repoResponse = deleteTicketRepository.deleteTicket(
+      uuid!,
+      {
+        "Authorization": 'Bearer ${Storage.getUser().access_token}',
+      },
+    );
+
+    if (repoResponse != null) {
+      Get.offAllNamed(Routes.HOME);
+
+      print("deleted");
+    }
+  }
+
   @override
   void onInit() {
     dynamic data = Get.arguments;
@@ -245,16 +293,13 @@ class TicketController extends GetxController {
     deploymentSteps = data['deploymentSteps'];
     email = data['email'];
     status = data['ticketStatus'];
+    assignedToId = data['assignedTo'];
 
     print(email);
 
     ticketStatus.value = status ?? "New";
 
     fetchAllComments();
-
-    // postAllComments();
-
-    // getAllParticipants();
 
     getAllTicketUpdate();
 

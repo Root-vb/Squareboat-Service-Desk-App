@@ -8,6 +8,7 @@ import 'package:starter/app/data/repository/user_repository.dart';
 import 'package:starter/app/routes/app_pages.dart';
 
 import 'package:starter/base/base_controller.dart';
+import 'package:starter/utils/loading/loading_utils.dart';
 import 'package:starter/utils/storage/storage_utils.dart';
 import 'package:starter/widgets/dialog/dialog_widget.dart';
 
@@ -38,17 +39,20 @@ class AuthLoginController extends BaseController {
   signOut() async {
     await _googleSignIn.signOut();
 
-    Get.toNamed(Routes.AUTH_LOGIN);
+    Get.offNamed(Routes.AUTH_LOGIN);
   }
 
   login(String token) async {
+    LoadingUtils.showLoader();
     RepoResponse<User> repoResponse = await _userRepository.login({
       "idToken": token,
     });
 
+    LoadingUtils.hideLoader();
+
     if (repoResponse.error == null) {
       Storage.setUser(repoResponse.data);
-      Get.toNamed(Routes.HOME);
+      Get.offNamed(Routes.HOME);
     } else {
       if (repoResponse.error?.message == "Your Domain is not registered.") {
         Get.dialog(DialogWidget(

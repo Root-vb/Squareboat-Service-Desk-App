@@ -25,156 +25,163 @@ class HomeView extends GetView<HomeController> {
           backgroundColor: AppColors.primaryBlue,
           onPressed: () {
             Get.bottomSheet(
-              DraggableScrollableSheet(
-                initialChildSize: .3,
-                minChildSize: .1,
-                maxChildSize: 0.856,
-                builder:
-                    (BuildContext context, ScrollController scrollController) {
-                  return SingleChildScrollView(
-                    controller: scrollController,
-                    child: Container(
-                      color: AppColors.white,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 10, horizontal: 24),
-                            child: Text(
-                              "Filter",
-                              style: Styles.tsPrimaryColorBold19,
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 8, horizontal: 24),
-                            child: Text(
-                              "Status",
-                              style: Styles.tsPrimaryColorBold19,
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 24),
-                            child:
-                                Divider(color: Color(0xffEEF2F8), thickness: 2),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 14),
-                            child: ListView.builder(
-                              shrinkWrap: true,
-                              physics: NeverScrollableScrollPhysics(),
-                              itemCount: controller.statusList.length,
-                              itemBuilder: (context, index) {
-                                return Obx(
-                                  () => CheckboxListTile(
-                                    title: Text(
-                                      controller.statusList[index],
-                                      style: Styles.tsPrimaryColorRegular12,
-                                    ),
-                                    value: controller.storeStatusList
-                                        .contains(controller.statusList[index]),
-                                    dense: true,
-                                    onChanged: (value) {
-                                      controller.addStatus(index, value);
-                                    },
-                                    checkColor: AppColors.white,
-                                    activeColor: AppColors.primaryBlue,
-                                  ),
-                                );
-                              },
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 24),
-                            child:
-                                Divider(color: Color(0xffEEF2F8), thickness: 2),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 8, horizontal: 24),
-                            child: Text(
-                              "Assigned To",
-                              style: Styles.tsPrimaryColorBold19,
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 14),
-                            child: ListView.builder(
-                              shrinkWrap: true,
-                              physics: NeverScrollableScrollPhysics(),
-                              itemCount: controller.devopsLists.length,
-                              itemBuilder: (context, index) {
-                                return Obx(
-                                  () => CheckboxListTile(
-                                    title: Text(
-                                      controller.devopsLists[index].name ?? "",
-                                      style: Styles.tsPrimaryColorRegular12,
-                                    ),
-                                    value: controller.assignedDevopsList
-                                        .contains(
-                                            controller.devopsLists[index].id),
-                                    dense: true,
-                                    onChanged: (value) {
-                                      controller.addAssignedDevops(
-                                          index, value);
-                                    },
-                                    checkColor: AppColors.white,
-                                    activeColor: AppColors.primaryBlue,
-                                  ),
-                                );
-                              },
-                            ),
-                          ),
-                          SizedBox(height: 10),
-                          Container(
-                            height: 50,
-                            child: Row(
+              Container(
+                color: Colors.white,
+                height: Get.height * 0.85,
+                child: SafeArea(
+                  child: Column(
+                    children: [
+                      Container(
+                        child: Expanded(
+                          child: SingleChildScrollView(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Expanded(
-                                  child: InkWell(
-                                    onTap: () {
-                                      Get.back();
-                                    },
-                                    child: Container(
-                                      height: 50,
-                                      width:
-                                          MediaQuery.of(context).size.width / 2,
-                                      color: AppColors.grey,
-                                      child: Center(
-                                          child: Text(
-                                        "CANCEL",
-                                        style: Styles.tsPrimaryColorSemiBold14,
-                                      )),
-                                    ),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 24,
+                                  ),
+                                  child: Text(
+                                    "Filter",
+                                    style: Styles.tsPrimaryColorBold21,
                                   ),
                                 ),
-                                Expanded(
-                                  child: InkWell(
-                                    onTap: () {
-                                      controller.applyFilter();
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 24),
+                                  child: Text(
+                                    "Status",
+                                    style: Styles.tsPrimaryColorSemiBold16,
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 24),
+                                  child: Divider(
+                                      color: Color(0xffEEF2F8), thickness: 2),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 14),
+                                  child: ListView.builder(
+                                    shrinkWrap: true,
+                                    physics: NeverScrollableScrollPhysics(),
+                                    itemCount: controller.statusList.length,
+                                    itemBuilder: (context, index) {
+                                      return Obx(
+                                        () => CheckboxListTile(
+                                          title: Text(
+                                            controller.statusList[index],
+                                            style:
+                                                Styles.tsPrimaryColorRegular12,
+                                          ),
+                                          value: controller.storeStatusList
+                                              .contains(
+                                                  controller.statusList[index]),
+                                          dense: true,
+                                          onChanged: (value) {
+                                            controller.addStatus(index, value);
+                                          },
+                                          checkColor: AppColors.white,
+                                          activeColor: AppColors.primaryBlue,
+                                        ),
+                                      );
                                     },
-                                    child: Container(
-                                      height: 50,
-                                      width:
-                                          MediaQuery.of(context).size.width / 2,
-                                      color: AppColors.primaryBlue,
-                                      child: Center(
-                                          child: Text(
-                                        " APPLY",
-                                        style: Styles.tsWhiteSemiBold14,
-                                      )),
-                                    ),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 24),
+                                  child: Divider(
+                                      color: Color(0xffEEF2F8), thickness: 2),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 8, horizontal: 24),
+                                  child: Text(
+                                    "Assigned To",
+                                    style: Styles.tsPrimaryColorBold19,
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 14),
+                                  child: ListView.builder(
+                                    shrinkWrap: true,
+                                    physics: NeverScrollableScrollPhysics(),
+                                    itemCount: controller.devopsLists.length,
+                                    itemBuilder: (context, index) {
+                                      return Obx(
+                                        () => CheckboxListTile(
+                                          title: Text(
+                                            controller
+                                                    .devopsLists[index].name ??
+                                                "",
+                                            style:
+                                                Styles.tsPrimaryColorRegular12,
+                                          ),
+                                          value: controller.assignedDevopsList
+                                              .contains(controller
+                                                  .devopsLists[index].id),
+                                          dense: true,
+                                          onChanged: (value) {
+                                            controller.addAssignedDevops(
+                                                index, value);
+                                          },
+                                          checkColor: AppColors.white,
+                                          activeColor: AppColors.primaryBlue,
+                                        ),
+                                      );
+                                    },
                                   ),
                                 ),
                               ],
                             ),
-                          )
+                          ),
+                        ),
+                      ),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: InkWell(
+                              onTap: () {
+                                Get.back();
+                              },
+                              child: Container(
+                                height: 50,
+                                width: MediaQuery.of(context).size.width / 2,
+                                color: AppColors.grey,
+                                child: Center(
+                                    child: Text(
+                                  "CANCEL",
+                                  style: Styles.tsPrimaryColorSemiBold14,
+                                )),
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            child: InkWell(
+                              onTap: () {
+                                controller.applyFilter();
+                              },
+                              child: Container(
+                                height: 50,
+                                width: MediaQuery.of(context).size.width / 2,
+                                color: AppColors.primaryBlue,
+                                child: Center(
+                                  child: Text(
+                                    " APPLY",
+                                    style: Styles.tsWhiteSemiBold14,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
                         ],
                       ),
-                    ),
-                  );
-                },
+                    ],
+                  ),
+                ),
               ),
               isScrollControlled: true,
             );
@@ -183,8 +190,7 @@ class HomeView extends GetView<HomeController> {
         ),
         body: RefreshIndicator(
           onRefresh: () => controller.onRefresh(),
-          child: SingleChildScrollView(
-            controller: controller.scrollController,
+          child: Container(
             child: Column(
               children: [
                 Padding(
@@ -202,17 +208,35 @@ class HomeView extends GetView<HomeController> {
                     ],
                   ),
                 ),
-                SizedBox(height: 40),
-                Obx(
-                  () => ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: controller.ticketList.length,
-                    physics: NeverScrollableScrollPhysics(),
-                    itemBuilder: (context, index) {
-                      return ticketItem(index);
-                    },
+                SizedBox(height: 30),
+                Expanded(
+                  child: SingleChildScrollView(
+                    controller: controller.scrollController,
+                    child: Column(
+                      children: [
+                        Container(
+                          child: Obx(
+                            () => controller.ticketList.length != 0
+                                ? ListView.builder(
+                                    shrinkWrap: true,
+                                    itemCount: controller.ticketList.length,
+                                    physics: NeverScrollableScrollPhysics(),
+                                    itemBuilder: (context, index) {
+                                      return ticketItem(index);
+                                    },
+                                  )
+                                : Center(
+                                    child: Text(
+                                      "No TIcket Found!",
+                                      style: Styles.tsDarkGreySemiBold13,
+                                    ),
+                                  ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                )
+                ),
               ],
             ),
           ),
@@ -249,6 +273,7 @@ class HomeView extends GetView<HomeController> {
             'email': controller.ticketList[index].formFields?.watcher,
             'ticketStatus': controller.ticketList[index].status,
             'participants': controller.ticketList[index].participants,
+            'assignedTo': controller.ticketList[index].assignedTo?.id,
           });
         },
         child: Column(
@@ -261,121 +286,114 @@ class HomeView extends GetView<HomeController> {
                   width: 0.5,
                 ),
               ),
-              child: Card(
-                elevation: 0,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      color: AppColors.lightBlueOpactiy40,
-                      height: 60,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 13),
-                              child: Text(
-                                controller.ticketList[index].type ??
-                                    'General Ticket',
-                                style: Styles.tsPrimaryColorBold19,
-                              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    color: AppColors.lightBlueOpactiy40,
+                    height: 60,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 13),
+                            child: Text(
+                              controller.ticketList[index].type ??
+                                  'General Ticket',
+                              style: Styles.tsPrimaryColorBold19,
                             ),
-                            Container(
-                              height: 29,
-                              decoration: BoxDecoration(
-                                  color: AppColors.lightBlue,
-                                  borderRadius: BorderRadius.circular(6.0)),
-                              child: Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 8),
-                                child: Center(
-                                  child: Text(
-                                    controller.ticketList[index].status ?? "-",
-                                    style: Styles.tsWhiteBold12,
-                                  ),
+                          ),
+                          Container(
+                            height: 29,
+                            decoration: BoxDecoration(
+                                color: AppColors.lightBlue,
+                                borderRadius: BorderRadius.circular(6.0)),
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 8),
+                              child: Center(
+                                child: Text(
+                                  controller.ticketList[index].status ?? "-",
+                                  style: Styles.tsWhiteBold12,
                                 ),
                               ),
                             ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          SizedBox(height: 20),
-                          Text(
-                            "Heading",
-                            style: Styles.tsDarkGreySemiBold13,
-                          ),
-                          SizedBox(height: 8),
-                          Text(
-                            controller.ticketList[index].formFields!.heading
-                                    ?.toUpperCase() ??
-                                "",
-                            style: Styles.tslightBlueWithOpcaity100Bold17,
-                          ),
-                          SizedBox(height: 20),
-                          Text(
-                            "Assigned To",
-                            style: Styles.tsDarkGreySemiBold13,
-                          ),
-                          SizedBox(height: 8),
-                          Text(
-                            controller.ticketList[index].assignedTo?.name ??
-                                "-",
-                            style: Styles.tsPrimaryColorSemiBold17,
-                          ),
-                          SizedBox(height: 20),
-                          Text(
-                            "Created By",
-                            style: Styles.tsDarkGreySemiBold13,
-                          ),
-                          SizedBox(height: 8),
-                          Text(
-                            controller.ticketList[index].createdBy ??
-                                "Created By",
-                            style: Styles.tsPrimaryColorSemiBold17,
                           ),
                         ],
                       ),
                     ),
-                    SizedBox(height: 20),
-                    Container(
-                      height: 50,
-                      decoration: BoxDecoration(
-                        color: AppColors.lightBlueOpactiy40,
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 14, vertical: 8),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 8),
-                              child: Text(
-                                controller.ticketList[index].uuid ?? "SQB",
-                                style:
-                                    Styles.tslightBlueWithOpcaity100SemiBold18,
-                              ),
-                            ),
-                            Text(
-                              timeago.format(time),
-                              style: Styles.tsDarkGreyRegular12,
-                            ),
-                          ],
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(height: 20),
+                        Text(
+                          "Heading",
+                          style: Styles.tsDarkGreySemiBold13,
                         ),
+                        SizedBox(height: 8),
+                        Text(
+                          controller.ticketList[index].formFields!.heading
+                                  ?.toUpperCase() ??
+                              "",
+                          style: Styles.tslightBlueWithOpcaity100Bold17,
+                        ),
+                        SizedBox(height: 20),
+                        Text(
+                          "Assigned To",
+                          style: Styles.tsDarkGreySemiBold13,
+                        ),
+                        SizedBox(height: 8),
+                        Text(
+                          controller.ticketList[index].assignedTo?.name ?? "-",
+                          style: Styles.tsPrimaryColorSemiBold17,
+                        ),
+                        SizedBox(height: 20),
+                        Text(
+                          "Created By",
+                          style: Styles.tsDarkGreySemiBold13,
+                        ),
+                        SizedBox(height: 8),
+                        Text(
+                          controller.ticketList[index].createdBy ??
+                              "Created By",
+                          style: Styles.tsPrimaryColorSemiBold17,
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: 20),
+                  Container(
+                    height: 50,
+                    decoration: BoxDecoration(
+                      color: AppColors.lightBlueOpactiy40,
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 14, vertical: 8),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 8),
+                            child: Text(
+                              controller.ticketList[index].uuid ?? "SQB",
+                              style: Styles.tslightBlueWithOpcaity100SemiBold18,
+                            ),
+                          ),
+                          Text(
+                            timeago.format(time),
+                            style: Styles.tsDarkGreySemiBold12,
+                          ),
+                        ],
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
             SizedBox(height: 30),

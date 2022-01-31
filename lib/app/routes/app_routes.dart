@@ -6,7 +6,8 @@ abstract class Routes {
   static const HOME = '/home';
   static const CREATE_TICKET = '/create-ticket';
   static const TICKET = '/ticket';
-  static const USERS = '/users';
+  static const PARTICIPANTS = '/partcipants';
   static const SHOWUPDATE = '/showupdate';
   static const SHOWCOMMENTS = '/showcomments';
+  static const USERS = '/users';
 }

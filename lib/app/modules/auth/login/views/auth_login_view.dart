@@ -55,41 +55,10 @@ class AuthLoginView extends GetView<AuthLoginController> {
   }
 
   Widget googleButton() {
-    return Container(
-      height: 40,
-      color: Color(0xFF4284F3),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(left: 5, top: 4, bottom: 5),
-            child: Container(
-              width: 38,
-              height: 35,
-              color: Colors.white,
-              child: Padding(
-                padding: const EdgeInsets.all(5.0),
-                child: Image.asset(
-                  "assets/images/google_logo.png",
-                  height: 20,
-                  width: 25,
-                ),
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 10, right: 8),
-            child: Container(
-              child: Text(
-                'Sign in with Google',
-                style: Styles.tsWhiteColorBold18,
-              ),
-            ),
-          ),
-        ],
-      ),
+    return Image.asset(
+      'assets/images/bg_img_google.png',
+      height: 60,
+      width: 184,
     );
   }
 }

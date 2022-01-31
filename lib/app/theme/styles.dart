@@ -153,9 +153,9 @@ class Styles {
     fontFamily: "opensans",
   );
 
-  static const tsDarkGreyRegular12 = TextStyle(
+  static const tsDarkGreySemiBold12 = TextStyle(
     color: AppColors.darkGrey,
-    fontWeight: FontWeight.w400,
+    fontWeight: FontWeight.w600,
     fontStyle: FontStyle.italic,
     fontSize: 12.0,
     fontFamily: "opensans",
@@ -200,6 +200,20 @@ class Styles {
     color: AppColors.white,
     fontWeight: FontWeight.w700,
     fontSize: 18.0,
+    fontFamily: "opensans",
+  );
+
+  static const tsRedRegular14 = TextStyle(
+    color: AppColors.red,
+    fontWeight: FontWeight.w400,
+    fontSize: 14.0,
+    fontFamily: "opensans",
+  );
+
+  static const tsPrimaryColorBold21 = TextStyle(
+    color: AppColors.primaryColor,
+    fontWeight: FontWeight.w700,
+    fontSize: 21.0,
     fontFamily: "opensans",
   );
 }

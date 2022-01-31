@@ -36,4 +36,7 @@ class URLs {
 
   static const myProfile =
       "https://api.service-desk.squareboat.info/users/my-profile";
+
+  static const deleteTicket =
+      "https://api.service-desk.squareboat.info/tickets/";
 }

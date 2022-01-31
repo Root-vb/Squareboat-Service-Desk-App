@@ -63,7 +63,7 @@ class CommentUtils extends StatelessWidget {
                               Flexible(
                                 child: Text(
                                   time,
-                                  style: Styles.tsDarkGreyRegular12,
+                                  style: Styles.tsDarkGreySemiBold12,
                                 ),
                               ),
                             ],

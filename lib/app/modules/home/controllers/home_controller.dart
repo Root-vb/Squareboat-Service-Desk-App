@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:starter/app/data/models/dto/devops.dart';
+import 'package:starter/app/data/models/dto/myprofile.dart';
 import 'package:starter/app/data/models/dto/response.dart';
 import 'package:starter/app/data/models/dto/ticket.dart';
 import 'package:starter/app/data/repository/devops_repository.dart';
+import 'package:starter/app/data/repository/profile_repository.dart';
 import 'package:starter/app/data/repository/ticket_repository.dart';
 import 'package:starter/utils/loading/loading_utils.dart';
 import 'package:starter/utils/storage/storage_utils.dart';
@@ -11,7 +13,7 @@ import 'package:starter/utils/storage/storage_utils.dart';
 class HomeController extends GetxController {
   TicketRepository _ticketRepository = TicketRepository();
   DevopsRepository devopsRepository = DevopsRepository();
-
+  ProfileRepository profileRepository = ProfileRepository();
   final scrollController = ScrollController();
 
   var ticketList = <Ticket>[].obs;
@@ -20,6 +22,7 @@ class HomeController extends GetxController {
   var assignedDevopsList = <String>[].obs;
 
   var isChecked = ''.obs;
+  var isUserIsAdmin = false.obs;
 
   int? totalPage;
   int currentPage = 1;
@@ -83,6 +86,23 @@ class HomeController extends GetxController {
     }
   }
 
+  Future<void> profileDetails() async {
+    RepoResponse<MyProfile> repoResponse =
+        await profileRepository.getAllProfileDetails({
+      "Authorization": 'Bearer ${Storage.getUser().access_token}',
+    });
+
+    if (repoResponse.error == null) {
+      repoResponse.data?.roles?.forEach((element) {
+        if (element.name == "organization_admin") {
+          isUserIsAdmin.value = true;
+        } else {
+          isUserIsAdmin.value = false;
+        }
+      });
+    }
+  }
+
   Future<void> onRefresh() async {
     ticketList.clear();
     allTicket();
@@ -122,6 +142,7 @@ class HomeController extends GetxController {
 
     allTicket();
     fetchAllDevops();
+    profileDetails();
 
     print(Storage.getUser().access_token);
 

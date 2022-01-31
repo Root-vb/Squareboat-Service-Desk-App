@@ -43,6 +43,7 @@ class CreateTicketController extends GetxController {
   var isGeneralTicket = true.obs;
   var selectedParticipants = "Select Participants".obs;
   String errorText = "Please fill in this feild";
+  DateTime? currentBackPressTime;
 
   bool validator() {
     bool hasError = false;
@@ -225,6 +226,17 @@ class CreateTicketController extends GetxController {
     }
 
     selectedParticipants.value = participantsList.first.name ?? "Ashwani Singh";
+  }
+
+  Future<bool> onWillPop() {
+    DateTime now = DateTime.now();
+    if (currentBackPressTime == null ||
+        now.difference(currentBackPressTime!) > Duration(seconds: 2)) {
+      currentBackPressTime = now;
+      LoadingUtils().doubleTapWarning();
+      return Future.value(false);
+    }
+    return Future.value(true);
   }
 
   final items = [

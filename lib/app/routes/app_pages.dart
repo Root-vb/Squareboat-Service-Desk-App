@@ -1,4 +1,8 @@
 import 'package:get/get.dart';
+import 'package:starter/app/modules/partcipants/bindings/partcipants_binding.dart';
+import 'package:starter/app/modules/partcipants/views/partcipants_view.dart';
+import 'package:starter/app/modules/users/bindings/users_binding.dart';
+import 'package:starter/app/modules/users/views/users_view.dart';
 
 import '../modules/auth/login/bindings/auth_login_binding.dart';
 import '../modules/auth/login/views/auth_login_view.dart';
@@ -15,8 +19,6 @@ import '../modules/splash/bindings/splash_binding.dart';
 import '../modules/splash/views/splash_view.dart';
 import '../modules/ticket/bindings/ticket_binding.dart';
 import '../modules/ticket/views/ticket_view.dart';
-import '../modules/users/bindings/users_binding.dart';
-import '../modules/users/views/users_view.dart';
 
 part 'app_routes.dart';
 
@@ -48,9 +50,9 @@ class AppPages {
       binding: TicketBinding(),
     ),
     GetPage(
-      name: Routes.USERS,
-      page: () => UsersView(),
-      binding: UsersBinding(),
+      name: Routes.PARTICIPANTS,
+      page: () => PartcipantsView(),
+      binding: PartcipantsBinding(),
     ),
     GetPage(
       name: Routes.SHOWUPDATE,
@@ -61,6 +63,11 @@ class AppPages {
       name: Routes.SHOWCOMMENTS,
       page: () => ShowcommentsView(),
       binding: ShowcommentsBinding(),
+    ),
+    GetPage(
+      name: Routes.USERS,
+      page: () => UsersView(),
+      binding: UsersBinding(),
     ),
   ];
 }

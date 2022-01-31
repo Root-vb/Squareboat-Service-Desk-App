@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:starter/app/theme/app_colors.dart';
+import 'package:starter/app/theme/styles.dart';
 import 'package:starter/widgets/comment_box_util.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import '../controllers/showcomments_controller.dart';
@@ -11,6 +12,10 @@ class ShowcommentsView extends GetView<ShowcommentsController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        title: Text(
+          'All Comments',
+          style: Styles.tsPrimaryColorSemiBold17,
+        ),
         backgroundColor: Colors.transparent,
         elevation: 0.0,
         iconTheme: IconThemeData(

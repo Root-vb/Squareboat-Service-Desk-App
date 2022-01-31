@@ -15,6 +15,7 @@ class CustomTextField extends StatelessWidget {
   Function()? onSubmitted;
   final TextInputAction textInputAction;
   List<TextInputFormatter>? inputformator;
+  int? maxLines;
 
   CustomTextField({
     required this.wrapper,
@@ -26,6 +27,7 @@ class CustomTextField extends StatelessWidget {
     this.onSubmitted,
     required this.textInputAction,
     this.inputformator,
+    this.maxLines,
   });
 
   @override
@@ -35,6 +37,7 @@ class CustomTextField extends StatelessWidget {
         controller: wrapper.controller,
         style: Styles.tsPrimaryColorRegular14,
         maxLength: maxLength,
+        maxLines: maxLines,
         keyboardType: inputType,
         inputFormatters: inputformator,
         onSubmitted: (_) => onSubmitted,
@@ -42,8 +45,7 @@ class CustomTextField extends StatelessWidget {
         textInputAction: textInputAction,
         decoration: InputDecoration(
           errorText: wrapper.errorText.isEmpty ? null : wrapper.errorText,
-          errorStyle: Styles.tsPrimaryColorRegular14,
-          counterText: '',
+          errorStyle: Styles.tsRedRegular14,
           fillColor: AppColors.white,
           filled: true,
           hintText: hintText,

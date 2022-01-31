@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:starter/app/routes/app_pages.dart';
 import 'package:starter/app/theme/app_colors.dart';
 import 'package:starter/widgets/dialog/dialog_widget.dart';
 
@@ -9,7 +10,7 @@ class LoadingUtils {
 
   static void showLoader() {
     final spinkit = SpinKitFadingFour(
-      color: Colors.white,
+      color: AppColors.primaryBlue,
       size: 50.0,
     );
     if (!isLoaderShowing) {
@@ -57,4 +58,34 @@ class LoadingUtils {
       actionText2: "Okay",
     ));
   }
+
+  doubleTapWarning() {
+    Get.dialog(DialogWidget(
+      title: "Are you sure?",
+      text: 'Do you want to exit an page?',
+      icon: (Icons.logout),
+      isSecondryButtonVisible: true,
+      action1: () => Get.back(),
+      action2: () {
+        Get.offAllNamed(Routes.HOME);
+      },
+      actionText1: "No",
+      actionText2: "Yes",
+    ));
+  }
+
+  // deleteTicket() {
+  //   Get.dialog(DialogWidget(
+  //     title: "Are you sure?",
+  //     text: 'Do you want to exit an page?',
+  //     icon: (Icons.logout),
+  //     isSecondryButtonVisible: true,
+  //     action1: () => Get.back(),
+  //     action2: () {
+  //       Get.offAllNamed(Routes.HOME);
+  //     },
+  //     actionText1: "No",
+  //     actionText2: "Yes",
+  //   ));
+  // }
 }
