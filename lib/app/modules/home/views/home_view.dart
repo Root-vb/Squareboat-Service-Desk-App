@@ -17,6 +17,9 @@ class HomeView extends GetView<HomeController> {
         appBar: AppBar(
           backgroundColor: Colors.transparent,
           elevation: 0.0,
+          iconTheme: IconThemeData(
+            color: AppColors.primaryColor,
+          ),
         ),
         floatingActionButton: FloatingActionButton(
           backgroundColor: AppColors.primaryBlue,

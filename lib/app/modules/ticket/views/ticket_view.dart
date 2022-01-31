@@ -207,7 +207,7 @@ class TicketView extends GetView<TicketController> {
                 ),
                 SizedBox(height: 30),
                 Text("Comments", style: Styles.tsPrimaryBlueSemiBold18),
-                SizedBox(height: 30),
+                SizedBox(height: 10),
                 Obx(
                   () => Column(
                     children: [
