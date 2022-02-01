@@ -26,6 +26,7 @@ class HomeView extends GetView<HomeController> {
         floatingActionButton: FloatingActionButton(
           backgroundColor: AppColors.primaryBlue,
           onPressed: () {
+            controller.updateFilter();
             Get.bottomSheet(
               Container(
                 color: Colors.white,
@@ -77,7 +78,7 @@ class HomeView extends GetView<HomeController> {
                                             style:
                                                 Styles.tsPrimaryColorRegular12,
                                           ),
-                                          value: controller.storeStatusList
+                                          value: controller.tempStoreStatusList
                                               .contains(
                                                   controller.statusList[index]),
                                           dense: true,
@@ -122,7 +123,8 @@ class HomeView extends GetView<HomeController> {
                                             style:
                                                 Styles.tsPrimaryColorRegular12,
                                           ),
-                                          value: controller.assignedDevopsList
+                                          value: controller
+                                              .tempAssignedDevopsList
                                               .contains(controller
                                                   .devopsLists[index].id),
                                           dense: true,

@@ -19,9 +19,10 @@ class HomeController extends GetxController {
 
   var ticketList = <Ticket>[].obs;
   var devopsLists = <Devops>[].obs;
-  var storeStatusList = <String>[].obs;
+  List<String> storeStatusList = <String>[];
   var tempStoreStatusList = <String>[].obs;
-  var assignedDevopsList = <String>[].obs;
+  List<String> assignedDevopsList = <String>[];
+  var tempAssignedDevopsList = <String>[].obs;
 
   var isChecked = ''.obs;
   var isUserIsAdmin = false.obs;
@@ -41,17 +42,17 @@ class HomeController extends GetxController {
 
   addStatus(int index, bool? value) {
     if (value == true) {
-      storeStatusList.add(statusList[index]);
+      tempStoreStatusList.add(statusList[index]);
     } else {
-      storeStatusList.remove(statusList[index]);
+      tempStoreStatusList.remove(statusList[index]);
     }
   }
 
   addAssignedDevops(int index, bool? value) {
     if (value == true) {
-      assignedDevopsList.add(devopsLists[index].id ?? "");
+      tempAssignedDevopsList.add(devopsLists[index].id ?? "");
     } else {
-      assignedDevopsList.remove(devopsLists[index].id);
+      tempAssignedDevopsList.remove(devopsLists[index].id);
     }
   }
 
@@ -123,12 +124,26 @@ class HomeController extends GetxController {
     ticketList.clear();
     LoadingUtils.showLoader();
 
+    storeStatusList.clear();
+    assignedDevopsList.clear();
+
+    storeStatusList.addAll(tempStoreStatusList);
+    assignedDevopsList.addAll(tempAssignedDevopsList);
+
     currentPage = 1;
 
     await allTicket();
 
     Get.back();
     LoadingUtils.hideLoader();
+  }
+
+  updateFilter() {
+    tempStoreStatusList.clear();
+    tempAssignedDevopsList.clear();
+
+    tempStoreStatusList.addAll(storeStatusList);
+    tempAssignedDevopsList.addAll(assignedDevopsList);
   }
 
   LoadingStates pageState() {
@@ -157,9 +172,9 @@ class HomeController extends GetxController {
   }
 
   cancelButton() {
-    if (tempStoreStatusList.isEmpty) {
-      storeStatusList.clear();
-    }
+    // if (tempStoreStatusList.isEmpty) {
+    //   storeStatusList.clear();
+    // }
     // else {
     //   for (var i = 0; i < storeStatusList.length; i++) {
     //     for (var j = 0; j < tempStoreStatusList.length; j++) {
