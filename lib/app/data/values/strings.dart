@@ -20,3 +20,9 @@ class ErrorMessages {
   static const invalidName = 'Invalid Name';
   static const invalidEmail = 'Invalid Email';
 }
+
+enum LoadingStates {
+  LOADING,
+  EMPTY,
+  LIST,
+}

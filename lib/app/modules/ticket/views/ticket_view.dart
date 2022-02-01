@@ -348,50 +348,53 @@ class TicketView extends GetView<TicketController> {
 
   Container assignedToDropDown() {
     return Container(
-      child: DropdownButtonHideUnderline(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 4),
-          child: Obx(
-            () => DropdownButton(
-              isExpanded: true,
-              value: controller.selectedDevops.value,
-              items: controller.devopsLists.map((Devops element) {
-                return DropdownMenuItem<String>(
-                  child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(element.name ?? "",
-                          style: Styles.tsPrimaryIndigoSemiBold14)),
-                  value: element.id ?? "",
-                );
-              }).toList(),
-              icon: Padding(
-                padding: const EdgeInsets.only(right: 4),
-                child: Icon(
-                  Icons.arrow_drop_down,
-                  color: AppColors.primaryIndigo,
-                ),
-              ),
-              onChanged: (String? value) {
-                if (controller.currentUserIsDevops.value) {
-                  controller.selectedDevops.value = value ?? "";
-                  controller.assignedToPerformAction(value!);
-                } else {
-                  Get.snackbar(
-                    "Error",
-                    "Only Devops has the permissions!",
-                    snackPosition: SnackPosition.TOP,
-                    backgroundColor: AppColors.darkWhite,
-                    colorText: AppColors.primaryColor,
+      child: IgnorePointer(
+        ignoring: (controller.currentUserIsDevops.value),
+        child: DropdownButtonHideUnderline(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 4),
+            child: Obx(
+              () => DropdownButton(
+                isExpanded: true,
+                value: controller.selectedDevops.value,
+                items: controller.devopsLists.map((Devops element) {
+                  return DropdownMenuItem<String>(
+                    child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(element.name ?? "",
+                            style: Styles.tsPrimaryIndigoSemiBold14)),
+                    value: element.id ?? "",
                   );
-                }
+                }).toList(),
+                icon: Padding(
+                  padding: const EdgeInsets.only(right: 4),
+                  child: Icon(
+                    Icons.arrow_drop_down,
+                    color: AppColors.primaryIndigo,
+                  ),
+                ),
+                onChanged: (String? value) {
+                  if (controller.currentUserIsDevops.value) {
+                    controller.selectedDevops.value = value ?? "";
+                    controller.assignedToPerformAction(value!);
+                  } else {
+                    Get.snackbar(
+                      "Error",
+                      "Only Devops has the permissions!",
+                      snackPosition: SnackPosition.TOP,
+                      backgroundColor: AppColors.darkWhite,
+                      colorText: AppColors.primaryColor,
+                    );
+                  }
 
-                if (controller.uuidOfCurrentUser ==
-                    controller.uuidOfAssignedUser) {
-                  controller.changeStatus.value = true;
-                } else {
-                  controller.changeStatus.value = false;
-                }
-              },
+                  if (controller.uuidOfCurrentUser ==
+                      controller.uuidOfAssignedUser) {
+                    controller.changeStatus.value = true;
+                  } else {
+                    controller.changeStatus.value = false;
+                  }
+                },
+              ),
             ),
           ),
         ),

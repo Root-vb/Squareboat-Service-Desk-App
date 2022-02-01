@@ -7,6 +7,7 @@ import 'package:starter/app/data/models/dto/ticket.dart';
 import 'package:starter/app/data/repository/devops_repository.dart';
 import 'package:starter/app/data/repository/profile_repository.dart';
 import 'package:starter/app/data/repository/ticket_repository.dart';
+import 'package:starter/app/data/values/strings.dart';
 import 'package:starter/utils/loading/loading_utils.dart';
 import 'package:starter/utils/storage/storage_utils.dart';
 
@@ -24,6 +25,8 @@ class HomeController extends GetxController {
 
   var isChecked = ''.obs;
   var isUserIsAdmin = false.obs;
+
+  RxBool isLoading = false.obs;
 
   int? totalPage;
   int currentPage = 1;
@@ -70,6 +73,8 @@ class HomeController extends GetxController {
   Future<void> allTicket({int? page}) async {
     // tempStoreStatusList.addAll(storeStatusList);
 
+    isLoading.value = true;
+
     RepoResponse<TicketList> repoResponse =
         await _ticketRepository.fetchAllTicket(data: {
       "Authorization": 'Bearer ${Storage.getUser().access_token}'
@@ -80,6 +85,8 @@ class HomeController extends GetxController {
           assignedDevopsList.length == 0 ? '' : assignedDevopsList.join(','),
       'status': storeStatusList.length == 0 ? '' : storeStatusList.join(','),
     });
+
+    isLoading.value = false;
 
     if (repoResponse.error == null) {
       repoResponse.data?.data?.forEach((element) {
@@ -122,6 +129,16 @@ class HomeController extends GetxController {
 
     Get.back();
     LoadingUtils.hideLoader();
+  }
+
+  LoadingStates pageState() {
+    if (isLoading.value && ticketList.isEmpty) {
+      return LoadingStates.LOADING;
+    } else if ((!(isLoading.value) && ticketList.isEmpty)) {
+      return LoadingStates.EMPTY;
+    } else {
+      return LoadingStates.LIST;
+    }
   }
 
   scrollCotrollers() {

@@ -263,13 +263,17 @@ class TicketController extends GetxController {
       print("parti $element");
     });
 
+    List<String> users = listOfParticipants.toSet().toList();
+
+    users.forEach((element) {
+      print("ele $element");
+    });
+
     final repoResponse = await performActionRepository.fetchAllActions(
       uuid!,
       {
         "actionType": "update-user",
-        "users": [
-          ...{...listOfParticipants}
-        ]
+        "users": users.length == 1 ? [users] : users,
       },
       {"Authorization": 'Bearer ${Storage.getUser().access_token}'},
     );

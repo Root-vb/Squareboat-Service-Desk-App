@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:starter/app/data/values/strings.dart';
 import 'package:starter/app/routes/app_pages.dart';
 import 'package:starter/app/theme/app_colors.dart';
 import 'package:starter/app/theme/styles.dart';
+import 'package:starter/utils/loading/loading_utils.dart';
 
 import 'package:starter/widgets/buttons/custom_button.dart';
 import 'package:timeago/timeago.dart' as timeago;
@@ -208,22 +210,26 @@ class HomeView extends GetView<HomeController> {
               SizedBox(height: 30),
               Expanded(
                 child: Obx(
-                  () => controller.ticketList.length != 0
-                      ? ListView.builder(
-                          controller: controller.scrollController,
-                          shrinkWrap: true,
-                          itemCount: controller.ticketList.length,
-                          physics: AlwaysScrollableScrollPhysics(),
-                          itemBuilder: (context, index) {
-                            return ticketItem(index);
-                          },
+                  () => controller.pageState() == LoadingStates.LOADING
+                      ? Center(
+                          child: CircularProgressIndicator(),
                         )
-                      : Center(
-                          child: Text(
-                            "No TIcket Found!",
-                            style: Styles.tsDarkGreySemiBold13,
-                          ),
-                        ),
+                      : controller.pageState() != LoadingStates.EMPTY
+                          ? ListView.builder(
+                              controller: controller.scrollController,
+                              shrinkWrap: true,
+                              itemCount: controller.ticketList.length,
+                              physics: AlwaysScrollableScrollPhysics(),
+                              itemBuilder: (context, index) {
+                                return ticketItem(index);
+                              },
+                            )
+                          : Center(
+                              child: Text(
+                                "No TIcket Found!",
+                                style: Styles.tsDarkGreySemiBold13,
+                              ),
+                            ),
                 ),
               ),
             ],
