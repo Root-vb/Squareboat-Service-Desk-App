@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:starter/app/data/models/dto/comment.dart';
@@ -6,6 +8,7 @@ import 'package:starter/app/data/models/dto/myprofile.dart';
 import 'package:starter/app/data/models/dto/response.dart';
 import 'package:starter/app/data/models/dto/ticket_update.dart';
 import 'package:starter/app/data/repository/comment_repository.dart';
+import 'package:starter/app/data/repository/delete_comment_repository.dart';
 import 'package:starter/app/data/repository/delete_ticket_repository.dart';
 import 'package:starter/app/data/repository/devops_repository.dart';
 import 'package:starter/app/data/repository/perform_action_repository.dart';
@@ -20,11 +23,11 @@ class TicketController extends GetxController {
   var ticketStatus = "New".obs;
   var selectedDevops = ''.obs;
 
-  TextEditingController commentController = TextEditingController();
   TicketUpdateRepository ticketUpdateRepository = TicketUpdateRepository();
   CommentRepository commentRepository = CommentRepository();
   PerformActionRepository performActionRepository = PerformActionRepository();
   DeleteTicketRepository deleteTicketRepository = DeleteTicketRepository();
+  DeleteCommentRepository deleteCommentRepository = DeleteCommentRepository();
   DevopsRepository devopsRepository = DevopsRepository();
   ProfileRepository profileRepository = ProfileRepository();
   TextFieldWrapper commentWrapper = TextFieldWrapper();
@@ -42,6 +45,7 @@ class TicketController extends GetxController {
   String uuidOfAssignedUser = "";
   String errorText = "Please fill in this feild";
   String createdTicketUuid = "";
+  var isCommentCreatedByCurrentUser = false.obs;
 
   String? profilePic;
   String? name;
@@ -74,11 +78,31 @@ class TicketController extends GetxController {
     if (commentWrapper.controller.text.isEmpty) {
       commentWrapper.errorText = errorText;
       hasError = true;
-    } else {
-      commentWrapper.controller.text = '';
     }
 
     return hasError;
+  }
+
+  Future<void> profileDetails() async {
+    RepoResponse<MyProfile> repoResponse =
+        await profileRepository.getAllProfileDetails({
+      "Authorization": 'Bearer ${Storage.getUser().access_token}',
+    });
+
+    if (repoResponse.error == null) {
+      repoResponse.data?.roles?.forEach((element) {
+        if (element.name == 'devops') {
+          currentUserIsDevops.value = true;
+        }
+        if (element.name == 'organization_admin') {
+          currentUserIsDevops.value = true;
+        }
+
+        roles.add(element);
+      });
+
+      uuidOfCurrentUser = repoResponse.data?.id ?? "";
+    }
   }
 
   fetchAllComments() async {
@@ -92,6 +116,14 @@ class TicketController extends GetxController {
       repoResponse.data?.data?.forEach((element) {
         commentList.add(element);
       });
+
+      for (var i = 0; i < commentList.length; i++) {
+        if (commentList[i].user?.uuid == uuidOfCurrentUser) {
+          isCommentCreatedByCurrentUser.value = true;
+        } else {
+          isCommentCreatedByCurrentUser.value = false;
+        }
+      }
     }
   }
 
@@ -105,7 +137,7 @@ class TicketController extends GetxController {
     LoadingUtils.showLoader();
 
     final response = await commentRepository.postComments(uuid!, {
-      "description": commentController.text,
+      "description": commentWrapper.controller.text,
     }, {
       "Authorization": 'Bearer ${Storage.getUser().access_token}',
     });
@@ -118,7 +150,7 @@ class TicketController extends GetxController {
       fetchAllComments();
     }
 
-    commentController.clear();
+    commentWrapper.controller.clear();
   }
 
   Future<void> onRefresh(BuildContext context) async {
@@ -184,28 +216,6 @@ class TicketController extends GetxController {
     }
   }
 
-  Future<void> profileDetails() async {
-    RepoResponse<MyProfile> repoResponse =
-        await profileRepository.getAllProfileDetails({
-      "Authorization": 'Bearer ${Storage.getUser().access_token}',
-    });
-
-    if (repoResponse.error == null) {
-      repoResponse.data?.roles?.forEach((element) {
-        if (element.name == 'devops') {
-          currentUserIsDevops.value = true;
-        }
-        if (element.name == 'organization_admin') {
-          currentUserIsDevops.value = true;
-        }
-
-        roles.add(element);
-      });
-
-      uuidOfCurrentUser = repoResponse.data?.id ?? "";
-    }
-  }
-
   Future<void> fetchAllDevops() async {
     RepoResponse<DevopsList> repoResponse =
         await devopsRepository.getAllDevopsDetails(
@@ -218,6 +228,8 @@ class TicketController extends GetxController {
       repoResponse.data?.devops?.forEach((element) {
         devopsLists.add(element);
       });
+
+      // devopsLists.insert(0, "");
 
       selectedDevops.value = devopsLists.first.id ?? "";
     }
@@ -240,8 +252,16 @@ class TicketController extends GetxController {
   Future<void> addPartcipantsPerformAction(List<String>? user) async {
     List<String> listOfParticipants = [];
 
+    // user?.forEach((element) {
+    //   print("users $element");
+    // });
+
     listOfParticipants.add(Storage.getUser().id);
     listOfParticipants.addAll(user ?? []);
+
+    listOfParticipants.forEach((element) {
+      print("parti $element");
+    });
 
     final repoResponse = await performActionRepository.fetchAllActions(
       uuid!,
@@ -259,9 +279,24 @@ class TicketController extends GetxController {
     }
   }
 
-  ticketDelete() {
+  Future<void> ticketDelete() async {
     final repoResponse = deleteTicketRepository.deleteTicket(
       uuid!,
+      {
+        "Authorization": 'Bearer ${Storage.getUser().access_token}',
+      },
+    );
+
+    if (repoResponse != null) {
+      Get.offAllNamed(Routes.HOME);
+
+      print("deleted");
+    }
+  }
+
+  Future<void> deleteComment(int commentId) async {
+    final repoResponse = deleteCommentRepository.deleteComments(
+      commentId,
       {
         "Authorization": 'Bearer ${Storage.getUser().access_token}',
       },
@@ -299,13 +334,13 @@ class TicketController extends GetxController {
 
     ticketStatus.value = status ?? "New";
 
+    profileDetails();
+
     fetchAllComments();
 
     getAllTicketUpdate();
 
     fetchAllDevops();
-
-    profileDetails();
 
     super.onInit();
   }

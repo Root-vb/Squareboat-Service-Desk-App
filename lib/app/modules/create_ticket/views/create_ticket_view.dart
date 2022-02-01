@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:starter/app/theme/app_colors.dart';
 import 'package:starter/widgets/buttons/custom_button.dart';
 import 'package:starter/widgets/text_field/custom_text_field.dart';
-import 'package:starter/widgets/upper_case_formatter.dart';
 
 import '../controllers/create_ticket_controller.dart';
 
@@ -136,7 +135,6 @@ class CreateTicketView extends GetView<CreateTicketController> {
                             wrapper: controller.generalHeadingWrapper,
                             textInputAction: TextInputAction.next,
                             hintText: "Heading",
-                            inputformator: [UpperCaseTextFormatter()],
                             hintStyle: TextStyle(color: Color(0xff7578AE)),
                             inputType: TextInputType.text,
                           ),
@@ -171,7 +169,6 @@ class CreateTicketView extends GetView<CreateTicketController> {
                             textInputAction: TextInputAction.next,
                             wrapper: controller.descriptionWrapper,
                             hintText: "Description",
-                            inputformator: [UpperCaseTextFormatter()],
                             hintStyle: TextStyle(color: Color(0xff7578AE)),
                             inputType: TextInputType.text,
                             maxLength: 255,
@@ -252,7 +249,6 @@ class CreateTicketView extends GetView<CreateTicketController> {
                             wrapper: controller.deploymentHeadingWrapper,
                             textInputAction: TextInputAction.next,
                             hintText: "Heading",
-                            inputformator: [UpperCaseTextFormatter()],
                             hintStyle: TextStyle(color: Color(0xff7578AE)),
                             inputType: TextInputType.text,
                           ),
@@ -286,7 +282,6 @@ class CreateTicketView extends GetView<CreateTicketController> {
                           child: CustomTextField(
                             textInputAction: TextInputAction.next,
                             wrapper: controller.projectNameWrapper,
-                            inputformator: [UpperCaseTextFormatter()],
                             hintText: "Project Name",
                             hintStyle: TextStyle(color: Color(0xff7578AE)),
                             inputType: TextInputType.text,
@@ -321,7 +316,6 @@ class CreateTicketView extends GetView<CreateTicketController> {
                           child: CustomTextField(
                             textInputAction: TextInputAction.next,
                             wrapper: controller.projectManagerWrapper,
-                            inputformator: [UpperCaseTextFormatter()],
                             hintText: "Project Manager",
                             hintStyle: TextStyle(color: Color(0xff7578AE)),
                             inputType: TextInputType.text,
@@ -356,7 +350,6 @@ class CreateTicketView extends GetView<CreateTicketController> {
                           child: CustomTextField(
                             textInputAction: TextInputAction.next,
                             wrapper: controller.repoNameWrapper,
-                            inputformator: [UpperCaseTextFormatter()],
                             hintText: "Repo Name",
                             hintStyle: TextStyle(color: Color(0xff7578AE)),
                             inputType: TextInputType.text,
@@ -390,7 +383,6 @@ class CreateTicketView extends GetView<CreateTicketController> {
                           padding: const EdgeInsets.symmetric(horizontal: 4),
                           child: CustomTextField(
                             textInputAction: TextInputAction.next,
-                            inputformator: [UpperCaseTextFormatter()],
                             wrapper: controller.branchNameWrapper,
                             hintText: "Branch Name",
                             hintStyle: TextStyle(color: Color(0xff7578AE)),
@@ -494,7 +486,6 @@ class CreateTicketView extends GetView<CreateTicketController> {
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 4),
                           child: CustomTextField(
-                            inputformator: [UpperCaseTextFormatter()],
                             textInputAction: TextInputAction.next,
                             wrapper: controller.releaseNotesWrapper,
                             hintText: "Release Notes",
@@ -530,7 +521,6 @@ class CreateTicketView extends GetView<CreateTicketController> {
                           padding: const EdgeInsets.symmetric(horizontal: 4),
                           child: CustomTextField(
                             textInputAction: TextInputAction.next,
-                            inputformator: [UpperCaseTextFormatter()],
                             wrapper: controller.deploymentStepsWrapper,
                             hintText: "Deployment Steps",
                             hintStyle: TextStyle(color: Color(0xff7578AE)),

@@ -39,4 +39,7 @@ class URLs {
 
   static const deleteTicket =
       "https://api.service-desk.squareboat.info/tickets/";
+
+  static const deleteComment =
+      "https://api.service-desk.squareboat.info/tickets/";
 }

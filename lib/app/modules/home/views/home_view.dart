@@ -144,9 +144,7 @@ class HomeView extends GetView<HomeController> {
                         children: [
                           Expanded(
                             child: InkWell(
-                              onTap: () {
-                                Get.back();
-                              },
+                              onTap: () => controller.cancelButton(),
                               child: Container(
                                 height: 50,
                                 width: MediaQuery.of(context).size.width / 2,
@@ -190,55 +188,45 @@ class HomeView extends GetView<HomeController> {
         ),
         body: RefreshIndicator(
           onRefresh: () => controller.onRefresh(),
-          child: Container(
-            child: Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 25),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "All Tickets",
-                        style: Styles.tsPrimaryColorSemiBold28,
-                      ),
-                      CustomButton(onPressed: () {
-                        Get.toNamed(Routes.CREATE_TICKET);
-                      })
-                    ],
-                  ),
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 25),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "All Tickets",
+                      style: Styles.tsPrimaryColorSemiBold28,
+                    ),
+                    CustomButton(onPressed: () {
+                      Get.toNamed(Routes.CREATE_TICKET);
+                    })
+                  ],
                 ),
-                SizedBox(height: 30),
-                Expanded(
-                  child: SingleChildScrollView(
-                    controller: controller.scrollController,
-                    child: Column(
-                      children: [
-                        Container(
-                          child: Obx(
-                            () => controller.ticketList.length != 0
-                                ? ListView.builder(
-                                    shrinkWrap: true,
-                                    itemCount: controller.ticketList.length,
-                                    physics: NeverScrollableScrollPhysics(),
-                                    itemBuilder: (context, index) {
-                                      return ticketItem(index);
-                                    },
-                                  )
-                                : Center(
-                                    child: Text(
-                                      "No TIcket Found!",
-                                      style: Styles.tsDarkGreySemiBold13,
-                                    ),
-                                  ),
+              ),
+              SizedBox(height: 30),
+              Expanded(
+                child: Obx(
+                  () => controller.ticketList.length != 0
+                      ? ListView.builder(
+                          controller: controller.scrollController,
+                          shrinkWrap: true,
+                          itemCount: controller.ticketList.length,
+                          physics: AlwaysScrollableScrollPhysics(),
+                          itemBuilder: (context, index) {
+                            return ticketItem(index);
+                          },
+                        )
+                      : Center(
+                          child: Text(
+                            "No TIcket Found!",
+                            style: Styles.tsDarkGreySemiBold13,
                           ),
                         ),
-                      ],
-                    ),
-                  ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),
@@ -308,7 +296,7 @@ class HomeView extends GetView<HomeController> {
                           Container(
                             height: 29,
                             decoration: BoxDecoration(
-                                color: AppColors.lightBlue,
+                                color: AppColors.lightBlueOpacity100,
                                 borderRadius: BorderRadius.circular(6.0)),
                             child: Padding(
                               padding:

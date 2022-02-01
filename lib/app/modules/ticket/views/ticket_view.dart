@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -285,6 +287,28 @@ class TicketView extends GetView<TicketController> {
                               name: data.user?.name ?? "",
                               time: timeago.format(time),
                               comments: data.description ?? "",
+                              widget: data.user?.uuid ==
+                                      controller.uuidOfCurrentUser
+                                  ? InkWell(
+                                      onTap: () {
+                                        if (data.user?.uuid ==
+                                            controller.uuidOfCurrentUser) {
+                                          controller.deleteComment(data.id!);
+                                        } else {
+                                          Get.snackbar(
+                                              "Error", "Can't be deleted",
+                                              backgroundColor: Colors.black,
+                                              colorText: Colors.white,
+                                              snackPosition: SnackPosition.TOP);
+                                        }
+                                      },
+                                      child: Icon(
+                                        CupertinoIcons.delete,
+                                        size: 13,
+                                        color: AppColors.red,
+                                      ),
+                                    )
+                                  : SizedBox(),
                             );
                           },
                         ),
@@ -295,7 +319,11 @@ class TicketView extends GetView<TicketController> {
                                   onTap: () {
                                     Get.toNamed(
                                       Routes.SHOWCOMMENTS,
-                                      arguments: controller.commentList,
+                                      arguments: {
+                                        'commentList': controller.commentList,
+                                        'uuidOfCurrentUser':
+                                            controller.uuidOfCurrentUser,
+                                      },
                                     );
                                   },
                                   child: Text(
@@ -728,49 +756,56 @@ class TicketView extends GetView<TicketController> {
         ),
         borderRadius: BorderRadius.circular(21.0),
       ),
-      child: DropdownButtonHideUnderline(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 4,
-          ),
-          child: Obx(
-            () => DropdownButton(
-              dropdownColor: AppColors.primaryBlue,
-              focusColor: Colors.red,
-              isExpanded: false,
-              value: controller.ticketStatus.value,
-              items: controller.items.map((String items) {
-                return DropdownMenuItem(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      items,
-                      style: Styles.tsWhiteRegular12,
+      child: Obx(
+        () => IgnorePointer(
+          ignoring: !(controller.changeStatus.value),
+          child: DropdownButtonHideUnderline(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 4,
+              ),
+              child: Obx(
+                () => DropdownButton(
+                  dropdownColor: AppColors.primaryBlue,
+                  focusColor: Colors.red,
+                  isExpanded: false,
+                  value: controller.ticketStatus.value,
+                  items: controller.items.map((String items) {
+                    return DropdownMenuItem(
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          items,
+                          style: Styles.tsWhiteRegular12,
+                        ),
+                      ),
+                      value: items,
+                    );
+                  }).toList(),
+                  onTap: () {},
+                  icon: Padding(
+                    padding: const EdgeInsets.only(right: 4),
+                    child: Icon(
+                      Icons.arrow_drop_down,
+                      color: Colors.white,
                     ),
                   ),
-                  value: items,
-                );
-              }).toList(),
-              icon: Padding(
-                padding: const EdgeInsets.only(right: 4),
-                child: Icon(
-                  Icons.arrow_drop_down,
-                  color: Colors.white,
+                  onChanged: (String? value) {
+                    print("change ${controller.changeStatus.value}");
+                    if (controller.changeStatus.value == true) {
+                      controller.changeTicketStatus(value ?? "");
+                      controller.ticketStatus.value = value ?? "";
+                    } else {
+                      Get.snackbar(
+                        "Error!",
+                        "Only Devops has the permissions!",
+                        snackPosition: SnackPosition.TOP,
+                        backgroundColor: AppColors.darkWhite,
+                      );
+                    }
+                  },
                 ),
               ),
-              onChanged: (String? value) {
-                if (controller.changeStatus.value == true) {
-                  controller.changeTicketStatus(value ?? "");
-                  controller.ticketStatus.value = value ?? "";
-                } else {
-                  Get.snackbar(
-                    "Error!",
-                    "Only Devops has the permissions!",
-                    snackPosition: SnackPosition.TOP,
-                    backgroundColor: AppColors.darkWhite,
-                  );
-                }
-              },
             ),
           ),
         ),

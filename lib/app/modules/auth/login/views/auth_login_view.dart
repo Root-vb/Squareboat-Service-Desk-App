@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:starter/app/modules/auth/login/controllers/auth_login_controller.dart';
-import 'package:starter/app/theme/styles.dart';
 
 class AuthLoginView extends GetView<AuthLoginController> {
   @override

@@ -7,6 +7,7 @@ import 'package:starter/utils/storage/storage_utils.dart';
 
 class ParticipantsController extends GetxController {
   final isSelected = false.obs;
+  String? uuidOfTicketCreator;
   final RxList<String> users = RxList<String>();
   var participantsList = <Participants>[].obs;
   TextEditingController searchController = TextEditingController();
@@ -22,6 +23,16 @@ class ParticipantsController extends GetxController {
       users.add(participantsList[index].id ?? "");
       selectedUser.add(participantsList[index].name);
     } else {
+      // if (uuidOfTicketCreator == participantsList[index].id) {
+      //   Get.snackbar(
+      //     "Error",
+      //     "Creater of the ticket can't be removed.",
+      //     snackPosition: SnackPosition.TOP,
+      //     backgroundColor: Colors.black,
+      //     colorText: Colors.white,
+      //   );
+      //   value = true;
+      // }
       users.remove(participantsList[index].id ?? "");
       selectedUser.remove(participantsList[index].name);
     }
@@ -66,7 +77,6 @@ class ParticipantsController extends GetxController {
     Get.back(result: users.value);
   }
 
-  final count = 0.obs;
   @override
   void onInit() {
     List<String>? data = Get.arguments;

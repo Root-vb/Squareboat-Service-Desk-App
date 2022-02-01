@@ -1,21 +1,24 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:starter/app/theme/app_colors.dart';
 import 'package:starter/app/theme/styles.dart';
 import 'package:starter/widgets/cached_netwrok_image_utils.dart';
 
 class CommentUtils extends StatelessWidget {
-  const CommentUtils({
+  CommentUtils({
     Key? key,
     required this.time,
     required this.imageUrl,
     required this.name,
     required this.comments,
+    this.widget,
   }) : super(key: key);
 
   final String time;
   final String imageUrl;
   final String name;
   final String comments;
+  Widget? widget;
 
   @override
   Widget build(BuildContext context) {
@@ -60,6 +63,7 @@ class CommentUtils extends StatelessWidget {
                                   style: Styles.tsPrimaryColorBold14,
                                 ),
                               ),
+                              widget ?? SizedBox(),
                               Flexible(
                                 child: Text(
                                   time,

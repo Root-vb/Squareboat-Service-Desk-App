@@ -1,16 +1,23 @@
 import 'package:get/get.dart';
-import 'package:starter/app/data/models/dto/comment.dart';
 
 class ShowcommentsController extends GetxController {
   RxList allComments = RxList();
+  String? uuidOfCurrentUser;
 
   @override
   void onInit() {
-    RxList<Data>? data = Get.arguments;
+    dynamic data = Get.arguments;
 
     if (data != null) {
-      allComments.addAll(data);
+      allComments.addAll(data['commentList']);
     }
+
+    uuidOfCurrentUser = data["uuidOfCurrentUser"];
+    // RxList<Data>? data = Get.arguments;
+
+    // if (data != null) {
+    //   allComments.addAll(data);
+    // }
     super.onInit();
   }
 

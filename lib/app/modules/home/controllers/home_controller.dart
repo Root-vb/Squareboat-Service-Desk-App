@@ -19,6 +19,7 @@ class HomeController extends GetxController {
   var ticketList = <Ticket>[].obs;
   var devopsLists = <Devops>[].obs;
   var storeStatusList = <String>[].obs;
+  var tempStoreStatusList = <String>[].obs;
   var assignedDevopsList = <String>[].obs;
 
   var isChecked = ''.obs;
@@ -67,6 +68,8 @@ class HomeController extends GetxController {
   }
 
   Future<void> allTicket({int? page}) async {
+    // tempStoreStatusList.addAll(storeStatusList);
+
     RepoResponse<TicketList> repoResponse =
         await _ticketRepository.fetchAllTicket(data: {
       "Authorization": 'Bearer ${Storage.getUser().access_token}'
@@ -134,6 +137,24 @@ class HomeController extends GetxController {
         }
       }
     } else {}
+  }
+
+  cancelButton() {
+    if (tempStoreStatusList.isEmpty) {
+      storeStatusList.clear();
+    }
+    // else {
+    //   for (var i = 0; i < storeStatusList.length; i++) {
+    //     for (var j = 0; j < tempStoreStatusList.length; j++) {
+    //       if (storeStatusList[i] != tempStoreStatusList[j]) {
+    //         print(tempStoreStatusList[j]);
+    //         storeStatusList.removeAt(j);
+    //       }
+    //     }
+    //   }
+    // }
+
+    Get.back();
   }
 
   @override
