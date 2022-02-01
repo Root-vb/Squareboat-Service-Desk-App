@@ -55,28 +55,33 @@ class PartcipantsView extends GetView<ParticipantsController> {
                 ),
                 SizedBox(height: 20),
                 !controller.showSearchResult.value
-                    ? ListView.builder(
-                        shrinkWrap: true,
-                        itemCount: controller.participantsList.length,
-                        physics: NeverScrollableScrollPhysics(),
-                        itemBuilder: (context, index) {
-                          return Obx(
-                            () => CheckboxListTile(
-                              dense: true,
-                              title: Text(
-                                controller.participantsList[index].name ?? "",
-                                style: Styles.tsPrimaryColorRegular14,
-                              ),
-                              value: controller.users.contains(
-                                  controller.participantsList[index].id),
-                              onChanged: (bool? value) {
-                                controller.addUser(index, value);
-                              },
-                              activeColor: AppColors.darkGrey,
-                            ),
-                          );
-                        },
-                      )
+                    ? controller.participantsList.isEmpty
+                        ? Center(
+                            child: CircularProgressIndicator(),
+                          )
+                        : ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: controller.participantsList.length,
+                            physics: NeverScrollableScrollPhysics(),
+                            itemBuilder: (context, index) {
+                              return Obx(
+                                () => CheckboxListTile(
+                                  dense: true,
+                                  title: Text(
+                                    controller.participantsList[index].name ??
+                                        "",
+                                    style: Styles.tsPrimaryColorRegular14,
+                                  ),
+                                  value: controller.users.contains(
+                                      controller.participantsList[index].id),
+                                  onChanged: (bool? value) {
+                                    controller.addUser(index, value);
+                                  },
+                                  activeColor: AppColors.darkGrey,
+                                ),
+                              );
+                            },
+                          )
                     : ListView.builder(
                         shrinkWrap: true,
                         itemCount: controller.searchList.length,

@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:starter/app/data/models/dto/participants_list.dart';
 import 'package:starter/app/data/models/dto/response.dart';
 import 'package:starter/app/data/repository/participants_repository.dart';
+import 'package:starter/utils/loading/loading_utils.dart';
 import 'package:starter/utils/storage/storage_utils.dart';
 
 class ParticipantsController extends GetxController {
