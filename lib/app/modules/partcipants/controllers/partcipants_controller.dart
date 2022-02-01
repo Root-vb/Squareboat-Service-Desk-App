@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:starter/app/data/models/dto/participants_list.dart';
 import 'package:starter/app/data/models/dto/response.dart';
 import 'package:starter/app/data/repository/participants_repository.dart';
-import 'package:starter/utils/loading/loading_utils.dart';
 import 'package:starter/utils/storage/storage_utils.dart';
 
 class ParticipantsController extends GetxController {
@@ -24,18 +23,18 @@ class ParticipantsController extends GetxController {
       users.add(participantsList[index].id ?? "");
       selectedUser.add(participantsList[index].name);
     } else {
-      // if (uuidOfTicketCreator == participantsList[index].id) {
-      //   Get.snackbar(
-      //     "Error",
-      //     "Creater of the ticket can't be removed.",
-      //     snackPosition: SnackPosition.TOP,
-      //     backgroundColor: Colors.black,
-      //     colorText: Colors.white,
-      //   );
-      //   value = true;
-      // }
-      users.remove(participantsList[index].id ?? "");
-      selectedUser.remove(participantsList[index].name);
+      if (uuidOfTicketCreator == participantsList[index].id) {
+        Get.snackbar(
+          "Error",
+          "Creater of the ticket can't be removed.",
+          snackPosition: SnackPosition.TOP,
+          backgroundColor: Colors.black,
+          colorText: Colors.white,
+        );
+      } else {
+        selectedUser.remove(participantsList[index].name);
+        users.remove(participantsList[index].id ?? "");
+      }
     }
   }
 
@@ -80,11 +79,13 @@ class ParticipantsController extends GetxController {
 
   @override
   void onInit() {
-    List<String>? data = Get.arguments;
+    dynamic data = Get.arguments;
 
     if (data != null) {
-      users.addAll(data);
+      users.addAll(data['listOfPartcipants']);
     }
+
+    uuidOfTicketCreator = data['uuidOfTicketCreator'];
 
     getAllParticipants();
 

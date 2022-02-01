@@ -241,8 +241,10 @@ class TicketController extends GetxController {
     updatedParticipantsList.forEach((element) {
       allParticipantsUuid.add(element.id ?? "");
     });
-    result =
-        await Get.toNamed(Routes.PARTICIPANTS, arguments: allParticipantsUuid);
+    result = await Get.toNamed(Routes.PARTICIPANTS, arguments: {
+      "listOfPartcipants": allParticipantsUuid,
+      "uuidOfTicketCreator": createdTicketUuid,
+    });
 
     if (result != null) {
       addPartcipantsPerformAction(result);
@@ -251,10 +253,6 @@ class TicketController extends GetxController {
 
   Future<void> addPartcipantsPerformAction(List<String>? user) async {
     List<String> listOfParticipants = [];
-
-    // user?.forEach((element) {
-    //   print("users $element");
-    // });
 
     listOfParticipants.add(Storage.getUser().id);
     listOfParticipants.addAll(user ?? []);
