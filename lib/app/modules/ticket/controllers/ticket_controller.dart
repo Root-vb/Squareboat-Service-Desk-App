@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:starter/app/data/models/dto/comment.dart';
@@ -153,8 +151,9 @@ class TicketController extends GetxController {
     commentWrapper.controller.clear();
   }
 
-  Future<void> onRefresh(BuildContext context) async {
-    postAllComments(context);
+  Future<void> onRefresh() async {
+    fetchAllComments();
+    // postAllComments(context);
   }
 
   Future<void> getAllTicketUpdate() async {
@@ -305,7 +304,8 @@ class TicketController extends GetxController {
     );
 
     if (repoResponse != null) {
-      Get.offAllNamed(Routes.HOME);
+      // Get.offAllNamed(Routes.HOME);
+      fetchAllComments();
 
       print("deleted");
     }

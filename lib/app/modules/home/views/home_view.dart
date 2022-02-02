@@ -4,8 +4,6 @@ import 'package:starter/app/data/values/strings.dart';
 import 'package:starter/app/routes/app_pages.dart';
 import 'package:starter/app/theme/app_colors.dart';
 import 'package:starter/app/theme/styles.dart';
-import 'package:starter/utils/loading/loading_utils.dart';
-
 import 'package:starter/widgets/buttons/custom_button.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import '../controllers/home_controller.dart';

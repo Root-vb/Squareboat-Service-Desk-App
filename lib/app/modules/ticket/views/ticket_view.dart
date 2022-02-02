@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -30,7 +28,7 @@ class TicketView extends GetView<TicketController> {
           ),
         ),
         body: RefreshIndicator(
-          onRefresh: () => controller.onRefresh(context),
+          onRefresh: () => controller.onRefresh(),
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 30),
             child: SingleChildScrollView(
