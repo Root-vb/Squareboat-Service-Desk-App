@@ -233,6 +233,7 @@ class TicketView extends GetView<TicketController> {
                           hintStyle: Styles.tsPrimaryColorSemiBold14.copyWith(
                             color: AppColors.primaryColor.withOpacity(0.37),
                           ),
+                          inputType: TextInputType.multiline,
                           textInputAction: TextInputAction.done,
                           maxLength: 255,
                           maxLines: 5,
@@ -375,7 +376,10 @@ class TicketView extends GetView<TicketController> {
                 onChanged: (String? value) {
                   if (controller.currentUserIsDevops.value) {
                     controller.selectedDevops.value = value ?? "";
-                    controller.assignedToPerformAction(value!);
+                    if (value != null) {
+                      controller.assignedToPerformAction(value);
+                      controller.selectedDevops.value = value;
+                    }
                   } else {
                     Get.snackbar(
                       "Error",

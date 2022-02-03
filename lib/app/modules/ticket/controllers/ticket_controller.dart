@@ -19,7 +19,7 @@ import 'package:starter/utils/storage/storage_utils.dart';
 
 class TicketController extends GetxController {
   var ticketStatus = "New".obs;
-  var selectedDevops = ''.obs;
+  var selectedDevops = "No one is Assigned".obs;
 
   TicketUpdateRepository ticketUpdateRepository = TicketUpdateRepository();
   CommentRepository commentRepository = CommentRepository();
@@ -171,6 +171,8 @@ class TicketController extends GetxController {
         updatedList.add(element);
       });
 
+      assignedToId = repoResponse.data?.assignedTo?.id;
+
       createdTicketUuid = repoResponse.data?.user?.uuid ?? "";
 
       repoResponse.data?.participants?.forEach((element) {
@@ -222,6 +224,15 @@ class TicketController extends GetxController {
         "Authorization": 'Bearer ${Storage.getUser().access_token}',
       },
     );
+    devopsLists.clear();
+    devopsLists.add(Devops(
+      email: "",
+      id: "",
+      name: "No one is Assigned",
+      organizationId: 0,
+      profilePicture: "",
+      status: "",
+    ));
 
     if (repoResponse.error == null) {
       repoResponse.data?.devops?.forEach((element) {
@@ -230,7 +241,11 @@ class TicketController extends GetxController {
 
       // devopsLists.insert(0, "");
 
-      selectedDevops.value = devopsLists.first.id ?? "";
+      if (assignedToId == null) {
+        selectedDevops.value = devopsLists.first.id ?? "";
+      } else {
+        selectedDevops.value = assignedToId ?? "";
+      }
     }
   }
 
@@ -281,6 +296,7 @@ class TicketController extends GetxController {
   }
 
   Future<void> ticketDelete() async {
+    getAllTicketUpdate();
     final repoResponse = deleteTicketRepository.deleteTicket(
       uuid!,
       {
