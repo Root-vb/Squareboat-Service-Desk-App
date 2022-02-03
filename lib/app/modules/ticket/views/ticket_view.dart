@@ -227,6 +227,7 @@ class TicketView extends GetView<TicketController> {
                     children: [
                       Expanded(
                         child: CustomTextField(
+                          fillColor: AppColors.white,
                           wrapper: controller.commentWrapper,
                           hintText: "Post a comment...",
                           hintStyle: Styles.tsPrimaryColorSemiBold14.copyWith(

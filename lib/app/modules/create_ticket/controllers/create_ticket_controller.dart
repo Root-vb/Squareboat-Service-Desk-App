@@ -5,6 +5,7 @@ import 'package:starter/app/data/models/dto/response.dart';
 import 'package:starter/app/data/repository/create_ticket_repository.dart';
 import 'package:starter/app/data/repository/participants_repository.dart';
 import 'package:starter/app/modules/home/controllers/home_controller.dart';
+import 'package:starter/app/routes/app_pages.dart';
 import 'package:starter/app/theme/app_colors.dart';
 import 'package:starter/utils/helper/text_field_wrapper.dart';
 import 'package:starter/utils/loading/loading_utils.dart';
@@ -136,7 +137,7 @@ class CreateTicketController extends GetxController {
       LoadingUtils.hideLoader();
 
       if (_response.error == null) {
-        Get.back();
+        Get.offAllNamed(Routes.DASHBOARD);
         controller.onRefresh();
         Get.snackbar(
           "Sucess!",
@@ -186,7 +187,7 @@ class CreateTicketController extends GetxController {
       LoadingUtils.hideLoader();
 
       if (_response.error == null) {
-        Get.back();
+        Get.offAllNamed(Routes.DASHBOARD);
 
         controller.onRefresh();
 

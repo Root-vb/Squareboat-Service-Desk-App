@@ -1,6 +1,10 @@
 import 'package:get/get.dart';
+import 'package:starter/app/modules/dashboard/dashboard_binding.dart';
+import 'package:starter/app/modules/dashboard/dashboard_view.dart';
 import 'package:starter/app/modules/partcipants/bindings/partcipants_binding.dart';
 import 'package:starter/app/modules/partcipants/views/partcipants_view.dart';
+import 'package:starter/app/modules/profile/profile_binding.dart';
+import 'package:starter/app/modules/profile/profile_view.dart';
 import 'package:starter/app/modules/users/bindings/users_binding.dart';
 import 'package:starter/app/modules/users/views/users_view.dart';
 
@@ -68,6 +72,16 @@ class AppPages {
       name: Routes.USERS,
       page: () => UsersView(),
       binding: UsersBinding(),
+    ),
+    GetPage(
+      name: Routes.PROFILE,
+      page: () => ProfileView(),
+      binding: ProfileBinding(),
+    ),
+    GetPage(
+      name: Routes.DASHBOARD,
+      page: () => DashboardView(),
+      binding: DashboardBinding(),
     ),
   ];
 }

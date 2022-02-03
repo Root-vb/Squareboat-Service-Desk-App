@@ -16,4 +16,5 @@ class AppColors {
   static const darkGrey = Color(0xff8E8686);
   static const lightGrey = Color(0xFFBAC3D280);
   static const darkWhite = Color.fromRGBO(47, 117, 253, 0.1);
+  static const filledWhiteColor = Color(0xffE4E9EF);
 }

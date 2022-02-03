@@ -4,8 +4,9 @@ import 'package:starter/app/theme/styles.dart';
 
 class CustomButton extends StatelessWidget {
   final Function() onPressed;
+  final String buttonName;
 
-  CustomButton({required this.onPressed});
+  CustomButton({required this.onPressed, required this.buttonName});
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +30,7 @@ class CustomButton extends StatelessWidget {
                 color: AppColors.white,
               ),
               Text(
-                "Create New",
+                buttonName,
                 style: Styles.tsWhiteSemiBold14,
               ),
             ],

@@ -17,4 +17,16 @@ class ProfileRepository extends BaseRepositry {
         ? RepoResponse(error: response)
         : RepoResponse(data: ProfileResponse.fromJson(response).data);
   }
+
+  Future<RepoResponse<bool>> updaetMyProfile(
+      Map<String, dynamic> updateData, Map<String, dynamic> data) async {
+    final response = await controller.patch(
+      path: URLs.myProfile,
+      data: updateData,
+      options: Options(headers: data),
+    );
+    return response is APIException
+        ? RepoResponse(error: response)
+        : RepoResponse(data: true);
+  }
 }

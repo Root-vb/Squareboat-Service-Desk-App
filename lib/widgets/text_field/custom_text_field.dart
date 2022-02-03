@@ -11,9 +11,10 @@ class CustomTextField extends StatelessWidget {
   final TextInputType inputType;
   final TextFieldWrapper wrapper;
   final bool isEnabled;
+  final Color fillColor;
   Function()? onSubmitted;
   final TextInputAction textInputAction;
-  // List<TextInputFormatter>? inputformator;
+  bool readOnly;
   int? maxLines;
 
   CustomTextField({
@@ -25,6 +26,8 @@ class CustomTextField extends StatelessWidget {
     this.isEnabled = true,
     this.onSubmitted,
     required this.textInputAction,
+    required this.fillColor,
+    this.readOnly = false,
     // this.inputformator,
     this.maxLines,
   });
@@ -33,6 +36,7 @@ class CustomTextField extends StatelessWidget {
   Widget build(BuildContext context) {
     return Obx(
       () => TextField(
+        readOnly: readOnly,
         controller: wrapper.controller,
         style: Styles.tsPrimaryColorRegular14,
         maxLength: maxLength,
@@ -41,11 +45,12 @@ class CustomTextField extends StatelessWidget {
         // inputFormatters: inputformator,
         onSubmitted: (_) => onSubmitted,
         enabled: isEnabled,
+
         textInputAction: textInputAction,
         decoration: InputDecoration(
           errorText: wrapper.errorText.isEmpty ? null : wrapper.errorText,
           errorStyle: Styles.tsRedRegular14,
-          fillColor: AppColors.white,
+          fillColor: fillColor,
           filled: true,
           hintText: hintText,
           hintStyle: hintStyle,

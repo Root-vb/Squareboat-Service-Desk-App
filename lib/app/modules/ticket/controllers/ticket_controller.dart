@@ -289,7 +289,7 @@ class TicketController extends GetxController {
     );
 
     if (repoResponse != null) {
-      Get.offAllNamed(Routes.HOME);
+      Get.offAllNamed(Routes.DASHBOARD);
 
       print("deleted");
     }

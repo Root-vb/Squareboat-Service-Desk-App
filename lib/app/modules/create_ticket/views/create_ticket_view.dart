@@ -133,6 +133,7 @@ class CreateTicketView extends GetView<CreateTicketController> {
                           padding: const EdgeInsets.symmetric(horizontal: 4),
                           child: CustomTextField(
                             wrapper: controller.generalHeadingWrapper,
+                            fillColor: AppColors.white,
                             textInputAction: TextInputAction.next,
                             hintText: "Heading",
                             hintStyle: TextStyle(color: Color(0xff7578AE)),
@@ -167,6 +168,7 @@ class CreateTicketView extends GetView<CreateTicketController> {
                           padding: const EdgeInsets.symmetric(horizontal: 4),
                           child: CustomTextField(
                             textInputAction: TextInputAction.next,
+                            fillColor: AppColors.white,
                             wrapper: controller.descriptionWrapper,
                             hintText: "Description",
                             hintStyle: TextStyle(color: Color(0xff7578AE)),
@@ -208,6 +210,7 @@ class CreateTicketView extends GetView<CreateTicketController> {
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 4),
                           child: CustomTextField(
+                            fillColor: AppColors.white,
                             wrapper: controller.generalWatcherEmails,
                             hintText: "Watcher Email",
                             textInputAction: TextInputAction.done,
@@ -246,6 +249,7 @@ class CreateTicketView extends GetView<CreateTicketController> {
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 4),
                           child: CustomTextField(
+                            fillColor: AppColors.white,
                             wrapper: controller.deploymentHeadingWrapper,
                             textInputAction: TextInputAction.next,
                             hintText: "Heading",
@@ -280,6 +284,7 @@ class CreateTicketView extends GetView<CreateTicketController> {
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 4),
                           child: CustomTextField(
+                            fillColor: AppColors.white,
                             textInputAction: TextInputAction.next,
                             wrapper: controller.projectNameWrapper,
                             hintText: "Project Name",
@@ -315,6 +320,7 @@ class CreateTicketView extends GetView<CreateTicketController> {
                           padding: const EdgeInsets.symmetric(horizontal: 4),
                           child: CustomTextField(
                             textInputAction: TextInputAction.next,
+                            fillColor: AppColors.white,
                             wrapper: controller.projectManagerWrapper,
                             hintText: "Project Manager",
                             hintStyle: TextStyle(color: Color(0xff7578AE)),
@@ -349,6 +355,7 @@ class CreateTicketView extends GetView<CreateTicketController> {
                           padding: const EdgeInsets.symmetric(horizontal: 4),
                           child: CustomTextField(
                             textInputAction: TextInputAction.next,
+                            fillColor: AppColors.white,
                             wrapper: controller.repoNameWrapper,
                             hintText: "Repo Name",
                             hintStyle: TextStyle(color: Color(0xff7578AE)),
@@ -383,6 +390,7 @@ class CreateTicketView extends GetView<CreateTicketController> {
                           padding: const EdgeInsets.symmetric(horizontal: 4),
                           child: CustomTextField(
                             textInputAction: TextInputAction.next,
+                            fillColor: AppColors.white,
                             wrapper: controller.branchNameWrapper,
                             hintText: "Branch Name",
                             hintStyle: TextStyle(color: Color(0xff7578AE)),
@@ -486,6 +494,7 @@ class CreateTicketView extends GetView<CreateTicketController> {
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 4),
                           child: CustomTextField(
+                            fillColor: AppColors.white,
                             textInputAction: TextInputAction.next,
                             wrapper: controller.releaseNotesWrapper,
                             hintText: "Release Notes",
@@ -520,6 +529,7 @@ class CreateTicketView extends GetView<CreateTicketController> {
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 4),
                           child: CustomTextField(
+                            fillColor: AppColors.white,
                             textInputAction: TextInputAction.next,
                             wrapper: controller.deploymentStepsWrapper,
                             hintText: "Deployment Steps",
@@ -707,6 +717,7 @@ class CreateTicketView extends GetView<CreateTicketController> {
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 4),
                           child: CustomTextField(
+                            fillColor: AppColors.white,
                             textInputAction: TextInputAction.done,
                             wrapper: controller.deploymentWatcherEmails,
                             hintText: "Watcher Email",
@@ -722,6 +733,7 @@ class CreateTicketView extends GetView<CreateTicketController> {
                 padding:
                     const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
                 child: CustomButton(
+                  buttonName: "Create New",
                   onPressed: () => controller.createTicket(),
                 ),
               ),

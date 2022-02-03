@@ -37,6 +37,7 @@ class AuthLoginController extends BaseController {
   }
 
   signOut() async {
+    await Storage.clearStorage();
     await _googleSignIn.signOut();
 
     Get.offNamed(Routes.AUTH_LOGIN);
@@ -52,7 +53,7 @@ class AuthLoginController extends BaseController {
 
     if (repoResponse.error == null) {
       Storage.setUser(repoResponse.data);
-      Get.offNamed(Routes.HOME);
+      Get.offNamed(Routes.DASHBOARD);
     } else {
       if (repoResponse.error?.message == "Your Domain is not registered.") {
         Get.dialog(DialogWidget(

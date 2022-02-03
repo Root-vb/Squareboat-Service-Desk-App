@@ -10,4 +10,6 @@ abstract class Routes {
   static const SHOWUPDATE = '/showupdate';
   static const SHOWCOMMENTS = '/showcomments';
   static const USERS = '/users';
+  static const DASHBOARD = "/dashboard";
+  static const PROFILE = "/profile";
 }

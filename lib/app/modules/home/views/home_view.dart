@@ -14,13 +14,6 @@ class HomeView extends GetView<HomeController> {
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.transparent,
-          elevation: 0.0,
-          iconTheme: IconThemeData(
-            color: AppColors.primaryColor,
-          ),
-        ),
         floatingActionButton: FloatingActionButton(
           backgroundColor: AppColors.primaryBlue,
           onPressed: () {
@@ -190,49 +183,53 @@ class HomeView extends GetView<HomeController> {
         ),
         body: RefreshIndicator(
           onRefresh: () => controller.onRefresh(),
-          child: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 25),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "All Tickets",
-                      style: Styles.tsPrimaryColorSemiBold28,
-                    ),
-                    CustomButton(onPressed: () {
-                      Get.toNamed(Routes.CREATE_TICKET);
-                    })
-                  ],
+          child: SafeArea(
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 25, top: 20, right: 25),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "All Tickets",
+                        style: Styles.tsPrimaryColorSemiBold28,
+                      ),
+                      CustomButton(
+                          buttonName: "Create New",
+                          onPressed: () {
+                            Get.toNamed(Routes.CREATE_TICKET);
+                          })
+                    ],
+                  ),
                 ),
-              ),
-              SizedBox(height: 30),
-              Expanded(
-                child: Obx(
-                  () => controller.pageState() == LoadingStates.LOADING
-                      ? Center(
-                          child: CircularProgressIndicator(),
-                        )
-                      : controller.pageState() != LoadingStates.EMPTY
-                          ? ListView.builder(
-                              controller: controller.scrollController,
-                              shrinkWrap: true,
-                              itemCount: controller.ticketList.length,
-                              physics: AlwaysScrollableScrollPhysics(),
-                              itemBuilder: (context, index) {
-                                return ticketItem(index);
-                              },
-                            )
-                          : Center(
-                              child: Text(
-                                "No TIcket Found!",
-                                style: Styles.tsDarkGreySemiBold13,
+                SizedBox(height: 30),
+                Expanded(
+                  child: Obx(
+                    () => controller.pageState() == LoadingStates.LOADING
+                        ? Center(
+                            child: CircularProgressIndicator(),
+                          )
+                        : controller.pageState() != LoadingStates.EMPTY
+                            ? ListView.builder(
+                                controller: controller.scrollController,
+                                shrinkWrap: true,
+                                itemCount: controller.ticketList.length,
+                                physics: AlwaysScrollableScrollPhysics(),
+                                itemBuilder: (context, index) {
+                                  return ticketItem(index);
+                                },
+                              )
+                            : Center(
+                                child: Text(
+                                  "No TIcket Found!",
+                                  style: Styles.tsDarkGreySemiBold13,
+                                ),
                               ),
-                            ),
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
